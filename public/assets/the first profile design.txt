@@ -1,0 +1,495 @@
+js for the first design : 
+
+    <div className="userPageContainer ">
+      <nav>
+        <span>
+          <i class="fas fa-arrow-left" onClick={goBack}></i>
+          <p>{userData.name} </p>
+        </span>
+        <button onClick={handleLogout}>
+          {" "}
+          <BiPowerOff />
+        </button>
+      </nav>
+      {(inputSelectValue || enlargeImageValue) && (
+        <div className="darkBody"></div>
+      )}
+      <div className="bodyContainer">
+        <div className="bodyContainerWrap">
+          <img
+            className="bgImg"
+            src="../assets/images/gradient-particles-background/background 5.jpg"
+          />
+          <section className="allWrap">
+            <span className="minWrap">
+              <span className="imgWrap">
+                {userData.profileImage ? (
+                  <motion.img
+                    whileHover={{ scale: 0.95 }}
+                    whileTap={{ scale: 1 }}
+                    style={{ cursor: "pointer", zIndex: "1" }}
+                    src={`../assets/profileImages/${userData.profileImage}`}
+                    onClick={() => {
+                      setEnlargeImageValue(!enlargeImageValue);
+                    }}
+                  />
+                ) : (
+                  <img src="../assets/images/OIP.jpg" />
+                )}
+                <i
+                  class="fa-solid fa-camera"
+                  style={{ cursor: "pointer", zIndex: "2" }}
+                  onClick={() => setInputSelectValue(!inputSelectValue)}
+                ></i>
+              </span>
+              {enlargeImageValue && (
+                <form className="chooseImage">
+                  <i
+                    class="fa-solid fa-times "
+                    onClick={() => setEnlargeImageValue(!enlargeImageValue)}
+                  ></i>
+                  <div>
+                    <img
+                      src={`../assets/profileImages/${userData.profileImage}`}
+                    />
+                  </div>
+                </form>
+              )}
+              {inputSelectValue && (
+                <form className="chooseImage">
+                  <i
+                    class="fa-solid fa-times "
+                    onClick={() => setInputSelectValue(!inputSelectValue)}
+                  ></i>
+                  <div>
+                    <img src={profileImageShown} />
+                  </div>
+                  <input
+                    type="file"
+                    hidden
+                    id="imgSelect"
+                    onChange={handleInputSelect}
+                  ></input>
+                  <span>
+                    <label htmlFor="imgSelect"> Choose Image</label>
+                    <hr />
+                    <button onClick={uploadImage}>Upload Image</button>
+                  </span>
+                </form>
+              )}
+            </span>
+
+            {/* <h1>{userData.name}</h1> */}
+            <div className="textsWrap">
+              <h1>{userData.name} </h1>
+              <span className="subtextswrap">
+                <h3>{userData.practitionField}</h3>
+                <h4>{userData.yoe} Years of experience</h4>
+              </span>
+              <Link to={"/chat"}>
+                <button>Messages</button>
+              </Link>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+
+..............................
+css for the first design 
+
+styles for the top of the page 
+.userPageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.userPageContainer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%; /* Adjust the height to control the gradient fade-off */
+  background: linear-gradient(
+    to bottom,
+    rgba(14, 18, 35, 0.8),
+    rgba(14, 18, 35, 0)
+  );
+  z-index: -1;
+}
+.userPageContainer nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 8vh;
+  padding: 5px;
+  background-color: #fff;
+  border: 1px double rgb(151, 151, 151);
+  justify-content: space-between;
+}
+.userPageContainer nav span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.userPageContainer nav button {
+  background-color: #181864;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+}
+.userPageContainer nav button:hover {
+  background-color: #0f0f3b;
+}
+.userPageContainer nav button:active {
+  background-color: #181864;
+}
+.userPageContainer nav i {
+  font-size: 20px;
+  margin: 10px;
+  padding: 15px 10px;
+  cursor: pointer;
+}
+.userPageContainer nav i:hover {
+  background-color: rgb(18, 25, 48);
+  color: #fff;
+}
+.userPageContainer nav p {
+  font-size: 15px;
+  font-weight: 900;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+.userPageContainer .darkBody {
+  position: absolute;
+  width: 100%;
+  height: 112vh;
+  background-color: rgb(0, 0, 0, 0.3);
+  z-index: 9;
+}
+.userPageContainer .bodyContainer {
+  width: 80%;
+  height: auto;
+  transition: 1s;
+}
+.userPageContainer .bodyContainer .bodyContainerWrap {
+  width: 100%;
+  object-fit: cover;
+  height: 80vh;
+  position: relative;
+  transition: 1s;
+}
+.userPageContainer .bodyContainer .bodyContainerWrap .bgImg {
+  width: 100%;
+  height: 70%;
+  border-radius: 0 0px 20px 20px;
+}
+.userPageContainer .bodyContainer .bodyContainerWrap .allWrap {
+  display: flex;
+}
+
+.userPageContainer .bodyContainer .bodyContainerWrap .minWrap {
+  display: flex;
+  align-items: center;
+  transition: 1s;
+  position: absolute;
+  top: 60%;
+  margin-left: 5%;
+}
+.userPageContainer .bodyContainer .bodyContainerWrap .minWrap .imgWrap {
+  background-color: #fff;
+  width: 180px;
+  height: 180px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 1s;
+  position: relative;
+}
+
+.userPageContainer .bodyContainer .bodyContainerWrap .minWrap .imgWrap img {
+  width: 90%;
+  height: 90%;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.userPageContainer .bodyContainer .bodyContainerWrap .minWrap .imgWrap i {
+  position: absolute;
+  bottom: 5%;
+  right: 15%;
+  padding: 5%;
+  background-color: rgb(192, 192, 192);
+  border-radius: 100px;
+  cursor: pointer;
+}
+.userPageContainer .bodyContainer .bodyContainerWrap .minWrap .imgWrap i:hover {
+  background-color: rgb(102, 102, 102);
+}
+.userPageContainer
+  .bodyContainer
+  .bodyContainerWrap
+  .minWrap
+  .imgWrap
+  i:active {
+  background-color: rgb(192, 192, 192);
+}
+.chooseImage {
+  position: absolute;
+
+  height: fit-content;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px 2px rgba(80, 80, 80, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+.chooseImage i {
+  font-size: 20px;
+  font-weight: bolder;
+  color: #000000;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 8px 10px;
+  border-radius: 100%;
+  cursor: pointer;
+}
+.chooseImage i:hover {
+  background-color: rgb(6, 37, 74);
+  color: white;
+}
+.chooseImage div {
+  width: 250px;
+  height: 250px;
+  margin: 50px;
+  background-color: gray;
+  position: relative;
+}
+.chooseImage div img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.chooseImage span {
+  position: absolute;
+  bottom: 5%;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+.chooseImage label {
+  font-size: 15px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  padding: 5px 10px;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 2px rgba(80, 80, 80, 0.2);
+  background-color: rgb(46, 46, 245);
+  border: none;
+  cursor: pointer;
+}
+.chooseImage button {
+  font-size: 15px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #303030;
+  padding: 5px 10px;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 2px rgba(80, 80, 80, 0.2);
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+}
+.chooseImage label:hover {
+  color: white;
+  background-color: rgb(6, 37, 74);
+}
+.chooseImage button:hover {
+  color: white;
+  background-color: rgb(6, 37, 74);
+}
+.userPageContainer .bodyContainer .bodyContainerWrap .allWrap .textsWrap {
+  position: relative;
+  width: 100%;
+  margin: 0%;
+  padding-left: 25%;
+}
+.userPageContainer .bodyContainer .bodyContainerWrap .allWrap .textsWrap h1 {
+  font-variant-caps: all-petite-caps;
+  font-size: 30px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+.userPageContainer
+  .bodyContainer
+  .bodyContainerWrap
+  .allWrap
+  .textsWrap
+  .subtextswrap {
+  display: flex;
+  width: 45%;
+  justify-content: space-between;
+}
+.userPageContainer
+  .bodyContainer
+  .bodyContainerWrap
+  .allWrap
+  .textsWrap
+  .subtextswrap
+  h3 {
+  font-family: "Times New Roman", Times, serif;
+}
+.userPageContainer
+  .bodyContainer
+  .bodyContainerWrap
+  .allWrap
+  .textsWrap
+  .subtextswrap
+  h4 {
+  font-weight: lighter;
+  font-stretch: extra-expanded;
+}
+.userPageContainer
+  .bodyContainer
+  .bodyContainerWrap
+  .allWrap
+  .textsWrap
+  button {
+  font-size: 15px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  padding: 5px 15px;
+  text-align: center;
+  box-shadow: 0px 0px 10px 2px rgba(80, 80, 80, 0.2);
+  background-color: rgb(3, 92, 3);
+  border: none;
+  cursor: pointer;
+  margin: 10px 0;
+}
+.userPageContainer
+  .bodyContainer
+  .bodyContainerWrap
+  .allWrap
+  .textsWrap
+  button:hover {
+  background-color: green;
+}
+.userPageContainer
+  .bodyContainer
+  .bodyContainerWrap
+  .allWrap
+  .textsWrap
+  button:active {
+  background-color: rgb(2, 78, 2);
+}
+/* styles for the media screen for the top of the page  */
+@media (max-width: 1200px) {
+  .userPageContainer .darkBody {
+    display: none;
+  }
+  .userPageContainer .bodyContainer .bodyContainerWrap .allWrap .textsWrap {
+    margin: 0%;
+    padding-left: 25%;
+  }
+  .userPageContainer .bodyContainer .bodyContainerWrap .allWrap .subtextswrap {
+    display: flex;
+    text-align: center;
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+@media (max-width: 1000px) {
+  .userPageContainer::before {
+    height: 40vh;
+  }
+  .userPageContainer .bodyContainer {
+    width: 100%;
+  }
+  .userPageContainer .bodyContainer .bodyContainerWrap {
+    height: 40vh;
+  }
+  .userPageContainer .bodyContainer .bodyContainerWrap .bgImg {
+    border-radius: 0;
+  }
+
+  .userPageContainer .bodyContainer .bodyContainerWrap .allWrap .subtextswrap {
+    display: flex;
+    text-align: center;
+    width: 85%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 900px) {
+  .userPageContainer .bodyContainer .bodyContainerWrap .bgImg {
+    border-radius: 0;
+  }
+
+  .userPageContainer .bodyContainer .bodyContainerWrap .allWrap {
+    display: block;
+  }
+  .userPageContainer .bodyContainer .bodyContainerWrap .allWrap .minWrap {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+  .userPageContainer
+    .bodyContainer
+    .bodyContainerWrap
+    .allWrap
+    .minWrap
+    .imgWrap {
+    width: 180px;
+    height: 180px;
+    margin: 0%;
+  }
+  .userPageContainer .bodyContainer .bodyContainerWrap .allWrap .textsWrap {
+    position: absolute;
+    top: 100%;
+    margin: 10% 0;
+    padding: 0%;
+    width: 100%;
+    text-align: center;
+  }
+  .userPageContainer
+    .bodyContainer
+    .bodyContainerWrap
+    .allWrap
+    .textsWrap
+    .subtextswrap {
+    display: block;
+    width: 100%;
+    padding: 0 10%;
+  }
+}
+@media (max-width: 500px) {
+  .userPageContainer .bodyContainer .bodyContainerWrap .allWrap .textsWrap {
+    margin: 20% 0;
+  }
+}
+/* styles for the rest of the page  */
+.userPageContainer .bodyContainer .bodyContainerWrap .aboutWrap {
+  width: 100%;
+  height: 30vh;
+  background-color: rgb(107, 107, 108);
+  box-shadow: 0px 0px 10px 2px rgba(80, 80, 80, 0.2);
+  border-radius: 20px;
+  margin-bottom: 100px;
+}

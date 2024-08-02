@@ -1,0 +1,98 @@
+/* @media (max-width: 1080px) {
+
+  .container nav ul {
+    position: absolute;
+    right: 0%;
+    top: 0;
+    height: fit-content;
+    padding: 20px 40px;
+    backdrop-filter: blur(50px);
+    border-radius: 30px 0px 0px 30px;
+    z-index: 99999999;
+  }
+  .container nav ul li {
+    display: flex;
+  }
+  .container nav ul li i {
+    position: relative;
+    right: 80%;
+    background: none;
+  }
+  .container nav .logo {
+    position: relative;
+  }
+
+  
+  .searchInput {
+    width: 80%;
+  }
+  .factsContainer h1 {
+    margin: 20px 40px;
+  }
+  .addFactDiv {
+    width: 100%;
+  }
+  .addFactDiv textarea {
+    height: 250px;
+  }
+  .factsContainer .text {
+    width: 90%;
+    margin: 10px 30px;
+  }
+
+
+  .aboutContainer {
+    width: 90%;
+    height: 100vh;
+    margin: 10px;
+  }
+  .aboutContainer .aboutWrap {
+    display: block;
+  }
+  .aboutContainer .aboutWrap h1 {
+    width: 100%;
+    font-size: 40px;
+    line-height: normal;
+  }
+  .aboutContainer .aboutWrap .imageContainer {
+    width: 100%;
+    height: 25vh;
+    background: none;
+    box-shadow: none;
+  }
+  .aboutContainer .aboutTextContainer .item {
+    bottom: 0;
+    top: 70%;
+    margin-bottom: 10px;
+  }
+
+  
+  .regContainer .formContainer form {
+    width: 90%;
+    top: 0;
+  }
+  .regContainer .formContainer form p {
+    font-size: 12px;
+    font-weight: 900;
+  }
+  .reachContainer {
+    display: block;
+  }
+
+  .reachContainer .reachWrap {
+    width: 100%;
+  }
+  .reachContainer .reachWrap .profileNav {
+    padding: 10px 20px;
+  }
+  .reachContainer .reachWrap .itemContainer .item {
+    width: 45%;
+    height: 30vh;
+  }
+} */
+/* @media (max-width: 500px) {
+  .reachContainer .reachWrap .itemContainer .item {
+    width: 90%;
+    height: 30vh;
+  }
+} */

@@ -1,0 +1,65 @@
+@media (max-width: 1080px) {
+  .cardContainer {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    margin: 0;
+    top: 0;
+  }
+  .cardContainer .enclose {
+    position: absolute;
+    top: 52%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .cardContainer h1 {
+    color: white;
+  }
+  .cardContainer i {
+    position: relative;
+    top: 0%;
+    margin: 1rem;
+  }
+  .cardContainer img {
+    box-shadow: none;
+  }
+
+  .cardContainer .detailsContainer h4 {
+    font-size: 15px;
+  }
+  .cardContainer .detailsContainer h6 {
+    font-size: 12px;
+  }
+
+  .bodyContainer .experiencesContainer {
+    width: 100%;
+    margin: 0%;
+  }
+  .chooseImage {
+    width: 100%;
+    margin: 0%;
+  }
+  .chooseImage .imgSelected {
+    width: 90%;
+    height: 40vh;
+  }
+  .WrapAddIcon {
+    width: 85vw;
+    position: fixed;
+    top: 85vh;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: black;
+    padding: 0% 1rem;
+  }
+  .addIcon {
+    left: 0%;
+    top: 0%;
+    bottom: 0%;
+    position: relative;
+  }
+}
