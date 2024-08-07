@@ -104,6 +104,24 @@ const ProfileSettings = () => {
           </div>
         </div>
       </div>
+      <div className="user-image" id="iamge-pp">
+        <div className="image-profile-image-sett">
+          <div className="left-tt">
+            <span>
+              Select Image
+            </span>
+
+          </div>
+          <div className="right-tt">
+            
+          </div>
+          <a href="" className="submit-btn-ups">
+              Upload 
+              <i className="fas fa-arrow-up"></i>
+          </a>
+         
+        </div>
+      </div>
       <div className="user-form-details">
         <form className="active-user-form" onSubmit={handleSubmit}>
           <div className="header-h2">
