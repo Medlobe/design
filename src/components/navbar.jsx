@@ -3,13 +3,16 @@ import "aos/dist/aos.css";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import axios from "axios";
 
 export default function Navbar() {
-  //get userId
-  const userId = sessionStorage.getItem("userId");
+  //variables
+  const serverName = process.env.REACT_APP_SERVER_NAME;
   const userAuth = sessionStorage.getItem("userAuth");
-  const [isScrolled, setIsScrolled] = useState(false);  
+  const token = sessionStorage.getItem("token");
+  const [isScrolled, setIsScrolled] = useState(false);
   const [screenValue, setScreenValue] = useState(false);
+
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -18,6 +21,8 @@ export default function Navbar() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  
 
   const handleScroll = () => {
     const threshold = 0.2 * window.innerHeight; // 30vh threshold
@@ -56,13 +61,12 @@ export default function Navbar() {
 
           <div className={isOpen ? "main-ul active" : "main-ul"}>
             <div className="hidden-toggle pst">
-              <img src="../assets/images/icon.png" alt="" className="left-o"/>
+              <img src="../assets/images/icon.png" alt="" className="left-o" />
               <i className="fas fa-close" onClick={toggleMenu}></i>
             </div>
             <a href="/" data-aos="fade-down-right " className="logo-img">
               <motion.img
                 src="../assets/images/icon.png"
-               
                 className="logo"
               ></motion.img>
             </a>
@@ -86,10 +90,16 @@ export default function Navbar() {
             </div>
           </div>
 
-          <div className="last-li">
-            <a href="/register">Sign up </a>
-            <a href="/Login">Sign in </a>
-          </div>
+          {userAuth ? (
+            <div className="last-li">
+              <a href="/dashboard">Dashboard </a>             
+            </div>
+          ) : (
+            <div className="last-li">
+              <a href="/register">Sign up </a>
+              <a href="/Login">Sign in </a>
+            </div>
+          )}
         </ul>
       </div>
     </nav>
