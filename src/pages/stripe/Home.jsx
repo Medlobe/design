@@ -43,7 +43,7 @@ const Home = () => {
   };
 
   //get user data
-  
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -63,7 +63,6 @@ const Home = () => {
 
     fetchUserData();
   }, [token]);
-  
 
   const checkout = async (plan) => {
     try {
@@ -84,7 +83,27 @@ const Home = () => {
     } catch (e) {
       // Log the error
       console.error(e.response?.data?.error || e.message);
-      toast.error(e.message, toastOptions);
+
+      // Display user-friendly error message using toast
+      let errorMessage =
+        "Something went wrong during checkout. Please try again.";
+
+      if (e.response?.data?.error) {
+        if (e.response.data.error.includes("No such price")) {
+          errorMessage =
+            "The selected plan is currently unavailable. Please choose a different plan.";
+        } else if (e.response.data.error.includes("Network Error")) {
+          errorMessage =
+            "Unable to connect to the server. Please check your internet connection.";
+        } else if (e.response.status === 404) {
+          errorMessage =
+            "The requested resource was not found. Please try again later.";
+        } else if (e.response.status === 500) {
+          errorMessage = "Internal server error. Please try again later.";
+        }
+      }
+
+      toast.error(errorMessage, toastOptions);
     }
   };
 

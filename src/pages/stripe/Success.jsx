@@ -11,6 +11,14 @@ const Success = () => {
   const token = sessionStorage.getItem("token");
   const navigate = useNavigate();
 
+  const toastOptions = {
+    position: "top-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  };
+
   const [userData, setUserData] = useState([])
   const [sessionId, setSessionId] = useState("");
 
@@ -46,20 +54,36 @@ const Success = () => {
         `${serverName}payment/payment-success`,
         {
           sessionId: sessionId,
-          firebaseId: userId,
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
       console.log(response.data.message);
-      toast.success(response.data.message);
+      toast.success("Payment successful! Thank you for your subscription.", toastOptions);
       navigate("/");
     } catch (error) {
       console.log(error.response?.data?.error || error.message);
+  
+      // Display user-friendly error message using toast
+      let errorMessage = "Payment verification failed. Please try again.";
+  
+      if (error.response?.data?.error) {
+        if (error.response.data.error.includes("Session not found")) {
+          errorMessage = "Payment session could not be found. Please contact support.";
+        } else if (error.response.data.error.includes("Network Error")) {
+          errorMessage = "Unable to connect to the server. Please check your internet connection.";
+        } else if (error.response.status === 404) {
+          errorMessage = "The requested resource was not found. Please try again later.";
+        } else if (error.response.status === 500) {
+          errorMessage = "Internal server error. Please try again later.";
+        }
+      }
+  
+      toast.error(errorMessage, toastOptions);
     }
   };
 
