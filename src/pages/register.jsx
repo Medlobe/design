@@ -99,7 +99,12 @@ export default function Register() {
       toast(`Your Email is Being Verified ${firstName}`);
       setLoginMessage(response.message);
 
-      if (response.data) {
+      if (response.data.healthPractitioner === true) {
+        setTimeout(() => {
+          const route = `/dashboard`;
+          window.location.href = route;
+        }, 3000);
+      }else {
         setTimeout(() => {
           const route = `/regShow`;
           window.location.href = route;
@@ -349,7 +354,7 @@ export default function Register() {
       </div>
       <div className="left-image-reg">
       <div className="header-signup">
-            <h1>Sign up for free and get acess to unlimited info.!</h1>
+            <h1>Sign up for free and get access to unlimited info.!</h1>
           </div>
       </div>
       <ToastContainer />
