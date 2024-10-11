@@ -51,7 +51,8 @@ const SideLeftNavbar = () => {
       <div className="user-details-side">
         <i className="fas fa-arrow-left" onClick={toggleNavbar}></i>
         <span>
-        {userData.profileImage && <img src={userData.profileImage.url}></img>}
+        <img src="../assets/images/BANNER2.jpg" alt="" />
+          {userData.profileImage && <img src={userData.profileImage.url}></img>}
           <div className="online-spot"></div>
         </span>
         <div className="name-items">

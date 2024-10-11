@@ -5,7 +5,10 @@ import axios, { all } from "axios";
 import { motion } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css";
+
 import CallChatBot from "../components/callChatbot";
+import NewNavbar from "../components/newNavbar";
+import HeroCsection from "./userPages/Hero0course-comp";
 
 export default function Reach() {
   //variables
@@ -136,15 +139,7 @@ export default function Reach() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    AOS.init({
-      duration: 2000, // animation duration in milliseconds
-      easing: "ease", // animation easing function
-      delay: 100, // delay between each animated element
-      once: true, // whether animation should only happen once
-    });
-    AOS.refresh();
-  }, []);
+
 
   useEffect(() => {
     fetchUserData();
@@ -152,15 +147,10 @@ export default function Reach() {
   }, []);
 
   return (
+
     <div className="reachWrap">
-      <div className="searchWrap">
-        <input
-          type="text"
-          placeholder="Seach for a Practitioner's name, field or years of exp"
-          onChange={handleSearchChange}
-          className="searchInput"
-        />
-      </div>
+      <NewNavbar/>
+      
       <div className="itemContainer">
         {filteredPractitionalsData.map((users, index) => (
           <Link

@@ -1,6 +1,7 @@
 import "./App.css";
 import "./output.css";
 import "./media.css";
+
 import { useEffect } from "react";
 import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -24,6 +25,8 @@ import RegShow from "./pages/emailVerify/regShow";
 import { ChatBotProvider } from "./components/chatbot/components/chatbotContext";
 import Dashboard from "./dashboardComponets/dashboard";
 import { NavbarProvider } from "./dashboardComponets/NavbarContext";
+import SecondUserPadge from "./pages/userPages/profile-testing";
+import NewReach from "./pages/newReach";
 
 function App() {
   //get the session token and the user id
@@ -61,10 +64,13 @@ function App() {
                 <Route path="/reach" element={<Login />} />
               )}
               <Route path="/facts" element={<Facts />} />
+              <Route path="/testpadge" element={<SecondUserPadge />} />
               <Route path="/about" element={<About />} />
               <Route path="/chatbot" element={<MedChatBot />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/newR" element={<NewReach />} />
+                
               <Route
                 path="/termsAndConditions"
                 element={<TermsAndConditions />}

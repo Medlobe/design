@@ -275,10 +275,7 @@
   
       border-color: var(--border-color);
     }
-    .emoji-picker-react .emoji-scroll-wrapper::-webkit-scrollbar {
-      background-color: #080420;
-      width: 5px;
-    }
+  
     .emoji-categories {
       button {
         filter: contrast(0);

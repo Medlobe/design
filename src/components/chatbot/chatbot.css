@@ -299,17 +299,7 @@ background-image: url('../../../public/assets/images/bg-shapes.png');
   /* border-left: 1px solid var(--border-color); */
 }
 
-::-webkit-scrollbar{
-  width: 12px !important;
-}
-::-webkit-scrollbar-track{
-  background: #040C18 !important;
-}
-::-webkit-scrollbar-thumb{
-  cursor: pointer;
-  border:4px solid #040C18!important;
-  background-color: var(--border-color)!important;
-}
+
 .message {
   display: flex;
   align-items: center;

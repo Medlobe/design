@@ -79,8 +79,12 @@ export default function Navbar() {
             <li>
               <a href="/facts">Facts</a>
             </li>
+
             <li>
               <a href="/about">About</a>
+            </li>
+            <li>
+              <a href="#">Chatbot <i className="fas fa-arrow-down"></i> </a>
             </li>
             <div className="hidden-t">
               <div className="bottom-nav">

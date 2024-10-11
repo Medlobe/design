@@ -631,8 +631,8 @@ video {
 }
 
 body {
-  background-color: #040c18;
-  overflow-x: hidden;
+  /* background-color: #040c18; */
+  /* overflow-x: hidden; */
   width: 100%;
   height: auto;
   min-height: 100vh;

@@ -59,6 +59,7 @@ export default function Dashboard() {
                 {/* <img src="../assets/images/menu.png" alt="" className="menu-i" /> */}
                 {/* <i className="fas fa-bars"></i> */}
                 <span>
+                  <img src="../assets/images/BANNER2.jpg" alt="" />
                 {userData.profileImage && <img src={userData.profileImage.url}></img>}
                 </span>
                 <p>
