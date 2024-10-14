@@ -52,9 +52,13 @@ const Home = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log(response.data);
         setUserData(response.data);
-        setUserName(userData.name);
-        setPlanType(userData.subscription.planType || "");
+        setUserName(response.data.name);
+        // Make sure subscription exists before accessing sessionId
+        const subscription = response.data.subscription || {};
+
+        setPlanType(subscription.planType || "");
         console.log("user  data", response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -65,6 +69,7 @@ const Home = () => {
   }, [token]);
 
   const checkout = async (plan) => {
+    console.log("plan number is : " + plan);
     try {
       const response = await axios.post(
         `${serverName}payment/create-subscription-checkout-session`,

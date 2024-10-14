@@ -36,15 +36,19 @@ const Success = () => {
           },
         });
         setUserData(response.data);
-        console.log("user  data", response.data);
-        setSessionId(userData.subscription.sessionId || "");
+        console.log("user data", response.data);
+  
+        // Make sure subscription exists before accessing sessionId
+        const subscription = response.data.subscription || {};
+        setSessionId(subscription.sessionId || "");
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
-
+  
     fetchUserData();
-  }, [token]);
+  }, [token]); // Be sure to include token in the dependency array
+  
 
   console.log(sessionId);
 
@@ -64,7 +68,7 @@ const Success = () => {
 
       console.log(response.data.message);
       toast.success("Payment successful! Thank you for your subscription.", toastOptions);
-      navigate("/");
+      navigate("/reach");
     } catch (error) {
       console.log(error.response?.data?.error || error.message);
   
