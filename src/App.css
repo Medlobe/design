@@ -51,6 +51,26 @@ button {
 .home-body {
   z-index: 8;
 }
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey border */
+  border-top: 16px solid hsl(265, 98%, 26%); /* Blue border */
+  border-radius: 50%;
+  width: 120px; /* Increased width */
+  height: 120px; /* Increased height */
+  animation: spin 2s linear infinite;
+
+  /* Center the loader */
+  position: fixed;
+  top: 45%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+  z-index: 9999; /* Ensure it's on top */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 .chatbot-div {
   position: fixed !important;

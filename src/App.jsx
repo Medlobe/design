@@ -2,8 +2,7 @@ import "./App.css";
 import "./output.css";
 import "./media.css";
 
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Facts from "./pages/facts";
@@ -27,16 +26,37 @@ import Dashboard from "./dashboardComponets/dashboard";
 import { NavbarProvider } from "./dashboardComponets/NavbarContext";
 import SecondUserPadge from "./pages/userPages/profile-testing";
 import NewReach from "./pages/newReach";
+import { GlobalProvider, GlobalContext } from "./context/GlobalContext";
+import axios from "axios";
 
 function App() {
-  //get the session token and the user id
+  //variables
+  const serverName = process.env.REACT_APP_SERVER_NAME;
+  //get userId
+  const userId = sessionStorage.getItem("userId");
   const token = sessionStorage.getItem("token");
+
+  const { state, dispatch } = useContext(GlobalContext);
 
   const [userAuth, setUserAuth] = useState(true);
 
-  // useEffect(() => {
-  //   setUserAuth(sessionStorage.getItem("userAuth"));
-  // }, []);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`${serverName}user/getUserData`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        dispatch({ type: "SET_USER", payload: response.data });
+        console.log("User data:", response.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData(); // Call the function when the component mounts
+  }, [dispatch]);
 
   return (
     <NavbarProvider>
@@ -46,6 +66,7 @@ function App() {
             <Routes>
               <Route index element={<Home />} />
               <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/regShow" element={<RegShow />} />
@@ -70,7 +91,7 @@ function App() {
               <Route path="/chat" element={<Chat />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/newR" element={<NewReach />} />
-                
+
               <Route
                 path="/termsAndConditions"
                 element={<TermsAndConditions />}
