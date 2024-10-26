@@ -59,7 +59,7 @@ export default function Contacts({ currentUser, currentChat, changeChat }) {
     };
 
     fetchData();
-  }, [userId, currentChat._id, token, serverName]);
+  }, [userId, token, serverName]);
 
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
