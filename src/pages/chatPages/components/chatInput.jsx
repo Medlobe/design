@@ -5,7 +5,7 @@ import { IoMdSend } from "react-icons/io";
 import { BsEmojiSmileFill } from "react-icons/bs";
 import EmojiPicker from "emoji-picker-react";
 
-export default function ChatInput({ handleSendMsg }) {
+export default function ChatInput({ handleSendMsg, isSending }) {
   const [msg, setMsg] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
@@ -51,15 +51,12 @@ export default function ChatInput({ handleSendMsg }) {
               )}
             </div>
           </div>
-          {msg.length >= 1 ? (
-            <button className="submit">
-              <IoMdSend />
-            </button>
-          ) : (
-            <button className="notSubmit">
-              <IoMdSend />
-            </button>
-          )}
+          <button
+          type="submit"
+            className={msg.length >= 1 && !isSending ? "submit" : "notSubmit"}
+          >
+            <IoMdSend />
+          </button>
         </form>
         <div className="pin-sendimage">
           <i className="fas fa-paperclip"></i>

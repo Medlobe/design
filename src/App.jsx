@@ -89,6 +89,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/chatbot" element={<MedChatBot />} />
               <Route path="/chat" element={<Chat />} />
+              <Route path="/chat/:id" element={<Chat />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/newR" element={<NewReach />} />
 

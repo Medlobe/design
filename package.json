@@ -31,7 +31,7 @@
     "react-owl-carousel": "^2.3.3",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.24.1",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "react-scroll-motion": "^0.3.3",
     "react-simple-typewriter": "^5.0.1",
     "react-slick": "^0.30.2",
@@ -68,6 +68,8 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/plugin-transform-destructuring": "^7.25.9",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.41",
     "tailwindcss": "^3.4.10"

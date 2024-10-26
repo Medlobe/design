@@ -1,20 +1,66 @@
 import { useEffect, useState } from "react";
 import ChatHeaderSearch from "./chatSearchheader";
+import axios from "axios";
 
-
-
-export default function Contacts({ contactedUsers, currentUser, changeChat }) {
+export default function Contacts({ currentUser, currentChat, changeChat }) {
+  const serverName = process.env.REACT_APP_SERVER_NAME;
+  const token = sessionStorage.getItem("token");
+  const userId = sessionStorage.getItem("userId");
   //states
-  const [currentUserName, setCurrentUserName] = useState(undefined);
-  const [currentUserImage, setCurrentUserImage] = useState(undefined);
+
   const [currentSelected, setCurrentSelected] = useState(undefined);
+  const [contacts, setContacts] = useState([]);
 
   useEffect(() => {
-    if (currentUser) {
-      setCurrentUserName(currentUser.name);
-      setCurrentUserImage(currentUser.profileImage);
-    }
-  }, [currentUser]);
+    const fetchData = async () => {
+      try {
+        // First, fetch the contacts
+        const contactsResponse = await axios.get(
+          `${serverName}api/contacts/${userId}`
+        );
+        const contactsData = contactsResponse.data;
+
+        // Set the initial contacts state
+        setContacts(contactsData);
+
+        // Now, fetch the contacted users
+        if (userId) {
+          const response = await axios.get(
+            `${serverName}messages/getContactedUsers?personsId=${currentChat._id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          // Extract contacted users data from the response
+          const contactedUsersData = response.data;
+
+          // Merge contactsData and contactedUsersData without duplicates
+          const allContacts = [
+            ...contactsData,
+            ...contactedUsersData.filter(
+              (contactedUser) =>
+                !contactsData.some(
+                  (contact) => contact._id === contactedUser._id 
+                )
+            ),
+          ];
+
+          // Update the contacts state with combined data
+          setContacts(allContacts);
+
+          console.log("Updated contacts data:", allContacts);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [userId, currentChat._id, token, serverName]);
+
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
     changeChat(contact);
@@ -24,12 +70,11 @@ export default function Contacts({ contactedUsers, currentUser, changeChat }) {
     <>
       <div className="contactContainer">
         <div className="upper-div">
-
-        <ChatHeaderSearch/>
+          <ChatHeaderSearch />
         </div>
-       
+
         <div className="contactBody">
-          {contactedUsers.map((contact, index) => {
+          {contacts.map((contact, index) => {
             return (
               <div className="contacts">
                 <div
@@ -41,7 +86,7 @@ export default function Contacts({ contactedUsers, currentUser, changeChat }) {
                 >
                   {contact.profileImage ? (
                     <img
-                      src={`../assets/profileImages/${contact.profileImage}`}
+                      src={`${contact.profileImage.url}`}
                       alt={`Profile image of ${contact.name}`}
                     />
                   ) : (

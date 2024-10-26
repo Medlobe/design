@@ -2,109 +2,92 @@ import { useEffect, useRef, useState } from "react";
 import ChatInput from "./chatInput";
 import Messages from "./messages";
 import axios from "axios";
+import { io } from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function ChatContainer({
   currentChat,
   currentUser,
-  socket,
   handleShow,
   screenValue,
 }) {
   //variables
   const serverName = process.env.REACT_APP_SERVER_NAME;
+  const hostName = process.env.REACT_APP_HOST_NAME;
   const token = sessionStorage.getItem("token");
   const scrollRef = useRef();
   const userId = sessionStorage.getItem("userId");
 
   //states
   const [messages, setMessages] = useState([]);
-  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [messageSending, setMessageSending] = useState(false);
+  const socket = useRef(null);
+  const senderId = userId;
+  const receiverId = currentChat._id;
 
-  //functions
-  // Function to send a message
-  const handleSendMsg = async (msg) => {
-    try {
-      await axios.post(
-        `${serverName}messages/addMessage`,
-        {
-          from: userId,
-          to: currentChat._id,
-          message: msg,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  const room = [senderId, receiverId].sort().join("_");
 
-      socket.current.emit("send-msg", {
-        to: currentChat._id,
-        from: currentUser._id,
-        message: msg,
-      });
-
-      // Update local state
-      setMessages((prev) => [...prev, { fromSelf: true, message: msg }]);
-    } catch (error) {
-      console.error("Error sending message:", error);
-    }
-  };
-
-  // Fetch initial messages for the current chat
   useEffect(() => {
+    // Initialize socket and join room on component mount
+    socket.current = io(hostName); // Update with your backend URL
+    socket.current.emit("joinRoom", { room });
+
+    // Fetch initial messages from backend
     const fetchMessages = async () => {
       try {
-        const response = await axios.post(
-          `${serverName}messages/getUsersMessage`,
-          {
-            from: userId,
-            to: currentChat.personsId,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+        const response = await axios.get(
+          `${serverName}api/messages/${senderId}/${receiverId}`
         );
-
         setMessages(response.data);
-        console.log("Fetched messages:", response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching messages:", error);
       }
     };
+    fetchMessages();
 
-    if (currentChat) {
-      fetchMessages();
-    }
-  }, [currentChat, currentUser.personsId, serverName, token]);
+    // Listen for real-time incoming messages
+    socket.current.on("receiveMessage", (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
 
-  // Handle real-time messages from Socket.IO
-  useEffect(() => {
-    if (socket.current) {
-      socket.current.on("msg-receive", (msg) => {
-        setArrivalMessage({ fromSelf: false, message: msg });
-      });
-
-      return () => {
-        socket.current.off("msg-receive"); // Cleanup to avoid memory leaks
-      };
-    }
-  }, [currentChat, socket]);
-
-  // Update messages when a new message arrives
-  useEffect(() => {
-    if (arrivalMessage) {
-      setMessages((prev) => [...prev, arrivalMessage]);
-    }
-  }, [arrivalMessage, currentChat]);
+    // Cleanup function to close socket connection
+    return () => {
+      socket.current.disconnect();
+    };
+  }, [senderId, receiverId, messages]);
 
   // Auto-scroll when messages change
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  const sendMessage = async (messageText) => {
+    if (!messageText.trim()) return;
+    setMessageSending(true);
+
+    const messageData = {
+      senderId,
+      receiverId,
+      content: messageText,
+      room,
+    };
+
+    try {
+      socket.current.emit("sendMessage", messageData);
+      const response = await axios.post(
+        `${serverName}/api/messages`,
+        messageData
+      );
+      setMessages((prevMessages) => [...prevMessages, response.data]);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setMessageSending(false);
+    }
+  };
 
   return (
     <>
@@ -122,7 +105,7 @@ export default function ChatContainer({
                 <div className="profileImg">
                   {currentChat.profileImage ? (
                     <img
-                      src={`../assets/profileImages/${currentChat.profileImage}`}
+                      src={`${currentChat.profileImage.url}`}
                       alt={`Profile image of ${currentChat.name}`}
                     />
                   ) : (
@@ -134,7 +117,6 @@ export default function ChatContainer({
                 </div>
               </span>
             </div>
-            
           </div>
           <div className="messagesContainer">
             {messages.map((message) => {
@@ -142,20 +124,21 @@ export default function ChatContainer({
                 <div ref={scrollRef} key={uuidv4()}>
                   <div
                     className={`message ${
-                      message.fromSelf ? "sent" : "received"
+                      message.senderId === senderId ? "sent" : "received"
                     }`}
                   >
                     <div className="content">
-                      <p>{message.message}</p>
+                      <p>{message.content}</p>
                     </div>
                   </div>
                 </div>
               );
             })}
           </div>
-          <ChatInput handleSendMsg={handleSendMsg} />
+          <ChatInput handleSendMsg={sendMessage} isSending={messageSending} />
         </div>
       )}
+      <ToastContainer />
     </>
   );
 }

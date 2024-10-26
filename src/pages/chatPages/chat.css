@@ -98,7 +98,8 @@
 
 }
 .contacts .selected {
-  /* background-color: rgba(225, 225, 225, 0.196); */
+   background-color: rgba(225, 225, 225, 0.196); 
+   width: 100%;
 }
 
 .contactFooter {

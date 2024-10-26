@@ -1,8 +1,7 @@
 // this is the page of the person the operator wants to contact
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { Switch } from "@mui/material";
-import { styled } from "@mui/material/styles";
+
 import "./userPage.css";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
@@ -14,6 +13,12 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import CallChatBot from "../../components/callChatbot";
+import {
+  MaterialUISwitch,
+  toastOptions,
+  settings,
+  sliderStyles,
+} from "../../utils/options";
 
 export default function ContactPage() {
   //variables
@@ -31,39 +36,11 @@ export default function ContactPage() {
     return stored ? JSON.parse(stored) : {}; // Parse or return empty object
   };
 
-  // style options for the toast message
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "dark",
-  };
-
-  //settings for the experience slider
-  const settings = {
-    dots: false, // Show navigation dots
-    arrows: false, // Disables navigation arrows
-    infinite: true, // Loop back to the start when reaching the end
-    autoplay: true, // Enable automatic sliding
-    autoplaySpeed: 5000, // Interval between slides in milliseconds
-    speed: 500, // Transition speed
-    slidesToShow: 1, // Number of slides to show at once
-    slidesToScroll: 1, // Number of slides to scroll at once
-  };
-
-  //style for the experience slider
-  const sliderStyles = {
-    width: "100%",
-    height: "fitContent",
-    margin: "auto",
-  };
-
   //states
   const [screenValue, setScreenValue] = useState(true);
   const [isDarkTheme, setIsDarkTheme] = useState(initialTheme);
   const [starValue, setStarValue] = useState(initialStarValue());
-  const [personsData, setPersonsData] = useState("");
+  const [practitioner, setPractitioner] = useState([]);
   const [enlargeImageValue, setEnlargeImageValue] = useState(false);
   const [contactedUsers, setContactedUsers] = useState([null]);
   const [allExperiencesData, setAllExperiencesData] = useState([]);
@@ -110,8 +87,7 @@ export default function ContactPage() {
             },
           }
         );
-        setPersonsData(response.data);
-        console.log("user  data", response.data);
+        setPractitioner(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -119,33 +95,6 @@ export default function ContactPage() {
 
     fetchPersonsData();
   }, []);
-
-  //get all the contacted users  from the database so you can find if the current persons data is there before adding to the db
-  useEffect(() => {
-    if (userId) {
-      const fetchContactedUsers = async () => {
-        try {
-          const response = await axios.get(
-            `${serverName}messages/getContactedUsers?personsId=${id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          setContactedUsers(response.data.contactedUsersData);
-          console.log(
-            "contactedUsers from database :",
-            response.data.contactedUsersData
-          );
-        } catch (error) {
-          console.error("Error fetching Contacted users  from db:", error);
-        }
-      };
-
-      fetchContactedUsers();
-    }
-  }, [personsData]);
 
   useEffect(() => {
     document.body.className = isDarkTheme ? "dark-theme" : "light-theme"; // Update the body class
@@ -203,116 +152,34 @@ export default function ContactPage() {
     fetchUserExperiences();
   }, []);
 
-  //functions
-
+  // functions
+  // Move to chat in the contact page
   const handleMovetoChat = async () => {
-    // Ensure that contactedUsers has been fetched
-    if (contactedUsers.length === null) {
-      console.warn("Contacted users not fetched yet. Please wait.");
-      return; // Exit early if the data hasn't loaded
-    }
-
-    // Check if the person's email already exists in contactedUsers
-    const emailExists = contactedUsers.some(
-      (user) => user.email === personsData.email
-    );
-
-    // Append `personsId` to `personsData` before navigation
-    const extendedPersonsData = { ...personsData, personsId: personsData._id };
-
-    if (emailExists) {
-      // If the email exists, navigate to the chat page
-      navigate(`/chat`, { state: extendedPersonsData });
-    } else {
-      // If the email does not exist, add the person to the contactedUsers database and then navigate
-      try {
-        const response = await axios.post(
-          `${serverName}messages/uploadContactedUser`,
-          {
-            email: personsData.email,
-            phoneNumber: personsData.phoneNumber,
-            name: personsData.name,
-            healthPractitioner: personsData.healthPractitioner,
-            practitionField: personsData.practitionField,
-            yoe: personsData.yoe,
-            country: personsData.country,
-            address: personsData.address,
-            zipcode: personsData.zipcode,
-            profileImage: personsData.profileImage,
-            personsId: personsData._id,
+    try {
+      await axios.post(
+        `${serverName}messages/uploadContactedUser`,
+        {
+          personsId: id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (response) {
-          console.log(`${personsData.name} contacted successfully`);
-
-          // Add the new user to the contactedUsers list
-          setContactedUsers((prev) => [
-            ...prev,
-            response.data.newContactedUser,
-          ]);
-
-          // Navigate to the chat page
-          navigate(`/chat`, { state: extendedPersonsData });
         }
-      } catch (error) {
-        console.error("Error signing up:", error.message);
-      }
+      );
+
+      console.log(`${practitioner.name} contacted successfully`);
+      // Navigate to the chat page
+      // Append `personsId` to `personsData` before navigation
+      const extendedPersonsData = {
+        ...practitioner,
+        personsId: practitioner._id,
+      };
+      navigate(`/chat`, { state: extendedPersonsData });
+    } catch (error) {
+      console.error("Error signing up:", error.message);
     }
   };
-
-  const MaterialUISwitch = styled(Switch)(({ theme }) => ({
-    width: 62,
-    height: 34,
-    padding: 7,
-    "& .MuiSwitch-switchBase": {
-      margin: 1,
-      padding: 0,
-      transform: "translateX(6px)",
-      "&.Mui-checked": {
-        color: "#fff",
-        transform: "translateX(22px)",
-        "& .MuiSwitch-thumb:before": {
-          backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
-            "#fff"
-          )}" d="M4.2 2.5l-.7 1.8-1.8.7 1.8.7.7 1.8.6-1.8L6.7 5l-1.9-.7-.6-1.8zm15 8.3a6.7 6.7 0 11-6.6-6.6 5.8 5.8 0 006.6 6.6z"/></svg>')`,
-        },
-        "& + .MuiSwitch-track": {
-          opacity: 1,
-          backgroundColor:
-            theme.palette.mode === "dark" ? "#8796A5" : "#aab4be",
-        },
-      },
-    },
-    "& .MuiSwitch-thumb": {
-      backgroundColor: theme.palette.mode === "dark" ? "#003892" : "#001e3c",
-      width: 32,
-      height: 32,
-      "&::before": {
-        content: "''",
-        position: "absolute",
-        width: "100%",
-        height: "100%",
-        left: 0,
-        top: 0,
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
-          "#fff"
-        )}" d="M9.305 1.667V3.75h1.389V1.667h-1.39zm-4.707 1.95l-.982.982L5.09 6.072l.982-.982-1.473-1.473zm10.802 0L13.927 5.09l.982.982 1.473-1.473-.982-.982zM10 5.139a4.872 4.872 0 00-4.862 4.86A4.872 4.872 0 0010 14.862 4.872 4.872 0 0014.86 10 4.872 4.872 0 0010 5.139zm0 1.389A3.462 3.462 0 0113.471 10a3.462 3.462 0 01-3.473 3.472A3.462 3.462 0 016.527 10 3.462 3.462 0 0110 6.528zM1.665 9.305v1.39h2.083v-1.39H1.666zm14.583 0v1.39h2.084v-1.39h-2.084zM5.09 13.928L3.616 15.4l.982.982 1.473-1.473-.982-.982zm9.82 0l-.982.982 1.473 1.473.982-.982-1.473-1.473zM9.305 16.25v2.083h1.389V16.25h-1.39z"/></svg>')`,
-      },
-    },
-    "& .MuiSwitch-track": {
-      opacity: 1,
-      backgroundColor: theme.palette.mode === "dark" ? "#8796A5" : "#aab4be",
-      borderRadius: 20 / 2,
-    },
-  }));
 
   const handleTheme = (event) => {
     setIsDarkTheme(event.target.checked);
@@ -346,9 +213,9 @@ export default function ContactPage() {
         <div className="profileContainer">
           <div className="topBackground">
             <i class="fa-solid fa-arrow-left goBackIcon" onClick={goBack}></i>
-            {personsData.profileImage ? (
+            {practitioner.profileImage ? (
               <img
-                src={`../assets/profileImages/${personsData.profileImage}`}
+                src={`../assets/profileImages/${practitioner.profileImage}`}
               />
             ) : (
               <img src="../assets/images/gradient-particles-background/background 3.jpg" />
@@ -356,7 +223,7 @@ export default function ContactPage() {
             <div className="topBackgroundGradient">
               <div className="topWrap">
                 <div className="topWrapWrap">
-                  <h1>{personsData.name}</h1>
+                  <h1>{practitioner.name}</h1>
                 </div>
               </div>
             </div>
@@ -411,16 +278,14 @@ export default function ContactPage() {
             </div>
           </div>
           <div className="cardContainer">
-            {personsData.profileImage ? (
-              <img
-                src={`../assets/profileImages/${personsData.profileImage}`}
-              />
+            {practitioner.profileImage ? (
+              <img src={`${practitioner.profileImage.url}`} />
             ) : (
               <img src="../assets/images/OIP.jpg" />
             )}
             <div className="detailsContainer">
               <h4>ABOUT</h4>
-              <h6>{personsData.about}</h6>
+              <h6>{practitioner.about}</h6>
               <hr />
               <div className="moveWrap">
                 <span onClick={handleMovetoChat} className="move">
@@ -429,11 +294,11 @@ export default function ContactPage() {
               </div>
               <span>
                 <i class="fa fa-envelope" aria-hidden="true"></i>
-                <h4>{personsData.email} </h4>
+                <h4>{practitioner.email} </h4>
               </span>
               <span>
                 <i class="fa-solid fa-phone"></i>
-                <h4>{personsData.phoneNumber}</h4>
+                <h4>{practitioner.phoneNumber}</h4>
               </span>
             </div>
           </div>
@@ -441,19 +306,17 @@ export default function ContactPage() {
       ) : (
         <div className="profileContainer">
           <div className="cardContainer">
-            {personsData.profileImage ? (
-              <img
-                src={`../assets/profileImages/${personsData.profileImage}`}
-              />
+            {practitioner.profileImage ? (
+              <img src={`${practitioner.profileImage.url}`} />
             ) : (
               <img src="../assets/images/OIP.jpg" />
             )}
             <div className="enclose">
-              <h1>{personsData.name}</h1>
+              <h1>{practitioner.name}</h1>
             </div>
             <div className="detailsContainer">
               <h4>ABOUT</h4>
-              <h6>{personsData.about}</h6>
+              <h6>{practitioner.about}</h6>
               <hr />
               <div className="moveWrap">
                 <span onClick={handleMovetoChat} className="move">
@@ -462,11 +325,11 @@ export default function ContactPage() {
               </div>
               <span>
                 <i class="fa fa-envelope" aria-hidden="true"></i>
-                <h4>{personsData.email} </h4>
+                <h4>{practitioner.email} </h4>
               </span>
               <span>
                 <i class="fa-solid fa-phone"></i>
-                <h4>{personsData.phoneNumber}</h4>
+                <h4>{practitioner.phoneNumber}</h4>
               </span>
             </div>
           </div>
