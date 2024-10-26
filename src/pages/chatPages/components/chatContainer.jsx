@@ -76,11 +76,8 @@ export default function ChatContainer({
   
     try {
       // Emit the message to the socket server
-      if (socket.current && socket.current.connected) {
-        socket.current.emit("sendMessage", messageData);
-      } else {
-        console.warn("Socket is not connected. Message may not reach the server.");
-      }
+      
+      socket.current.emit("sendMessage", messageData);
   
       // Optimistically update the messages state for a smoother UI
       setMessages((prevMessages) => [...prevMessages, messageData]);
