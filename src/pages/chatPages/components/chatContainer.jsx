@@ -87,7 +87,7 @@ export default function ChatContainer({
   
       // Send the message to the backend
       const response = await axios.post(
-        `${serverName}/api/messages`,
+        `${serverName}api/messages`,
         messageData
       );
   
