@@ -2,6 +2,7 @@ import "./App.css";
 import "./output.css";
 import "./media.css";
 
+
 import { useEffect, useState, useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
@@ -28,6 +29,8 @@ import SecondUserPadge from "./pages/userPages/profile-testing";
 import NewReach from "./pages/newReach";
 import { GlobalProvider, GlobalContext } from "./context/GlobalContext";
 import axios from "axios";
+
+import DashboarMain from "./pages/Dashboard/user-dashboard";
 
 function App() {
   //variables
@@ -70,6 +73,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/regShow" element={<RegShow />} />
+              <Route path="/dashboardm" element={<DashboarMain/>}/>
               <Route
                 path="/users/:id/verify/:token"
                 element={<EmailVerify />}

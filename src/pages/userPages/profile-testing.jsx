@@ -81,9 +81,7 @@ export default function SecondUserPadge() {
               <div className="about-me sza-section">
                 <div className="sca-header">
                   <h4>
-                    Skin Care Specialist | Medical Dermatology | Cosmetic
-                    Dermatology | Expert in Acne, Eczema, and Psoriasis
-                    Treatment
+                    DERMATOLOGiST
                   </h4>
                 </div>
                 <span>
@@ -103,7 +101,7 @@ export default function SecondUserPadge() {
               </div>
               <div className=" sza-section">
                 <div className="sca-header">
-                  <h4>Experience</h4>
+                  <h4>EXPERIENCE</h4>
                 </div>
                 <span>
                   <div className="experience-whole">
@@ -122,6 +120,7 @@ export default function SecondUserPadge() {
                         Could not recommend him more!" less
                       </p>
                     </div>
+                   
                     <span className="ptrc">
                       <button>Private Contract</button>
                     </span>

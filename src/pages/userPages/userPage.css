@@ -512,7 +512,7 @@
 }
 
 .main-nav-nav{
-  border-bottom: 2px solid #eee;
+  /* border-bottom: 2px solid #eee; */
   width: 100%;
   position: sticky;
   top: 0;
@@ -1035,15 +1035,17 @@ align-items: center;
   flex-direction:column;
   width: 100%;
   padding: 20px;
+  border-radius: 10px;
   /* height: 200px; */
   
   min-height:150px;
+  margin-bottom: 10px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
  
  
   border: 1px solid #ddd;
-  border-bottom: none;
+  /* border-bottom: none; */
 
 
 }
