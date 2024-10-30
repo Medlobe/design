@@ -66,38 +66,31 @@ export default function ChatContainer({
   const sendMessage = async (messageText) => {
     if (!messageText.trim()) return;
     setMessageSending(true);
-  
+
     const messageData = {
       senderId,
       receiverId,
       content: messageText,
       room,
     };
-  
+
     try {
       // Emit the message to the socket server
-      if (socket.current && socket.current.connected) {
-        socket.current.emit("sendMessage", messageData);
-      } else {
-        console.warn("Socket is not connected. Message may not reach the server.");
-      }
-  
-      // Optimistically update the messages state for a smoother UI
+      socket.current.emit("sendMessage", messageData);
+
+      // updating the messages staTE
       setMessages((prevMessages) => [...prevMessages, messageData]);
-  
+
       // Send the message to the backend
       const response = await axios.post(
-        `${serverName}/api/messages`,
+        `${serverName}api/messages`,
         messageData
       );
-  
-      // Update the message with any server response (like ID or timestamp)
+
+      // Replacing the optimistically added message with the one from the server (if it includes an ID or timestamp)
       setMessages((prevMessages) =>
-        prevMessages.map((msg) =>
-          msg === messageData ? response.data : msg
-        )
+        prevMessages.map((msg) => (msg === messageData ? response.data : msg))
       );
-  
     } catch (error) {
       console.error("Error sending message:", error);
       toast.error("Failed to send message. Please try again.");
@@ -105,7 +98,7 @@ export default function ChatContainer({
       setMessageSending(false);
     }
   };
-  
+
   return (
     <>
       {currentChat && (
