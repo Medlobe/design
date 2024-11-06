@@ -76,19 +76,18 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/regShow" element={<RegShow />} />
-              
-              <Route path="/dashboardm" element={<DashboarMain />} />
               <Route
                 path="/users/:id/verify/:token"
                 element={<EmailVerify />}
               />
+              <Route path="/dashboardm" element={<DashboarMain />} />
               {userAuth ? (
                 <Route path="/dashboard/:id" element={<Reach />} />
               ) : (
                 <Route path="/reach/:id" element={<Login />} />
               )}
               {userAuth ? (
-                <Route path="/reach" element={<Reach />} />
+                <Route path="/reach" element={<NewReach />} />
               ) : (
                 <Route path="/reach" element={<Login />} />
               )}
@@ -106,30 +105,28 @@ function App() {
                 element={<TermsAndConditions />}
               />
               {userAuth ? (
-                <Route path="/profile/:id" element={<ProfilePage />} />
+                <Route path="/profile/:id" element={<DashboarMain />} />
               ) : (
-                <Route path="/profile/:id" element={<Login />} />
+                <Route path="/profile/:id" element={<SecondUserPadge />} />
               )}
               {userAuth ? (
-                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/profile" element={<DashboarMain />} />
               ) : (
                 <Route path="/profile" element={<Login />} />
               )}
-              {userAuth ? (
-                <Route path="/toContact/:id" element={<ContactPage />} />
-              ) : (
-                <Route path="/toContact/:id" element={<Login />} />
-              )}
+
+              <Route path="/toContact/:id" element={<SecondUserPadge />} />
 
               {userAuth ? (
                 <Route path="/chat:id" element={<Chat />} />
               ) : (
                 <Route path="/chat:id" element={<Login />} />
               )}
+
               {userAuth ? (
                 <Route path="/payment" element={<PaymentPage />} />
               ) : (
-                <Route path="/profile" element={<Login />} />
+                <Route path="payment" element={<Login />} />
               )}
 
               {userAuth ? (
@@ -138,12 +135,12 @@ function App() {
                   element={<PaymentSuccessPage />}
                 />
               ) : (
-                <Route path="/profile" element={<Login />} />
+                <Route path="/payment-success" element={<Login />} />
               )}
               {userAuth ? (
                 <Route path="/payment-cancel" element={<PaymentCancelPage />} />
               ) : (
-                <Route path="/profile" element={<Login />} />
+                <Route path="/payment-cancel" element={<Login />} />
               )}
             </Routes>
           </BrowserRouter>

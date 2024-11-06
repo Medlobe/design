@@ -1,19 +1,113 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HeroCsection from "./Hero0course-comp";
 import NewNavbar from "../../components/newNavbar";
 import SearchNavabar from "../../components/reachout-bt-nav";
 import SimpleSlider from "../../components/chatbot/testingalider";
+import { GlobalContext } from "../../context/GlobalContext";
+import axios from "axios";
 
 export default function SecondUserPadge() {
   gsap.registerPlugin(ScrollTrigger);
 
+  //variables
+
+  const goBack = () => {
+    window.history.back();
+  };
+  const serverName = process.env.REACT_APP_SERVER_NAME;
+  const userId = sessionStorage.getItem("userId");
+  const token = sessionStorage.getItem("token");
+  const { state } = useContext(GlobalContext);
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  // Set a default value for user if it's undefined or null
+  const user = state.user || [];
+
+  // useRefs
   const navRef = useRef(null);
   const logoRef = useRef(null);
   const navTextRef = useRef([]); // Array to hold multiple text elements
   const detailsDiv = useRef(null);
   const h1Ref = useRef(null); // Reference for the h1 element
+
+  // states
+  const [practitioner, setPractitioner] = useState([]);
+
+  // useEffects
+  //get persons data
+  useEffect(() => {
+    const fetchPersonsData = async () => {
+      try {
+        const response = await axios.get(
+          `${serverName}user/getPersonsData?personsId=${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setPractitioner(response.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchPersonsData();
+  }, []);
+
+  // functions
+  // handle contacting of the practitioner
+  const handleContact = async () => {
+    try {
+      await axios.post(
+        `${serverName}messages/uploadContactedUser`,
+        {
+          personsId: id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(`${practitioner.name} contacted successfully`);
+    } catch (error) {
+      console.error("Could not contact", error.message);
+    }
+  };
+
+  // Move to chat
+  const handleMovetoChat = async () => {
+    try {
+      await axios.post(
+        `${serverName}messages/uploadContactedUser`,
+        {
+          personsId: id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(`${practitioner.name} contacted successfully`);
+      // Navigate to the chat page
+      // Append `personsId` to `personsData` before navigation
+      const extendedPersonsData = {
+        ...practitioner,
+        personsId: practitioner._id,
+      };
+      navigate(`/chat`, { state: extendedPersonsData });
+    } catch (error) {
+      console.error("Could not contact", error.message);
+    }
+  };
 
   return (
     <div className="main-user-container">
@@ -37,17 +131,21 @@ export default function SecondUserPadge() {
           <div className="bottom-grid">
             <div className="left-grid">
               <div className="practioner-image">
-                <img src="../assets/images/BANNER2.jpg" alt="" />
-                <p>John Kelby</p>
-                <h4>CharlesOpp@yahoo.com</h4>
-                <a href="#">
-                  Follow <i className="fas fa-plus"></i>{" "}
+                {practitioner.profileImage ? (
+                  <img src={`${practitioner.profileImage}`} />
+                ) : (
+                  <img src="assets/images/banner3.jpg" />
+                )}
+                <p>{practitioner.name}</p>
+                <h4>{practitioner.email}</h4>
+                <a onClick={handleContact}>
+                  Contact <i className="fas fa-plus"></i>{" "}
                 </a>
               </div>
               <div className="checklist-div">
                 <div className="grid-check-list">
                   <span>
-                    <h1>300+</h1>
+                    <h1>{practitioner.contacts}</h1>
                     <p>Happy Clients</p>
                   </span>
                   <span>
@@ -56,14 +154,18 @@ export default function SecondUserPadge() {
                   </span>
                 </div>
               </div>
-              <div className="message-conatct-div">
-                <a href="#">
+              <div
+                className="message-conatct-div"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <a onClick={handleMovetoChat}>
                   Message
                   <i className="far fa-message"></i>
-                </a>
-                <a href="#">
-                  Book a Meeting
-                  <i className="fas fa-video"></i>
                 </a>
               </div>
             </div>
@@ -80,23 +182,11 @@ export default function SecondUserPadge() {
               </div> */}
               <div className="about-me sza-section">
                 <div className="sca-header">
-                  <h4>
-                    DERMATOLOGiST
-                  </h4>
+                  <h4>{practitioner.practitionField} </h4>
                 </div>
                 <span>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Excepturi aliquid ducimus debitis natus est placeat soluta
-                    quidem, ab fuga cumque eos unde, a quae beatae repellendus,
-                    quam asperiores suscipit magni assumenda atque! Error
-                    sapiente, veniam vero nemo nam laboriosam incidunt pariatur
-                    sed ab nesciunt, ipsa totam necessitatibus iure nihil a.
-                  </p>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Cum, illo.
-                  </p>
+                  <h1>{practitioner.expertise}</h1>
+                  <p>{practitioner.about}</p>
                 </span>
               </div>
               <div className=" sza-section">
@@ -120,7 +210,7 @@ export default function SecondUserPadge() {
                         Could not recommend him more!" less
                       </p>
                     </div>
-                   
+
                     <span className="ptrc">
                       <button>Private Contract</button>
                     </span>

@@ -49,7 +49,6 @@ export default function Reach() {
   const [isLoading, setIsLoading] = useState(false);
 
   //functions
-
   const fetchPractitionersData = async () => {
     
     try {
