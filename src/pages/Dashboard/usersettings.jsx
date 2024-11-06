@@ -28,12 +28,6 @@ export default function UserSettigns() {
   // State for form inputs
   const [profileImage, setProfileImage] = useState("assets/images/banner3.jpg");
   useEffect(() => {
-    if (user) {
-      setLoading(false);
-    } else {
-      setLoading(true);
-    }
-
     if (user && user.profileImage) {
       setProfileImage(user.profileImage);
     }
@@ -135,7 +129,6 @@ export default function UserSettigns() {
         toast.error("An error occurred while uploading the image");
       } finally {
         setLoading(false);
-        toast("finished uploading");
       }
     }
   };
@@ -210,268 +203,258 @@ export default function UserSettigns() {
     closeModal();
   };
 
-  if (!user) {
+  if (user.length === 0) {
     return <Loader />;
   }
 
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <div className="user-image-and-info">
-          <div className="image-casingus">
-            <div className="img-img">
-              <div
-                className="baby-plus-div"
-                onClick={() => openModal("profile")}
-              >
-                <p>EDIT</p>
-                <i className="fas fa-pencil"></i>
-              </div>
-              <span className="main-img-css">
-                <img src={profileImage} alt="Profile" />
-                <div className="camera-div" onClick={handleEditPhotoClick}>
-                  EDIT PHOTO
-                </div>
-
-                {/* Hidden file input */}
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                  style={{ display: "none" }}
-                />
-              </span>
-
-              <div className="user-details-main-main">
-                <h1>{user.name}</h1>
-                <p>
-                  {user.email} <i className="fas fa-copy"></i>
-                </p>
-                <span className="online-statuse">
-                  <i></i>
-                  <h4>Online</h4>
-                </span>
-              </div>
+      <div className="user-image-and-info">
+        <div className="image-casingus">
+          <div className="img-img">
+            <div className="baby-plus-div" onClick={() => openModal("profile")}>
+              <p>EDIT</p>
+              <i className="fas fa-pencil"></i>
             </div>
-            <div className="user-same-dis">
-              <div className="text-prct no-p">
-                <h1>
-                  Premium Member
-                  <img src="assets/images/Group134.png" alt="" />
-                </h1>
-                <h4>{user.expertise}</h4>
-                <p>Nigeria</p>
+            <span className="main-img-css">
+              <img src={profileImage} alt="Profile" />
+              <div className="camera-div" onClick={handleEditPhotoClick}>
+                EDIT PHOTO
               </div>
-              <div className="star-rating">
-                <p>4.5</p>
-                <span>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                </span>
-                <p>(222,000)</p>
-                <button className="pp-btn">Global Practitioner </button>
-              </div>
-              <div className="sumarry-prct">
-                <p>{user.about}</p>
-              </div>
-              <div className="folowers-and-post">
-                <a href="#">
-                  <strong>33</strong>
-                  posts
-                </a>
-                <a href="#">
-                  <strong>{user.contacts}</strong>
-                  contacts
-                </a>
-                <a href="#">
-                  <strong>{user.contactedPersons}</strong>
-                  contacted
-                </a>
-              </div>
-              <div className="association-set">
-                <div className="asos-div">
-                  <img src="assets/images/Google-lens.png" alt="" />
-                  <span>
-                    <h4>Asociated With</h4>
 
-                    <a href="#">Google</a>
-                  </span>
-                </div>
+              {/* Hidden file input */}
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                style={{ display: "none" }}
+              />
+            </span>
 
-                <button>Explore</button>
-              </div>
+            <div className="user-details-main-main">
+              <h1>{user.name}</h1>
+              <p>
+                {user.email} <i className="fas fa-copy"></i>
+              </p>
+              <span className="online-statuse">
+                <i></i>
+                <h4>Online</h4>
+              </span>
             </div>
           </div>
-          <div className="testimonials-div">
-            <div className="plus-div" onClick={() => openModal("experiences")}>
-              <i className="fas fa-plus"></i>
+          <div className="user-same-dis">
+            <div className="text-prct no-p">
+              <h1>
+                Premium Member
+                <img src="assets/images/Group134.png" alt="" />
+              </h1>
+              <h4>{user.expertise}</h4>
+              <p>Nigeria</p>
             </div>
-            <div className="block-header">
-              <h1>Experiences</h1>
+            <div className="star-rating">
+              <p>4.5</p>
+              <span>
+                <i className="fas fa-star"></i>
+                <i className="fas fa-star"></i>
+                <i className="fas fa-star"></i>
+                <i className="fas fa-star"></i>
+              </span>
+              <p>(222,000)</p>
+              <button className="pp-btn">Global Practitioner </button>
             </div>
-
-            <div className="empty-no-file">
-              <img src="assets/images/nodata.jpeg" alt="" />
+            <div className="sumarry-prct">
+              <p>{user.about}</p>
             </div>
-
-            <Modal
-              isOpen={activeModal === "profile"}
-              onClose={closeModal}
-              onSubmit={(e) => handleFormSubmit(e, "profile")}
-            >
-              <h2>Edit Profile</h2>
-              <div className="change-inps-set">
-                <div className="inps-innn">
-                  <span>
-                    <label htmlFor="nameInp">Name</label>
-                    <input
-                      type="text"
-                      id="nameInp"
-                      name="name"
-                      value={profileData.name}
-                      onChange={handleProfileInputChange}
-                    />
-                  </span>
-                  <span>
-                    <label htmlFor="description">Expertise</label>
-                    <textarea
-                      id="expertise"
-                      name="expertise"
-                      value={profileData.expertise}
-                      onChange={handleProfileInputChange}
-                    />
-                  </span>
-                </div>
+            <div className="folowers-and-post">
+              <a href="#">
+                <strong>33</strong>
+                posts
+              </a>
+              <a href="#">
+                <strong>{user.contacts}</strong>
+                contacts
+              </a>
+              <a href="#">
+                <strong>{user.contactedPersons}</strong>
+                contacted
+              </a>
+            </div>
+            <div className="association-set">
+              <div className="asos-div">
+                <img src="assets/images/Google-lens.png" alt="" />
                 <span>
-                  <label htmlFor="Email">Email</label>
+                  <h4>Asociated With</h4>
+
+                  <a href="#">Google</a>
+                </span>
+              </div>
+
+              <button>Explore</button>
+            </div>
+          </div>
+        </div>
+        <div className="testimonials-div">
+          <div className="plus-div" onClick={() => openModal("experiences")}>
+            <i className="fas fa-plus"></i>
+          </div>
+          <div className="block-header">
+            <h1>Experiences</h1>
+          </div>
+
+          <div className="empty-no-file">
+            <img src="assets/images/nodata.jpeg" alt="" />
+          </div>
+
+          <Modal
+            isOpen={activeModal === "profile"}
+            onClose={closeModal}
+            onSubmit={(e) => handleFormSubmit(e, "profile")}
+          >
+            <h2>Edit Profile</h2>
+            <div className="change-inps-set">
+              <div className="inps-innn">
+                <span>
+                  <label htmlFor="nameInp">Name</label>
                   <input
                     type="text"
-                    name=""
-                    id="Email"
-                    value={user.email}
-                    disabled
-                  />
-                </span>
-
-                <span>
-                  <label htmlFor="about">About</label>
-                  <textarea
-                    id="about"
-                    name="about"
-                    value={profileData.about}
+                    id="nameInp"
+                    name="name"
+                    value={profileData.name}
                     onChange={handleProfileInputChange}
                   />
                 </span>
-
-                {!user.healthPractitioner === false ||
-                  (!healthPractitioner && (
-                    <div className="ihp">
-                      <h1>Are you a health practitioner?</h1>
-                      <button type="button" onClick={handleCheckboxChange}>
-                        YES
-                      </button>
-                    </div>
-                  ))}
-                {user.healthPractitioner ||
-                  (healthPractitioner && (
-                    <div style={{ display: "flex", gap: "5px" }}>
-                      <span>
-                        <label htmlFor="yoe">Years of Experience(yoe)</label>
-                        <input
-                          type="number"
-                          id="yoe"
-                          name="yoe"
-                          value={profileData.yoe}
-                          onChange={handleProfileInputChange}
-                        />
-                      </span>
-                      <span>
-                        <label htmlFor="practitionField">
-                          Practition Field
-                        </label>
-                        <input
-                          type="text"
-                          id="practitionField"
-                          name="practitionField"
-                          value={profileData.practitionField}
-                          onChange={handleProfileInputChange}
-                        />
-                      </span>
-                    </div>
-                  ))}
-                <div className="disclaimer-div">
-                  <i className="fas fa-info"></i>
-                  <p>
-                    All changes to your personal cridentials must match the one
-                    on your government ID and cant be modified after this
-                    changes
-                  </p>
-                </div>
+                <span>
+                  <label htmlFor="description">Expertise</label>
+                  <textarea
+                    id="expertise"
+                    name="expertise"
+                    value={profileData.expertise}
+                    onChange={handleProfileInputChange}
+                  />
+                </span>
               </div>
-            </Modal>
+              <span>
+                <label htmlFor="Email">Email</label>
+                <input
+                  type="text"
+                  name=""
+                  id="Email"
+                  value={user.email}
+                  disabled
+                />
+              </span>
 
-            {/*  Experiences Modal */}
-            <Modal
-              isOpen={activeModal === "experiences"}
-              onClose={closeModal}
-              onSubmit={(e) => handleFormSubmit(e, "experiences")}
-            >
-              <h2>Experiences</h2>
-              <div className="change-inps-set">
-                <div className="inps-innn">
-                  <span>
-                    <label htmlFor="organization">Organization Name</label>
-                    <input
-                      type="text"
-                      id="organization"
-                      name="organization"
-                      value={experienceData.organization}
-                      onChange={handleExperienceInputChange}
-                    />
-                  </span>
-                </div>
-                <div className="image-update">
-                  <div className="box-span">
-                    <i className="fas fa-image"></i>
-                    <p>Upload Image</p>
-                  </div>
-                </div>
-                <h2>Details About Your Experiences</h2>
+              <span>
+                <label htmlFor="about">About</label>
                 <textarea
-                  name="description"
-                  id="description"
-                  className="about-description"
-                  value={experienceData.description}
-                  onChange={handleExperienceInputChange}
-                ></textarea>
-              </div>
-            </Modal>
+                  id="about"
+                  name="about"
+                  value={profileData.about}
+                  onChange={handleProfileInputChange}
+                />
+              </span>
 
-            {/* Preferences Modal */}
-            <Modal
-              isOpen={activeModal === "preferences"}
-              onClose={closeModal}
-              onSubmit={(e) => handleFormSubmit(e, "preferences")}
-            >
-              <h2>Update Preferences</h2>
-              <label>
-                Notifications:
-                <input type="checkbox" name="notifications" />
-              </label>
-              <label>
-                Dark Mode:
-                <input type="checkbox" name="darkMode" />
-              </label>
-            </Modal>
-          </div>
-          <ToastContainer />
+              {!user.healthPractitioner === false ||
+                (!healthPractitioner && (
+                  <div className="ihp">
+                    <h1>Are you a health practitioner?</h1>
+                    <button type="button" onClick={handleCheckboxChange}>
+                      YES
+                    </button>
+                  </div>
+                ))}
+              {user.healthPractitioner ||
+                (healthPractitioner && (
+                  <div style={{ display: "flex", gap: "5px" }}>
+                    <span>
+                      <label htmlFor="yoe">Years of Experience(yoe)</label>
+                      <input
+                        type="number"
+                        id="yoe"
+                        name="yoe"
+                        value={profileData.yoe}
+                        onChange={handleProfileInputChange}
+                      />
+                    </span>
+                    <span>
+                      <label htmlFor="practitionField">Practition Field</label>
+                      <input
+                        type="text"
+                        id="practitionField"
+                        name="practitionField"
+                        value={profileData.practitionField}
+                        onChange={handleProfileInputChange}
+                      />
+                    </span>
+                  </div>
+                ))}
+              <div className="disclaimer-div">
+                <i className="fas fa-info"></i>
+                <p>
+                  All changes to your personal cridentials must match the one on
+                  your government ID and cant be modified after this changes
+                </p>
+              </div>
+            </div>
+          </Modal>
+
+          {/*  Experiences Modal */}
+          <Modal
+            isOpen={activeModal === "experiences"}
+            onClose={closeModal}
+            onSubmit={(e) => handleFormSubmit(e, "experiences")}
+          >
+            <h2>Experiences</h2>
+            <div className="change-inps-set">
+              <div className="inps-innn">
+                <span>
+                  <label htmlFor="organization">Organization Name</label>
+                  <input
+                    type="text"
+                    id="organization"
+                    name="organization"
+                    value={experienceData.organization}
+                    onChange={handleExperienceInputChange}
+                  />
+                </span>
+              </div>
+              <div className="image-update">
+                <div className="box-span">
+                  <i className="fas fa-image"></i>
+                  <p>Upload Image</p>
+                </div>
+              </div>
+              <h2>Details About Your Experiences</h2>
+              <textarea
+                name="description"
+                id="description"
+                className="about-description"
+                value={experienceData.description}
+                onChange={handleExperienceInputChange}
+              ></textarea>
+            </div>
+          </Modal>
+
+          {/* Preferences Modal */}
+          <Modal
+            isOpen={activeModal === "preferences"}
+            onClose={closeModal}
+            onSubmit={(e) => handleFormSubmit(e, "preferences")}
+          >
+            <h2>Update Preferences</h2>
+            <label>
+              Notifications:
+              <input type="checkbox" name="notifications" />
+            </label>
+            <label>
+              Dark Mode:
+              <input type="checkbox" name="darkMode" />
+            </label>
+          </Modal>
         </div>
-      )}
+        <ToastContainer />
+      </div>
     </>
   );
 }
