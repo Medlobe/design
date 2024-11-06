@@ -3,7 +3,7 @@ export default function SideNavbarD() {
     
       <div className="side-bar-cnt">
         <div className="main-navbar-columns">
-          <div className="links-a">
+          <div className="links-a active">
             <i className="fas fa-user"></i>
             <a href="#">Profile</a>
           </div>
