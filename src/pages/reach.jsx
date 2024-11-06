@@ -10,6 +10,7 @@ import CallChatBot from "../components/callChatbot";
 import NewNavbar from "../components/newNavbar";
 import HeroCsection from "./userPages/Hero0course-comp";
 import { GlobalContext } from "../context/GlobalContext";
+import Loader from "../components/loader";
 
 export default function Reach() {
   //variables
@@ -139,7 +140,7 @@ export default function Reach() {
     <div className="reachWrap">
       <NewNavbar onSearch={handleSearchChange} />
       {isLoading ? (
-        <div className="loader"></div>
+        <Loader/>
       ) : (
         <div className="itemContainer">
           {filteredPractitionalsData.map((users, index) => (
@@ -152,10 +153,10 @@ export default function Reach() {
                 <span className="round">
                   {users.profileImage ? (
                     <img
-                      src={`../assets/profileImages/${users.profileImage}`}
+                      src={`${users.profileImage.url}`}
                     />
                   ) : (
-                    <img src="../assets/images/profile.png" />
+                    <img src="../assets/images/icon.png" />
                   )}
                 </span>
                 <div className="text-abt-pra">

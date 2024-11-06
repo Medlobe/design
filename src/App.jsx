@@ -2,7 +2,6 @@ import "./App.css";
 import "./output.css";
 import "./media.css";
 
-
 import { useEffect, useState, useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
@@ -42,9 +41,11 @@ function App() {
   const { state, dispatch } = useContext(GlobalContext);
 
   const [userAuth, setUserAuth] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(`${serverName}user/getUserData`, {
           headers: {
@@ -55,6 +56,8 @@ function App() {
         console.log("User data:", response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -73,7 +76,8 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/regShow" element={<RegShow />} />
-              <Route path="/dashboardm" element={<DashboarMain/>}/>
+              
+              <Route path="/dashboardm" element={<DashboarMain />} />
               <Route
                 path="/users/:id/verify/:token"
                 element={<EmailVerify />}
