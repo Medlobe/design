@@ -240,9 +240,7 @@ export default function SecondUserPadge() {
                           <div className="date-of-work">
                             <p className="text-sm ">{experience.companyName}</p>
                             <p>.</p>
-                            <a className="text-sm ">
-                              {experience.companyDomain}
-                            </a>
+                            <a className="text-sm ">{experience.companyDomain}</a>
                           </div>
                           <div className="brief-explanation">
                             <p>{experience.experience}</p>
