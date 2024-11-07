@@ -14,7 +14,7 @@ export default function UserSettigns() {
   const { state } = useContext(GlobalContext);
   // Set a default value for user if it's undefined or null
   const user = state.user || [];
-  const brandFetchKey = process.env.BRAND_FETCH_API_KEY
+  const brandFetchKey = process.env.BRAND_FETCH_API_KEY;
 
   console.log("THIS IS THE STATE : ", user);
 
@@ -53,10 +53,16 @@ export default function UserSettigns() {
     practitionField: "",
   });
 
-  const [experienceData, setExperienceData] = useState({
-    organization: "",
-    description: "",
+  const [experiencesData, setExperiencesData] = useState({
+    companyName: "",
+    domain: "",
+    logo: "",
+    position: "",
+    experience: "",
   });
+
+  const [companyData, setCompanyData] = useState([]);
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
   const [preferencesData, setPreferencesData] = useState({
     notifications: false,
@@ -81,9 +87,9 @@ export default function UserSettigns() {
     }));
   };
 
-  const handleExperienceInputChange = (e) => {
+  const handleExperiencesInputChange = (e) => {
     const { name, value } = e.target;
-    setExperienceData((prevData) => ({
+    setExperiencesData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -165,6 +171,38 @@ export default function UserSettigns() {
     }
   };
 
+  // Fetch company data based on the domain using Brandfetch API
+  const handleSearch = async () => {
+    const options = { method: "GET" };
+
+    fetch(
+      `https://api.brandfetch.io/v2/search/${experiencesData.domain}`,
+      options
+    )
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        setCompanyData(response);
+        setIsConfirmed(false);
+      })
+      .catch((err) => {
+        toast.error("Could not find that organization");
+        setCompanyData(null);
+      });
+  };
+
+  const handleConfirm = (company) => {
+    if (companyData) {
+      setExperiencesData((prevData) => ({
+        ...prevData,
+        logo: company.icon,
+        companyName: company.name,
+        domain: company.domain,
+      }));
+      setIsConfirmed(true);
+    }
+  };
+
   // Form submit handler
   const handleFormSubmit = async (e, modalType) => {
     e.preventDefault();
@@ -196,7 +234,37 @@ export default function UserSettigns() {
         );
       }
     } else if (modalType === "experiences") {
-      // Handle experiences submission logic here
+      if (
+        !experiencesData.companyName |
+        experiencesData.domain |
+        experiencesData.logo |
+        experiencesData.position
+      ) {
+        toast.error("fill all the fields");
+        return;
+      }
+
+      try {
+        // Assuming the backend route is /experience/uploadExperience
+        const response = await axios.post(
+          `${serverName}experience/uploadExperience`,
+          experiencesData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.data.success) {
+          toast.success("experience uploaded succesfully");
+
+          window.location.reload();
+        }
+      } catch (error) {
+        alert("Failed to upload experience");
+        console.error(error);
+      }
     } else if (modalType === "preferences") {
       // Handle preferences update logic here
     }
@@ -304,16 +372,14 @@ export default function UserSettigns() {
           </div>
           <div className="experience-divs">
             <div className="experience">
-                <div className="imgexp-div">
-              <img src="assets/images/openai.jpg" alt="" />
-
-                </div>
+              <div className="imgexp-div">
+                <img src="assets/images/openai.jpg" alt="" />
+              </div>
               <div className="detailes-ofexp">
                 <h2>Open AI.io</h2>
                 <a href="#">Www.open.ai.com</a>
                 <span>
                   <h4>Pharmacitical Company</h4>
-               
                 </span>
                 <div className="role-xp">
                   <p>Role</p>
@@ -324,7 +390,10 @@ export default function UserSettigns() {
                   <h4>
                     Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                     Quibusdam commodi earum rem quisquam tempora aliquid fugiat
-                    exercitationem incidunt non? Sapiente. Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui illum modi sed accusantium laboriosam suscipit earum, culpa expedita unde repudiandae.
+                    exercitationem incidunt non? Sapiente. Lorem ipsum dolor sit
+                    amet consectetur adipisicing elit. Qui illum modi sed
+                    accusantium laboriosam suscipit earum, culpa expedita unde
+                    repudiandae.
                   </h4>
                 </div>
               </div>
@@ -426,62 +495,115 @@ export default function UserSettigns() {
             isOpen={activeModal === "experiences"}
             onClose={closeModal}
             onSubmit={(e) => handleFormSubmit(e, "experiences")}
+            disabled={!isConfirmed || !experiencesData.role}
           >
             <h2>Experiences</h2>
             <div className="change-inps-set">
               <div className="inps-innn">
                 <span>
-                  <label htmlFor="organization">Organization Name</label>
+                  <label htmlFor="CompanyD">Name/Domain of the Organization</label>
                   <input
                     type="text"
-                    id="organization"
-                    name="organization"
-                    value={experienceData.organization}
-                    onChange={handleExperienceInputChange}
+                    placeholder="Company Domain (e.g., example.com)"
+                    name="domain"
+                    value={experiencesData.domain}
+                    onChange={handleExperiencesInputChange}
                   />
-                </span>
-                <span>
-                  <label htmlFor="CompanyD">Company Website</label>
-                  <input type="search" name="CompanyD" id="CompanyD" />
-                  <div className="searchbtn-org">
+                  <div className="searchbtn-org" onClick={handleSearch}>
                     <i className="fas fa-search"></i>
                   </div>
                 </span>
               </div>
-              <div className="searched-company">
-                <span className="individual-comp">
-                  <img src="assets/images/openai.jpg" alt="" />
-                  <div className="name-of-company">
-                    <p>Open AI.Io</p>
-                    <a href="#">www.openai.com</a>
+              {companyData &&
+                companyData.length > 0 &&
+                !isConfirmed &&
+                companyData.map((company, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleConfirm(company)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      border: "1px solid #ddd",
+                      borderRadius: "8px",
+                      padding: "16px",
+                      marginBottom: "12px",
+                      cursor: "pointer",
+                      backgroundColor: "#f9f9f9",
+                    }}
+                  >
+                    <img
+                      src={company.icon}
+                      alt={`${company.name || company.domain} logo`}
+                      style={{
+                        width: "30px",
+                        height: "30px",
+                        borderRadius: "8px",
+                        marginRight: "16px",
+                      }}
+                    />
+                    <div style={{ flex: 1 }}>
+                      <p
+                        style={{
+                          margin: 0,
+                          fontWeight: "bold",
+                          fontSize: "1rem",
+                        }}
+                      >
+                        {company.name || "No Name Available"}
+                      </p>
+                      <a
+                        href={`https://${company.domain}`}
+                        style={{
+                          color: "#0073e6",
+                          textDecoration: "none",
+                          fontSize: "0.9rem",
+                          display: "block",
+                          marginTop: "4px",
+                        }}
+                      >
+                        {company.domain}
+                      </a>
+                    </div>
+                  </div>
+                ))}
+
+              {isConfirmed && (
+                <>
+                  <div className="position-at-the-comp">
+                    <div className="inps-innn">
+                      <span>
+                        <label htmlFor="nameInp">
+                          Your Position/Role at the Oranization
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Your Position or Role at the Organization (e.g., Head Doctor @ Save a Life ) "
+                          name="position"
+                          value={experiencesData.position}
+                          onChange={handleExperiencesInputChange}
+                        />
+                      </span>
+                    </div>
+                  </div>
+                  <div className="inps-inn">
                     <span>
-                      <h4>Pharmacitical Company</h4>
-                      <h4 className="country-name">USA. canada</h4>
+                      <label htmlFor="description">
+                        Achievements you had or role you played @ the
+                        organization (optional)
+                      </label>
+                      <textarea
+                        className="about-description"
+                        placeholder="Achievements you had or role you played @ the organization"
+                        name="experience"
+                        value={experiencesData.experience}
+                        onChange={handleExperiencesInputChange}
+                      />
                     </span>
                   </div>
-                  <div className="delete-div">
-                    <i className="fas fa-times"></i>
-                  </div>
-                </span>
-              </div>
-              <div className="position-at-the-comp">
-                <div className="inps-innn">
-                  <span>
-                    <label htmlFor="nameInp">Company Role</label>
-                    <input type="text" id="" name="name" />
-                  </span>
-                </div>
-              </div>
-              <div className="inps-inn">
-                <span>
-                  <label htmlFor="description">Job Epxerience</label>
-                  <textarea
-                    id="expertise"
-                    name="experience"
-                    className="about-description"
-                  />
-                </span>
-              </div>
+                </>
+              )}
             </div>
           </Modal>
 

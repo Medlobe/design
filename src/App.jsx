@@ -60,8 +60,10 @@ function App() {
         setIsLoading(false);
       }
     };
-
-    fetchUserData(); // Call the function when the component mounts
+    
+    if (token) {
+      fetchUserData(); // Call the function when the user is logged in
+    }
   }, [dispatch]);
 
   return (
