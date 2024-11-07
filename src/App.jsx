@@ -1,5 +1,4 @@
 import "./App.css";
-import "./output.css";
 import "./media.css";
 
 import { useEffect, useState, useContext } from "react";

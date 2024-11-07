@@ -24,6 +24,7 @@ export default function SecondUserPadge() {
   const { state } = useContext(GlobalContext);
   const { id } = useParams();
   const navigate = useNavigate();
+  const [userExperienceData, setUserExperienceData] = useState([]);
 
   // Set a default value for user if it's undefined or null
   const user = state.user || [];
@@ -57,8 +58,30 @@ export default function SecondUserPadge() {
       }
     };
 
+    // Function to fetch experiences for the contacted user
+    const fetchUserExperiences = async () => {
+      try {
+        const response = await axios.get(
+          `${serverName}experience/getUserExperiences?id=${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.status === 200) {
+          const experiences = response.data.experiences.slice().reverse();
+          setUserExperienceData(experiences);
+          console.log("userown", experiences);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUserExperiences();
     fetchPersonsData();
-  }, []);
+  }, [id]);
 
   // functions
   // handle contacting of the practitioner
@@ -197,27 +220,34 @@ export default function SecondUserPadge() {
                     <h4>EXPERIENCE</h4>
                   </div>
                   <span>
-                    <div className="experience-whole">
-                      <h1>Health Analytics</h1>
-                      <div className="date-of-work">
-                        <p>August 19,2022</p>
-                        <p>-</p>
-                        <p>December 20,2024</p>
+                    {userExperienceData.map((experience, index) => (
+                      <div key={index} className="experience-whole">
+                        {experience.companyLogo ? (
+                          <img
+                            src={experience.companyLogo}
+                            alt={experience.companyName}
+                            className="w-12 h-12 rounded-md mr-4"
+                          />
+                        ) : (
+                          <img
+                            src="../assets/images/banner3.jpg"
+                            alt={`any`}
+                            className="w-12 h-12 rounded-md mr-4"
+                          />
+                        )}
+                        <div>
+                          <h1>{experience.companyPosition}</h1>
+                          <div className="date-of-work">
+                            <p className="text-sm ">{experience.companyName}</p>
+                            <p>.</p>
+                            <a className="text-sm ">{experience.companyDomain}</a>
+                          </div>
+                          <div className="brief-explanation">
+                            <p>{experience.experience}</p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="brief-explanation">
-                        <p>
-                          "Nektarios is the best! He works quickly and adjusts
-                          to what is working/not working very fast so no time or
-                          money is wasted. He's a very polite, friendly, and
-                          patient in breaking everything down for his client.
-                          Could not recommend him more!" less
-                        </p>
-                      </div>
-
-                      <span className="ptrc">
-                        <button>Private Contract</button>
-                      </span>
-                    </div>
+                    ))}
                     <div className="experience-whole">
                       <h1>Health Analytics</h1>
                       <div className="date-of-work">
