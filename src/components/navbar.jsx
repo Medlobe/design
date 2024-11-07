@@ -84,7 +84,7 @@ export default function Navbar() {
               <a href="/about">About</a>
             </li>
             <li>
-              <a href="#">Chatbot <i className="fas fa-arrow-down"></i> </a>
+              <a href="/chatbot">Chatbot <i className="fas fa-arrow-down"></i> </a>
             </li>
             <div className="hidden-t">
               <div className="bottom-nav">
@@ -96,7 +96,7 @@ export default function Navbar() {
 
           {userAuth ? (
             <div className="last-li">
-              <a href="/dashboard">Dashboard </a>             
+              <a href="/reach">Dashboard </a>             
             </div>
           ) : (
             <div className="last-li">

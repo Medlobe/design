@@ -59,8 +59,10 @@ function App() {
         setIsLoading(false);
       }
     };
-
-    fetchUserData(); // Call the function when the component mounts
+    
+    if (token) {
+      fetchUserData(); // Call the function when the user is logged in
+    }
   }, [dispatch]);
 
   return (
@@ -79,9 +81,8 @@ function App() {
                 path="/users/:id/verify/:token"
                 element={<EmailVerify />}
               />
-              <Route path="/dashboardm" element={<DashboarMain />} />
               {userAuth ? (
-                <Route path="/dashboard/:id" element={<Reach />} />
+                <Route path="/reach/:id" element={<Reach />} />
               ) : (
                 <Route path="/reach/:id" element={<Login />} />
               )}
@@ -96,7 +97,6 @@ function App() {
               <Route path="/chatbot" element={<MedChatBot />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/chat/:id" element={<Chat />} />
-              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/newR" element={<NewReach />} />
 
               <Route
