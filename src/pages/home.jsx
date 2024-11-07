@@ -27,7 +27,9 @@ import { Email, Margin } from "@mui/icons-material";
 import useLenis from "./chatPages/components/useLenis";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+
 import ChatBot from "../components/chatbot/components/chatbot";
+import NewNavbar from "../components/newNavbar";
 
 export default function Home() {
   gsap.registerPlugin(useGSAP);
@@ -149,9 +151,10 @@ export default function Home() {
           <ChatBot />
         </div>
         <div className="hero-body">
-          <Navbar />
+          <NewNavbar/>
 
           <div className="her0-z">
+           
             <div className="container">
               <div className="main-hero">
                 <div className="text-box">
@@ -184,10 +187,14 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="img-anim">
-                  <img src="../assets/images/Featureimage.svg" />
+                  
                 </div>
               </div>
             </div>
+          </div>
+          <div className="svg-main-ase">
+
+            <img src="assets/images/waves.svg" alt="" />
           </div>
          
           
