@@ -240,7 +240,9 @@ export default function SecondUserPadge() {
                           <div className="date-of-work">
                             <p className="text-sm ">{experience.companyName}</p>
                             <p>.</p>
-                            <a className="text-sm ">{experience.companyDomain}</a>
+                            <a className="text-sm ">
+                              {experience.companyDomain}
+                            </a>
                           </div>
                           <div className="brief-explanation">
                             <p>{experience.experience}</p>
@@ -248,26 +250,6 @@ export default function SecondUserPadge() {
                         </div>
                       </div>
                     ))}
-                    <div className="experience-whole">
-                      <h1>Health Analytics</h1>
-                      <div className="date-of-work">
-                        <p>August 19,2022</p>
-                        <p>-</p>
-                        <p>December 20,2024</p>
-                      </div>
-                      <div className="brief-explanation">
-                        <p>
-                          "Nektarios is the best! He works quickly and adjusts
-                          to what is working/not working very fast so no time or
-                          money is wasted. He's a very polite, friendly, and
-                          patient in breaking everything down for his client.
-                          Could not recommend him more!" less
-                        </p>
-                      </div>
-                      <span className="ptrc">
-                        <button>Private Contract</button>
-                      </span>
-                    </div>
                   </span>
                 </div>
                 {/* <div className="sza-section">
