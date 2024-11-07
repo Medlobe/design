@@ -1,5 +1,5 @@
 import Modal from "./editForms";
-import { useState, useContext } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
 import { GlobalContext } from "../../context/GlobalContext";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
@@ -26,6 +26,16 @@ export default function UserSettigns() {
   };
 
   // State for form inputs
+  const [profileImage, setProfileImage] = useState("assets/images/banner3.jpg");
+  useEffect(() => {
+    if (user && user.profileImage) {
+      setProfileImage(user.profileImage);
+    }
+  }, [user]);
+
+  const fileInputRef = useRef(null);
+  const [loading, setLoading] = useState(false);
+
   const [profileData, setProfileData] = useState({
     name: "",
     about: "",
@@ -55,6 +65,12 @@ export default function UserSettigns() {
   const [healthPractitioner, setHealthPractitioner] = useState(false);
 
   // Input change handlers for each form
+
+  // Open file selection dialog when "EDIT PHOTO" is clicked
+  const handleEditPhotoClick = () => {
+    fileInputRef.current.click();
+  };
+
   const handleProfileInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -80,6 +96,43 @@ export default function UserSettigns() {
     }));
   };
 
+  // Handle file selection and upload
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      try {
+        setLoading(true);
+        // Convert image to Base64 or FormData
+        const formData = new FormData();
+        formData.append("profileImage", file);
+
+        const response = await axios.put(
+          `${serverName}user/profileImage`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.data.success) {
+          setProfileImage(response.data.profileImage);
+          toast.success("Profile image uploaded successfully");
+          window.location.reload();
+        } else {
+          toast.error(response.data.message || "Failed to upload image");
+        }
+      } catch (error) {
+        console.error("Error uploading profile image:", error);
+        toast.error("An error occurred while uploading the image");
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
   const handleCheckboxChange = async (e) => {
     // If the user is already marked as a health practitioner, show a notification and exit
     if (user.healthPractitioner) {
@@ -88,7 +141,7 @@ export default function UserSettigns() {
     }
 
     try {
-      // Sending T request to update the practition value
+      // Sending  request to update the practition value
       const response = await axios.put(
         `${serverName}user/updatePractitionValue`,
         { healthPractitioner: true },
@@ -150,9 +203,9 @@ export default function UserSettigns() {
     closeModal();
   };
 
-  if (!user) {
-    return <Loader />;
-  }
+  //   if (user.length === 0) {
+  //     return <Loader />;
+  //   }
 
   return (
     <>
@@ -164,9 +217,19 @@ export default function UserSettigns() {
               <i className="fas fa-pencil"></i>
             </div>
             <span className="main-img-css">
-              <img src="assets/images/banner3.jpg" alt="" />
+              <img src={profileImage} alt="Profile" />
+              <div className="camera-div" onClick={handleEditPhotoClick}>
+                EDIT PHOTO
+              </div>
 
-              <div className="camera-div">EDIT PHOTO</div>
+              {/* Hidden file input */}
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                style={{ display: "none" }}
+              />
             </span>
 
             <div className="user-details-main-main">
@@ -238,11 +301,40 @@ export default function UserSettigns() {
           <div className="block-header">
             <h1>Experiences</h1>
           </div>
+          <div className="experience-divs">
+            <div className="experience">
+                <div className="imgexp-div">
+              <img src="assets/images/openai.jpg" alt="" />
 
-          <div className="empty-no-file">
-            <img src="assets/images/nodata.jpeg" alt="" />
+                </div>
+              <div className="detailes-ofexp">
+                <h2>Open AI.io</h2>
+                <a href="#">Www.open.ai.com</a>
+                <span>
+                  <h4>Pharmacitical Company</h4>
+               
+                </span>
+                <div className="role-xp">
+                  <p>Role</p>
+                  <h4 className="cream">Tech Engineer</h4>
+                </div>
+                <div className="role-xp">
+                  <p>Details</p>
+                  <h4>
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Quibusdam commodi earum rem quisquam tempora aliquid fugiat
+                    exercitationem incidunt non? Sapiente. Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui illum modi sed accusantium laboriosam suscipit earum, culpa expedita unde repudiandae.
+                  </h4>
+                </div>
+              </div>
+            </div>
           </div>
 
+          {/* <div className="empty-no-file">
+                        <img src="assets/images/nodata.jpeg" alt="" />
+                    </div> */}
+
+          {/*profile Modal*/}
           <Modal
             isOpen={activeModal === "profile"}
             onClose={closeModal}
@@ -266,27 +358,19 @@ export default function UserSettigns() {
                   <textarea
                     id="expertise"
                     name="expertise"
+                    className="about-descriptio"
                     value={profileData.expertise}
                     onChange={handleProfileInputChange}
                   />
                 </span>
               </div>
-              <span>
-                <label htmlFor="Email">Email</label>
-                <input
-                  type="text"
-                  name=""
-                  id="Email"
-                  value={user.email}
-                  disabled
-                />
-              </span>
 
               <span>
                 <label htmlFor="about">About</label>
                 <textarea
                   id="about"
                   name="about"
+                  className="about-description"
                   value={profileData.about}
                   onChange={handleProfileInputChange}
                 />
@@ -296,7 +380,9 @@ export default function UserSettigns() {
                 (!healthPractitioner && (
                   <div className="ihp">
                     <h1>Are you a health practitioner?</h1>
-                    <button onClick={handleCheckboxChange}>YES</button>
+                    <button type="button" onClick={handleCheckboxChange}>
+                      YES
+                    </button>
                   </div>
                 ))}
               {user.healthPractitioner ||
@@ -353,21 +439,48 @@ export default function UserSettigns() {
                     onChange={handleExperienceInputChange}
                   />
                 </span>
+                <span>
+                  <label htmlFor="CompanyD">Company Website</label>
+                  <input type="search" name="CompanyD" id="CompanyD" />
+                  <div className="searchbtn-org">
+                    <i className="fas fa-search"></i>
+                  </div>
+                </span>
               </div>
-              <div className="image-update">
-                <div className="box-span">
-                  <i className="fas fa-image"></i>
-                  <p>Upload Image</p>
+              <div className="searched-company">
+                <span className="individual-comp">
+                  <img src="assets/images/openai.jpg" alt="" />
+                  <div className="name-of-company">
+                    <p>Open AI.Io</p>
+                    <a href="#">www.openai.com</a>
+                    <span>
+                      <h4>Pharmacitical Company</h4>
+                      <h4 className="country-name">USA. canada</h4>
+                    </span>
+                  </div>
+                  <div className="delete-div">
+                    <i className="fas fa-times"></i>
+                  </div>
+                </span>
+              </div>
+              <div className="position-at-the-comp">
+                <div className="inps-innn">
+                  <span>
+                    <label htmlFor="nameInp">Company Role</label>
+                    <input type="text" id="" name="name" />
+                  </span>
                 </div>
               </div>
-              <h2>Details About Your Experiences</h2>
-              <textarea
-                name="description"
-                id="description"
-                className="about-description"
-                value={experienceData.description}
-                onChange={handleExperienceInputChange}
-              ></textarea>
+              <div className="inps-inn">
+                <span>
+                  <label htmlFor="description">Job Epxerience</label>
+                  <textarea
+                    id="expertise"
+                    name="experience"
+                    className="about-description"
+                  />
+                </span>
+              </div>
             </div>
           </Modal>
 
