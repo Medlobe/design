@@ -101,12 +101,12 @@ export default function Register() {
 
       if (response.data.healthPractitioner === true) {
         setTimeout(() => {
-          const route = `/dashboard`;
+          const route = `/profile`;
           window.location.href = route;
         }, 3000);
       }else {
         setTimeout(() => {
-          const route = `/regShow`;
+          const route = `/reach`;
           window.location.href = route;
         }, 3000);
       }

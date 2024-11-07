@@ -14,6 +14,7 @@ export default function UserSettigns() {
   const { state } = useContext(GlobalContext);
   // Set a default value for user if it's undefined or null
   const user = state.user || [];
+  const brandFetchKey = process.env.BRAND_FETCH_API_KEY
 
   console.log("THIS IS THE STATE : ", user);
 
