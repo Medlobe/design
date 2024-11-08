@@ -6,6 +6,7 @@ import "aos/dist/aos.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FcGoogle } from "react-icons/fc";
 
 export default function Login() {
   //variables
@@ -38,6 +39,11 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    if (!email | !password) {
+      toast.error("please fill in all the compulsory fields");
+      return;
+    }
 
     if (
       email === process.env.REACT_APP_ADMIN_EMAIL &&
@@ -90,7 +96,7 @@ export default function Login() {
         const nameParts = response.data.name.split(" ");
         // Get the first part of the name (index 0)
         const firstName = nameParts[0];
-        toast(`Welcome ${firstName}`);
+        toast.success(`Welcome ${firstName}`);
         if (response.data.verified) {
           setTimeout(() => {
             const route = `/reach`;
@@ -127,69 +133,107 @@ export default function Login() {
     }
   };
 
+  const messages = [
+    "Connect with healthcare professionals worldwide.",
+    "Get the latest medical advancements and breakthroughs.",
+    "Ask health-related questions anytime, anywhere.",
+    "Stay updated with global health facts and tips.",
+  ];
+
+  const [currentMessage, setCurrentMessage] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentMessage((prevMessage) => (prevMessage + 1) % messages.length);
+    }, 3000); // Change message every 3 seconds
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, [messages.length]);
+
   return (
-    <div className="regContainer">
-      <div className="formContainer">
-        <form
-          className="site-form"
-          onSubmit={handleLogin}
-          
-          // style={{ top: 0 }}
-        >
-          <a href="/" className="logo-doc">
-            <img src="../assets/images/icon.png" alt="" />
-            <h1>Medai Chat</h1>
-          </a>
-          <a href="#" className="google-log">
-            <img src="../assets/images/google-lens.png"></img>
-            <p>Sign in with Google</p>
+    <div className="flex min-h-screen items-center justify-center bg-gray-100">
+      <div className="w-full  max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden flex  flex-col lg:flex-row">
+        {/* Left Section - Form */}
+        <div className=" lg:w-1/2  p-8 flex flex-col justify-center">
+          <span
+            className="flex justify-center font-extrabold text-2xl mb-4"
+            onClick={() => navigate("/")}
+          >
+            <h1>MED</h1>
+            <h1 className="text-purple-950">LOBE</h1>
+          </span>
+          <div className="w-90 flex items-center  mb-2 py-1 px-2  bg-gray-100  gap-8 rounded-full">
+            <button
+              className="py-1 w-[10rem] bg-purple-100  rounded-full text-purple-950 font-semibold"
+              onClick={() => navigate("/login ")}
+            >
+              Login
+            </button>
+            <button
+              className="py-1 w-[10rem]  font-semibold rounded-full hover:text-gray-400"
+              onClick={() => navigate("/register")}
+            >
+              Sign up
+            </button>
+          </div>
+          <div className="text-2xl font-bold text-black mb-2">
+            Welcome back!
+          </div>
 
-          </a>
-          <span className="or-span">or</span>
-          <div className="inps">
-            
-            <input
-              className="form-input"
-              id="email"
-              type="email"
-              placeholder="Email"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autocomplete="email"
-              autofocus
+          <form className="space-y-4" onSubmit={handleLogin}>
+            <div>
+              <label className="block text-gray-600 mb-1">Email</label>
+              <input
+                type="email"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none"
+                placeholder="fatma@gmail.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                autocomplete="email"
+                autofocus
+              />
+            </div>
+            <div>
+              <label className="block text-gray-600 mb-1">Password</label>
+              <input
+                type="password"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none"
+                placeholder="******"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <div className="text-right text-sm text-gray-500 mt-1">
+                <a href="#" className="hover:underline">
+                  Forgot password?
+                </a>
+              </div>
+            </div>
+            <button
+              className="w-full bg-purple-950 hover:opacity-7 text-white py-2 rounded-lg font-bold"
+              type="submit"
+            >
+              GO!
+            </button>
+          </form>
+        </div>
+
+        {/* Right Section - Illustration */}
+        <div className="w-full lg:w-1/2 lg:relative  bg-purple-100 flex flex-col  items-center p-8 ">
+          <h2 className="text-2xl font-bold text-purple-950 mb-2 z-50">
+            {" "}
+            {messages[currentMessage]}{" "}
+          </h2>
+          <div className="lg:absolute mt-4 w-full h-full flex items-center justify-center -z-1">
+            <img
+              src="/assets/images/FeatureImage.svg"
+              alt="Illustration"
+              className="w-3/4 h-auto"
             />
           </div>
-          <div className="inps">
-          
-            <input
-              className="form-input"
-              id="password"
-              type="password"
-              placeholder="Password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              autocomplete="current-password"
-            />
-          </div>
-
-          <button className="button-login">Sign in</button>
-          <div className="form-footer">
-            <p>
-              Not a user ?  <a href="/register">Sign up</a>
-            </p>
-          </div>
-          
-        </form>
-        <ToastContainer />
-      </div>
-      <div className="left-image-reg">
-
-
-
+        </div>
       </div>
     </div>
   );

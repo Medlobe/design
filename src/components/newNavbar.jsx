@@ -22,13 +22,17 @@ export default function NewNavbar({ onSearch }) {
   return (
     <div className="main-nav-nav">
       <div className="top-main-profile">
+        <div className="logo-img-site">
+          <h1>MEDLOBE</h1>
+        </div>
         <div className="user-detailes-o">
           <div className="nav-side">
-            <a href="/home">Home</a>
+            <a href="/home" className="active-a">Home</a>
             <a href="/reach">Reach Out</a>
             <a href="/chatbot">Medai AI</a>
             <a href="/about">About</a>
             <a href="#">Community</a>
+            <a href="#">More</a>
           </div>
         </div>
         <div className="hire-burrons">
@@ -51,12 +55,8 @@ export default function NewNavbar({ onSearch }) {
               marginLeft: "10px",
             }}
           >
-            <div className="if-auth">
-              <a href="">
-                <i className="far fa-bell"></i>
-              </a>
-            </div>
-            <img
+           
+            {/* <img
               src={user.profileImage}
               alt="User Profile"
               style={{
@@ -67,7 +67,7 @@ export default function NewNavbar({ onSearch }) {
                 marginRight: "8px",
                 border: "2px solid #fff",
               }}
-            />
+            /> */}
             <div
               onClick={() => navigate("/profile")}
               style={{

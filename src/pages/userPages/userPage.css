@@ -552,30 +552,15 @@
   border: 2px solid white;
   box-shadow: 0 0 10px rgba(0 0 0 /20%);
 }
-.user-online-and-image span {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 2px solid white;
-  background-color: rgb(68, 204, 68);
-  position: absolute;
-  top: 80%;
-  left: 60%;
-  display: flex;
-  box-shadow: 0 0 10px rgba(0 0 0 /20%);
-}
-.user-online-and-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
+
+
 .nav-side {
   position: relative;
   display: flex;
   flex-direction: row;
   color: black;
   gap: 10px;
+  left: 40px;
 }
 .nav-side a {
   padding: 5px 10px;
@@ -591,6 +576,10 @@
 .nav-side a i {
   transform: scale(0.8);
   margin-top: 1px;
+}
+.active-a{
+  color: #321564;
+  font-weight: 600 ;
 }
 
 .hire-burrons {

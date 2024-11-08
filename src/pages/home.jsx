@@ -17,7 +17,7 @@ import { Typewriter, Cursor } from "react-simple-typewriter";
 import "aos/dist/aos.css";
 import { motion } from "framer-motion";
 import axios from "axios";
-import Footer from "./chatPages/components/footer";
+
 import CheckTerms from "../components/terms-and-conditiion-check";
 
 import CallChatBot from "../components/callChatbot";
@@ -30,6 +30,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import ChatBot from "../components/chatbot/components/chatbot";
 import NewNavbar from "../components/newNavbar";
+import EfficiencySection from "../components/chatbot/components/herosections/first-section";
+import StickyComponent from "../components/chatbot/components/herosections/secondsticly-section";
+import GridSection from "../components/chatbot/components/herosections/grid-section";
+import HeroSection from "../components/chatbot/components/herosections/lastSect";
+import Footer from "../components/footer";
 
 export default function Home() {
   gsap.registerPlugin(useGSAP);
@@ -73,7 +78,8 @@ export default function Home() {
       duration: 1000, // animation duration in milliseconds
       easing: "ease", // animation easing function
       delay: 100, // delay between each animated element
-      once: false, // whether animation should only happen once
+      once: false,
+      offset:100, // whether animation should only happen once
     });
     AOS.refresh();
   }, []);
@@ -151,56 +157,64 @@ export default function Home() {
           <ChatBot />
         </div>
         <div className="hero-body">
-          <NewNavbar/>
+          <NewNavbar />
 
           <div className="her0-z">
-           
             <div className="container">
               <div className="main-hero">
                 <div className="text-box">
-                  <h1>Medai Chat,</h1>
-                  <h1>The Future Of Medical Research and History</h1>
-
+                  <h1 data-aos="fade-down" data-aos-delay="0">Medai Chat, The Future Of Medical Research and History</h1>
+                  <p data-aos="fade-down" data-aos-delay="0">“Medlobe: Where AI meets healthcare, and a doctor is always within reach.”</p>
                   <div className="email-btn">
-                    <input
-                      className="form-input-hero"
-                      id="email"
-                      type="email"
-                      placeholder="Email"
-                      name="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      autocomplete="email"
-                      autofocus
-                    />
-                    <a onClick={goToreg}>Get Started</a>
-                  </div>
-                  <div className="users-on-site">
-                    <img src="../assets/images/people.png"></img>
-                    <div className="acess-me">
-                      <p>16k+</p>
-                    </div>
-                    <p className="margin-p">
-                      1,600 people requested access a visit in last 24 hours
-                    </p>
+                    <a onClick={goToreg} data-aos="fade-right" data-aos-delay="400">Sign in</a>
+                    <a onClick={goToreg} data-aos="fade-left" data-aos-delay="600">Sign up</a>
                   </div>
                 </div>
-                <div className="img-anim">
-                  
+
+                <div className="images-inline">
+                  <div className="images-casing" data-aos="fade-up" data-aos-delay="0">
+                    <img src="assets/images/banner3.jpg" alt="" />
+                  </div>
+                  <div className="images-casing dark" data-aos="fade-up" data-aos-delay="200">
+                    <h2>100+</h2>
+                    <p>Served clients all over the country</p>
+                  </div>
+                  <div className="images-casing whitee" data-aos="fade-up" data-aos-delay="400">
+                    <span>
+                      <p>Total clients </p>
+                      <i className="fas fa-arrow-up"></i>
+                      <p>2%</p>
+                    </span>
+                    <h2>1951 +</h2>
+                    <p>Increased by 20% this month</p>
+                  </div>
+                  <div className="images-casing purplee" data-aos="fade-up" data-aos-delay="600">
+                    <h2>6 +</h2>
+                    <p>Dedicated to service</p>
+                  </div>
+                  <div className="images-casing" data-aos="fade-up" data-aos-delay="800">
+                    <img src="assets/images/banner2.jpg" alt="" />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          
-         
-          
 
-          
-          
-          
-         
-          
+          <EfficiencySection />
+          <StickyComponent />
+          <GridSection />
+          <HeroSection />
+          <Footer />
+
+
+
+
+
+
+
+
+
+
 
           <CallChatBot />
         </div>
