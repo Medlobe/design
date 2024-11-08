@@ -27,6 +27,7 @@ import SecondUserPadge from "./pages/userPages/profile-testing";
 import NewReach from "./pages/newReach";
 import { GlobalProvider, GlobalContext } from "./context/GlobalContext";
 import axios from "axios";
+import { ToastContainer } from "react-toastify";
 
 import DashboarMain from "./pages/Dashboard/user-dashboard";
 
@@ -143,6 +144,7 @@ function App() {
               )}
             </Routes>
           </BrowserRouter>
+          <ToastContainer/>
         </body>
       </ChatBotProvider>
     </NavbarProvider>

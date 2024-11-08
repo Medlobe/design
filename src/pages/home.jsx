@@ -184,7 +184,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="img-anim">
-                  <img src="../assets/images/Featureimage.svg" />
+                  <img src="assets/images/Featureimage.svg" />
                 </div>
               </div>
             </div>

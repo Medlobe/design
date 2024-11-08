@@ -21,11 +21,11 @@ export default function Register() {
     draggable: true,
     theme: "dark",
   };
-  useEffect(() => {
-    setEmail(location.state || {});
+  // useEffect(() => {
+  //  setEmail(location.state || {});
 
-    console.log(email);
-  }, [location.state]);
+  //  console.log(email);
+  // }, [location.state]);
 
   //time durations for aos
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function Register() {
 
   //states
   const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState();
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [country, setCountry] = useState("");
@@ -64,6 +64,16 @@ export default function Register() {
     e.preventDefault();
     if (yoe === 0) {
       setHealthPractitioner(false);
+    }
+
+    if (!email | !name | !phoneNumber | !password | !address) {
+      toast.error("Please fill in all the compulsory fields.");
+      return;
+    }
+
+    if (!termsAndConditions) {
+      toast.error("Accept the terms and condtions.");
+      return;
     }
 
     if (name.length <= 4) {
@@ -96,7 +106,7 @@ export default function Register() {
       const nameParts = response.data.name.split(" ");
       // Get the first part of the name (index 0)
       const firstName = nameParts[0];
-      toast(`Your Email is Being Verified ${firstName}`);
+      toast.succes(`Your Email is Being Verified ${firstName}`);
       setLoginMessage(response.message);
 
       if (response.data.healthPractitioner === true) {
@@ -104,7 +114,7 @@ export default function Register() {
           const route = `/profile`;
           window.location.href = route;
         }, 3000);
-      }else {
+      } else {
         setTimeout(() => {
           const route = `/reach`;
           window.location.href = route;
@@ -184,180 +194,201 @@ export default function Register() {
       }
     }
   };
+
+  const messages = [
+    "Connect with healthcare professionals worldwide.",
+    "Get the latest medical advancements and breakthroughs.",
+    "Ask health-related questions anytime, anywhere.",
+    "Stay updated with global health facts and tips.",
+  ];
+
+  const [currentMessage, setCurrentMessage] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentMessage((prevMessage) => (prevMessage + 1) % messages.length);
+    }, 3000); // Change message every 3 seconds
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, [messages.length]);
+
   return (
-    <div className="regContainer">
-      <div className="formContainer">
-        <form onSubmit={handleSignup}>
-          <a href="/" className="logo-doc">
-            <img src="../assets/images/icon.png" alt="" />
-            <h1>Medai Chat</h1>
-          </a>
-         
-          <div className="row-inps">
-            <div className="inps">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100">
+      <div className="w-full  max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden flex">
+        {/* Left Section - Form */}
+        <div className="w-1/2 p-8 flex flex-col justify-center">
+          <span
+            className="flex justify-center font-extrabold text-2xl mb-4 "
+            onClick={() => navigate("/")}
+          >
+            <h1>MED</h1>
+            <h1 className="text-purple-700">LOBE</h1>
+          </span>
+          <div className="w-90 flex items-center gap-8 justify-end mb-2 py-1 px-2  bg-gray-100  rounded-full">
+            <button
+              className="py-1 w-[10rem]  font-semibold rounded-full hover:text-gray-400"
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </button>
+            <button
+              className="py-1 w-[10rem] bg-purple-100  rounded-full text-purple-700 font-semibold"
+              onClick={() => navigate("/register")}
+            >
+              Sign up
+            </button>
+          </div>
+          <div className="text-2xl font-bold text-black mb-2">
+            You are Welcome!
+          </div>
+
+          <form onSubmit={handleSignup} className="space-y-4 w-full mx-auto">
+            <div>
               <input
-                className="form-input"
-                id="email"
                 type="email"
                 placeholder="Email address"
-                name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                autocomplete="email"
-                autofocus
+                autoComplete="email"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-purple-500"
               />
             </div>
-            <div className="inps">
+
+            <div>
               <input
-                className="form-input"
-                id="phoneNumber"
                 type="tel"
-                placeholder="phone number"
-                name="phone number"
+                placeholder="Phone number"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 required
-                autocomplete="tel"
-                autofocus
+                autoComplete="tel"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-purple-500"
               />
             </div>
-          </div>
-          <div className="row-inps">
-            <div className="inps">
+
+            <div className="flex gap-4">
               <input
-                className="form-input"
-                id="name"
                 type="text"
-                name="name"
+                placeholder="Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Name"
                 required
-                autocomplete="name"
+                autoComplete="name"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-purple-500"
               />
-            </div>
-            <div className="inps">
               <input
-                className="form-input"
-                id="country"
                 type="text"
-                name="country"
+                placeholder="Country"
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
-                placeholder="Country"
                 required
-                autocomplete="country"
+                autoComplete="country"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-purple-500"
               />
             </div>
-          </div>
-          <p className="form-terms">
-            <span
-              className="span-box"
-              onClick={() => setHealthPractitioner(!healthPractitioner)}
-            >
-              <i
-                className={`${
-                  healthPractitioner ? " fas fa-check ont" : "one-t"
-                }`}
-              ></i>
-            </span>
-            <span>Are you a health practitioner ?</span>
-          </p>
 
-          {healthPractitioner && (
-            <>
-              <div className="row-inps">
-                <div className="inps">
+            <div>
+              <input
+                type="text"
+                placeholder="Address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                required
+                autoComplete="address"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-purple-500"
+              />
+            </div>
+
+            <div>
+              <input
+                type="password"
+                placeholder="Select Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                autoComplete="new-password"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-purple-500"
+              />
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                checked={healthPractitioner}
+                onChange={() => setHealthPractitioner(!healthPractitioner)}
+                className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+              />
+              <label className="text-gray-600">
+                Are you a health practitioner?
+              </label>
+            </div>
+
+            {healthPractitioner && (
+              <div className="mt-2 transition-transform duration-500 transform">
+                <div className=" flex gap-4">
                   <input
-                    className="form-input"
-                    id="practitionField"
                     type="text"
+                    placeholder="Practition Field"
                     value={practitionField}
                     onChange={(e) => setPractitionField(e.target.value)}
-                    placeholder="Your Practition Field"
-                    name="practition_field"
                     required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-purple-500"
                   />
-                </div>
-                <div className="inps">
                   <input
-                    className="form-input"
-                    id="yoe"
                     type="number"
+                    placeholder="Years in field"
                     value={yoe}
                     onChange={(e) => setYoe(e.target.value)}
-                    placeholder="Years of experience"
-                    name="years_of_experience"
                     required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-purple-500"
                   />
                 </div>
               </div>
-            </>
-          )}
+            )}
 
-          <div className="inps">
-            <input
-              className="form-input"
-              id="address"
-              type="text"
-              name="address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="Enter Address"
-              required
-              autocomplete="address"
-            />
-          </div>
-          <div className="inps no-marg">
-            <input
-              className="form-input "
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Select Password"
-              name="password"
-              required
-            />
-          </div>
-          <span className="or-span">or</span>
-          <a href="#" className="google-log yes-marg">
-            <img src="../assets/images/google-lens.png"></img>
-            <p>Sign up with Google</p>
-          </a>
+            <div className="flex items-center space-x-2 mt-2">
+              <input
+                type="checkbox"
+                checked={termsAndConditions}
+                onClick={() => setTermsAndconditions(true)}
+                className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+              />
+              <label className="text-gray-600">
+                I agree with the{" "}
+                <a
+                  href="/termsAndConditions"
+                  className="text-purple-600 underline"
+                >
+                  Terms and Conditions
+                </a>
+              </label>
+            </div>
 
-          <p className="form-terms">
-            <span
-              className="span-box"
-              onClick={() => setTermsAndconditions(!termsAndConditions)}
+            <button
+              type="submit"
+              className="w-full bg-purple-700 text-white py-2 rounded-lg font-bold mt-6 hover:bg-purple-800 transition-colors"
             >
-              <i
-                className={`${
-                  termsAndConditions ? " fas fa-check ont" : "one-t"
-                }`}
-              ></i>
-            </span>
-            <span>
-              I agree with |{" "}
-              <a href="/termsAndConditions">Terms and Conditions</a>
-            </span>
-          </p>
+              Proceed
+            </button>
+          </form>
+        </div>
 
-          <button className="button-login">Register</button>
-          <div className="form-footer">
-            <p>
-              Already a user ? | <a href="/login">Login</a>
-            </p>
+        {/* Right Section - Illustration */}
+        <div className="w-1/2 bg-purple-100 flex flex-col  items-center p-8 relative">
+          <h2 className="text-2xl font-bold text-purple-700 mb-2 z-50">
+            {" "}
+            {messages[currentMessage]}{" "}
+          </h2>
+          <div className="absolute w-full h-full flex items-center justify-center -z-1">
+            <img
+              src="/assets/images/FeatureImage.svg"
+              alt="Illustration"
+              className="w-3/4 h-auto"
+            />
           </div>
-        </form>
+        </div>
       </div>
-      <div className="left-image-reg">
-      <div className="header-signup">
-            <h1>Sign up for free and get access to unlimited info.!</h1>
-          </div>
-      </div>
-      <ToastContainer />
     </div>
   );
 }
