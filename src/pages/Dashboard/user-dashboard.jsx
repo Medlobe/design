@@ -2,6 +2,7 @@ import NewNavbar from "../../components/newNavbar";
 import SideNavbarD from "./dashboard-side-bar";
 import "../Dashboard/dashboardmain.css";
 import UserSettigns from "./usersettings";
+import Footer from "../../components/footer";
 
 export default function DashboarMain() {
   return (
@@ -11,6 +12,7 @@ export default function DashboarMain() {
         <SideNavbarD />
         <UserSettigns />
       </div>
+      <Footer />
     </div>
   );
 }

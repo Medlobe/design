@@ -12,6 +12,7 @@ import HeroCsection from "./userPages/Hero0course-comp";
 import SearchNavabar from "../components/reachout-bt-nav";
 import { GlobalContext } from "../context/GlobalContext";
 import Loader from "../components/loader";
+import Footer from "../components/footer";
 
 export default function NewReach() {
   //variables
@@ -184,212 +185,220 @@ export default function NewReach() {
   };
 
   return (
-    <div className="reach-body">
-      <NewNavbar onSearch={handleSearchChange} />
-      {/* <SearchNavabar /> */}
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div className="container">
-          <div className="main-pract">
-            <div className="filter-pract">
-              <div className="filter-section">
-                <div className="filter-header">
-                  <p>Gender</p>
-                  <i className="fas fa-angle-down"></i>
-                </div>
-                <div className="filter-contents">
-                  <span className="check-span">
-                    <button>
-                      <i className="fas fa-check"></i>
-                    </button>
-                    <p>Male</p>
-                  </span>
-                  <span className="check-span">
-                    <button>
-                      <i className="fas fa-check"></i>
-                    </button>
-                    <p>Female</p>
-                  </span>
-                </div>
-              </div>
-              <div className="filter-section">
-                <div className="filter-header">
-                  <p>Medical Practicee</p>
-                  <i className="fas fa-angle-down"></i>
-                </div>
-                <div className="filter-contents">
-                  <span className="check-span">
-                    <button>
-                      <i className="fas fa-check"></i>
-                    </button>
-                    <p>Private Practitioner</p>
-                  </span>
-                  <span className="check-span">
-                    <button>
-                      <i className="fas fa-check"></i>
-                    </button>
-                    <p>Global Practitioner</p>
-                  </span>
-                </div>
-              </div>
-              <div className="filter-section">
-                <div className="filter-header">
-                  <p>Location</p>
-                  <i className="fas fa-angle-down"></i>
-                </div>
-                <div className="filter-contents">
-                  <div className="input-filter">
-                    <input
-                      type="text"
-                      placeholder="Select Country"
-                      value={selectedCountries.join(", ")}
-                      readOnly
-                      onClick={handleToggle}
-                    />
-                    <i className="fas fa-angle-down" onClick={handleToggle}></i>
-                    {isOpen && (
-                      <div className="drops">
-                        <div className="search-drop-down">
-                          <input
-                            type="text"
-                            placeholder="Search"
-                            value={searchTerm}
-                            onChange={handleSearch}
-                          />
-                          <i className="fas fa-search"></i>
-                        </div>
-                        <div className="search-items">
-                          {filteredCountries.map((country) => (
-                            <span className="check-span" key={country.id}>
-                              <button
-                                onClick={() => handleSelect(country.name)}
-                              >
-                                <i className="fas fa-check"></i>
-                              </button>
-                              <p>{country.name}</p>
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+    <>
+      <div className="reach-body">
+        <NewNavbar onSearch={handleSearchChange} />
+        {/* <SearchNavabar /> */}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <div className="container">
+            <div className="main-pract">
+              <div className="filter-pract">
+                <div className="filter-section">
+                  <div className="filter-header">
+                    <p>Gender</p>
+                    <i className="fas fa-angle-down"></i>
+                  </div>
+                  <div className="filter-contents">
+                    <span className="check-span">
+                      <button>
+                        <i className="fas fa-check"></i>
+                      </button>
+                      <p>Male</p>
+                    </span>
+                    <span className="check-span">
+                      <button>
+                        <i className="fas fa-check"></i>
+                      </button>
+                      <p>Female</p>
+                    </span>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="practioner-cards">
-              <div className="grid-prtc">
-                {filteredPractitionalsData.map((users, index) => (
-                  <Link
-                    to={`/toContact/${users._id}`}
-                    style={{ textDecoration: "none" }}
-                    key={index}
-                  >
-                    <div className="pract-card">
-                      <div className="pct-img">
-                        <span>
-                          {users.profileImage ? (
-                            <img src={`${users.profileImage}`} />
-                          ) : (
-                            <img src="assets/images/banner3.jpg"  />
-                          )}
-                        </span>
-                        <div className="text-prct">
-                          <h1>
-                            {users.name}
-                            <img src="assets/images/Group134.png" alt="" />
-                          </h1>
-                          <h4>{users.expertise}</h4>
-                          <p>{users.country}</p>
+                <div className="filter-section">
+                  <div className="filter-header">
+                    <p>Medical Practicee</p>
+                    <i className="fas fa-angle-down"></i>
+                  </div>
+                  <div className="filter-contents">
+                    <span className="check-span">
+                      <button>
+                        <i className="fas fa-check"></i>
+                      </button>
+                      <p>Private Practitioner</p>
+                    </span>
+                    <span className="check-span">
+                      <button>
+                        <i className="fas fa-check"></i>
+                      </button>
+                      <p>Global Practitioner</p>
+                    </span>
+                  </div>
+                </div>
+                <div className="filter-section">
+                  <div className="filter-header">
+                    <p>Location</p>
+                    <i className="fas fa-angle-down"></i>
+                  </div>
+                  <div className="filter-contents">
+                    <div className="input-filter">
+                      <input
+                        type="text"
+                        placeholder="Select Country"
+                        value={selectedCountries.join(", ")}
+                        readOnly
+                        onClick={handleToggle}
+                      />
+                      <i
+                        className="fas fa-angle-down"
+                        onClick={handleToggle}
+                      ></i>
+                      {isOpen && (
+                        <div className="drops">
+                          <div className="search-drop-down">
+                            <input
+                              type="text"
+                              placeholder="Search"
+                              value={searchTerm}
+                              onChange={handleSearch}
+                            />
+                            <i className="fas fa-search"></i>
+                          </div>
+                          <div className="search-items">
+                            {filteredCountries.map((country) => (
+                              <span className="check-span" key={country.id}>
+                                <button
+                                  onClick={() => handleSelect(country.name)}
+                                >
+                                  <i className="fas fa-check"></i>
+                                </button>
+                                <p>{country.name}</p>
+                              </span>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                      <div className="star-rating">
-                        <p>4.5</p>
-                        <span>
-                          <i className="fas fa-star"></i>
-                          <i className="fas fa-star"></i>
-                          <i className="fas fa-star"></i>
-                          <i className="fas fa-star"></i>
-                        </span>
-                        <p>(222,000)</p>
-                        <button className="pp-btn">Global Practitioner</button>
-                      </div>
-                      <div className="sumarry-prct">
-                        <p>{users.about}</p>
-                      </div>
-                      <div className="folowers-and-post">
-                        <a href="#">
-                          <strong>33</strong>
-                          posts
-                        </a>
-                        <a href="#">
-                          <strong>{users.contacts} </strong>
-                          contacts
-                        </a>
-                        <a href="#">
-                          <strong>Clients</strong>
-                          100+
-                        </a>
-                      </div>
-                      <div className="association-set">
-                        <div className="asos-div">
-                          <img src="assets/images/Google-lens.png" alt="" />
-                          <span>
-                            <h4>Asociated With</h4>
-
-                            <a href="#">Google</a>
-                          </span>
-                        </div>
-
-                        <button>Explore</button>
-                      </div>
+                      )}
                     </div>
-                  </Link>
-                ))}
-
-                <div className="people-also-grid">
-                  <h1>People Also Searched For</h1>
-                  <div className="button-grid">
-                    <button>
-                      <i className="fas fa-search"></i>
-                      <p>Geographer</p>
-                    </button>
-                    <button>
-                      <i className="fas fa-search"></i>
-                      <p>Geographer</p>
-                    </button>
-                    <button>
-                      <i className="fas fa-search"></i>
-                      <p>Geographer</p>
-                    </button>
-                    <button>
-                      <i className="fas fa-search"></i>
-                      <p>Geographer</p>
-                    </button>
                   </div>
                 </div>
               </div>
-              <div className="navigation-padges-buttons">
-                <div className="nabvigations">
-                  <button className="prev-btn">
-                    <i className="fas fa-angle-left"> </i>
-                    Previouse
-                  </button>
-                  <span className="counter-btn">
-                    <button className="active">1</button>
-                    <button>2</button>
-                    <button>3</button>
-                  </span>
-                  <button className="after-btn-">
-                    After
-                    <i className="fas fa-angle-right"> </i>
-                  </button>
+              <div className="practioner-cards">
+                <div className="grid-prtc">
+                  {filteredPractitionalsData.map((users, index) => (
+                    <Link
+                      to={`/toContact/${users._id}`}
+                      style={{ textDecoration: "none" }}
+                      key={index}
+                    >
+                      <div className="pract-card">
+                        <div className="pct-img">
+                          <span>
+                            {users.profileImage ? (
+                              <img src={`${users.profileImage}`} />
+                            ) : (
+                              <img src="assets/images/banner3.jpg" />
+                            )}
+                          </span>
+                          <div className="text-prct">
+                            <h1>
+                              {users.name}
+                              <img src="assets/images/Group134.png" alt="" />
+                            </h1>
+                            <h4>{users.expertise}</h4>
+                            <p>{users.country}</p>
+                          </div>
+                        </div>
+                        <div className="star-rating">
+                          <p>4.5</p>
+                          <span>
+                            <i className="fas fa-star"></i>
+                            <i className="fas fa-star"></i>
+                            <i className="fas fa-star"></i>
+                            <i className="fas fa-star"></i>
+                          </span>
+                          <p>(222,000)</p>
+                          <button className="pp-btn">
+                            Global Practitioner
+                          </button>
+                        </div>
+                        <div className="sumarry-prct">
+                          <p>{users.about}</p>
+                        </div>
+                        <div className="folowers-and-post">
+                          <a href="#">
+                            <strong>33</strong>
+                            posts
+                          </a>
+                          <a href="#">
+                            <strong>{users.contacts} </strong>
+                            contacts
+                          </a>
+                          <a href="#">
+                            <strong>Clients</strong>
+                            100+
+                          </a>
+                        </div>
+                        <div className="association-set">
+                          <div className="asos-div">
+                            <img src="assets/images/Google-lens.png" alt="" />
+                            <span>
+                              <h4>Asociated With</h4>
+
+                              <a href="#">Google</a>
+                            </span>
+                          </div>
+
+                          <button>Explore</button>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+
+                  <div className="people-also-grid">
+                    <h1>People Also Searched For</h1>
+                    <div className="button-grid">
+                      <button>
+                        <i className="fas fa-search"></i>
+                        <p>Geographer</p>
+                      </button>
+                      <button>
+                        <i className="fas fa-search"></i>
+                        <p>Geographer</p>
+                      </button>
+                      <button>
+                        <i className="fas fa-search"></i>
+                        <p>Geographer</p>
+                      </button>
+                      <button>
+                        <i className="fas fa-search"></i>
+                        <p>Geographer</p>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div className="navigation-padges-buttons">
+                  <div className="nabvigations">
+                    <button className="prev-btn">
+                      <i className="fas fa-angle-left"> </i>
+                      Previouse
+                    </button>
+                    <span className="counter-btn">
+                      <button className="active">1</button>
+                      <button>2</button>
+                      <button>3</button>
+                    </span>
+                    <button className="after-btn-">
+                      After
+                      <i className="fas fa-angle-right"> </i>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+      <Footer />
+    </>
   );
 }
