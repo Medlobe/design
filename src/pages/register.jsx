@@ -213,16 +213,16 @@ export default function Register() {
   }, [messages.length]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full  max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden flex">
+    <div className="flex min-h-screen  items-center justify-center bg-gray-100">
+      <div className="w-full  max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden flex  flex-col lg:flex-row">
         {/* Left Section - Form */}
-        <div className="w-1/2 p-8 flex flex-col justify-center">
+        <div className="lg:w-1/2 p-8 flex flex-col justify-center">
           <span
             className="flex justify-center font-extrabold text-2xl mb-4 "
             onClick={() => navigate("/")}
           >
             <h1>MED</h1>
-            <h1 className="text-purple-700">LOBE</h1>
+            <h1 className="text-purple-950">LOBE</h1>
           </span>
           <div className="w-90 flex items-center gap-8 justify-end mb-2 py-1 px-2  bg-gray-100  rounded-full">
             <button
@@ -232,7 +232,7 @@ export default function Register() {
               Login
             </button>
             <button
-              className="py-1 w-[10rem] bg-purple-100  rounded-full text-purple-700 font-semibold"
+              className="py-1 w-[10rem] bg-purple-100  rounded-full text-purple-950 font-semibold"
               onClick={() => navigate("/register")}
             >
               Sign up
@@ -367,7 +367,7 @@ export default function Register() {
 
             <button
               type="submit"
-              className="w-full bg-purple-700 text-white py-2 rounded-lg font-bold mt-6 hover:bg-purple-800 transition-colors"
+              className="w-full bg-purple-950 text-white py-2 rounded-lg font-bold mt-6 hover:opacity-7 transition-colors"
             >
               Proceed
             </button>
@@ -375,12 +375,12 @@ export default function Register() {
         </div>
 
         {/* Right Section - Illustration */}
-        <div className="w-1/2 bg-purple-100 flex flex-col  items-center p-8 relative">
-          <h2 className="text-2xl font-bold text-purple-700 mb-2 z-50">
+        <div className="w-full lg:w-1/2  lg:relative bg-purple-100 flex flex-col  items-center p-8 ">
+          <h2 className="text-2xl font-bold text-purple-950 mb-2 z-50">
             {" "}
             {messages[currentMessage]}{" "}
           </h2>
-          <div className="absolute w-full h-full flex items-center justify-center -z-1">
+          <div className="lg:absolute ow-full h-full flex items-center justify-center -z-1">
             <img
               src="/assets/images/FeatureImage.svg"
               alt="Illustration"
