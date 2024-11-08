@@ -192,10 +192,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="svg-main-ase">
-
-            <img src="assets/images/waves.svg" alt="" />
-          </div>
+          
          
           
 

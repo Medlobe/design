@@ -411,11 +411,11 @@ export default function UserSettigns() {
             <h1>Experiences</h1>
           </div>
           <div className="experience-divs">
-            <div className="w-100 ">
+            <div className="w-100 experience ">
               {userExperienceData.map((experience, index) => (
                 <div
                   key={index}
-                  className="flex items-start p-2 border-b border-gray-600"
+                  className="flex items-start p-2 "
                 >
                   {experience.companyLogo ? (
                     <img

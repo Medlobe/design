@@ -41,14 +41,7 @@ export default function NewNavbar({ onSearch }) {
               />
             </div>
           )}
-          <div className="if-auth">
-            <a href="#">
-              <i className="far fa-user"></i>
-            </a>
-            <a href="">
-              <i className="far fa-bell"></i>
-            </a>
-          </div>
+
           {/* Profile Picture and Username */}
           <div
             className="profile-section"
@@ -58,6 +51,11 @@ export default function NewNavbar({ onSearch }) {
               marginLeft: "10px",
             }}
           >
+            <div className="if-auth">
+              <a href="">
+                <i className="far fa-bell"></i>
+              </a>
+            </div>
             <img
               src={user.profileImage}
               alt="User Profile"
