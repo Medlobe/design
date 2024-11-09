@@ -1,110 +1,132 @@
-import AOS from "aos";
-import "aos/dist/aos.css";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
-  //variables
-  const serverName = process.env.REACT_APP_SERVER_NAME;
-  const userAuth = sessionStorage.getItem("userAuth");
+  const navigate = useNavigate();
   const token = sessionStorage.getItem("token");
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [screenValue, setScreenValue] = useState(false);
-
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  
-
-  const handleScroll = () => {
-    const threshold = 0.2 * window.innerHeight; // 30vh threshold
-    const currentScroll = window.scrollY;
-
-    setIsScrolled(currentScroll >= threshold);
-  };
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  //useEffects
-  useEffect(() => {
-    AOS.init({
-      duration: 2000,
-      easing: "ease",
-      delay: 100,
-      once: true,
-    });
-    AOS.refresh();
-  }, []);
 
   return (
-    <nav className={` nav ${isScrolled ? "scrolled" : ""}`}>
-      <div className="container">
-        <ul className="nav-ul">
-          <div className="hidden-toggle">
-            <img src="../assets/images/icon.png" alt="" />
-          </div>
-          <div className="hidden-toggle">
-            <i className="fas fa-user"></i>
-            <i className="fas fa-bars" onClick={toggleMenu}></i>
-          </div>
+    <nav className=" py-2 px-6 ">
+      <div className="max-w-screen-xl mx-auto flex justify-between items-center">
+        <span
+          className="flex justify-center font-extrabold text-2xl"
+          onClick={() => navigate("/")}
+        >
+          <h1>MED</h1>
+          <h1 className="text-purple-950">LOBE</h1>
+        </span>
 
-          <div className={isOpen ? "main-ul active" : "main-ul"}>
-            <div className="hidden-toggle pst">
-              <img src="../assets/images/icon.png" alt="" className="left-o" />
-              <i className="fas fa-close" onClick={toggleMenu}></i>
-            </div>
-            <a href="/" data-aos="fade-down-right " className="logo-img">
-              <motion.img
-                src="../assets/images/icon.png"
-                className="logo"
-              ></motion.img>
-            </a>
-            <li>
-              <a href="/">Home</a>
-            </li>
-            <li>
-              <Link to={`/reach`}>Reach out</Link>
-            </li>
-            <li>
-              <a href="/facts">Facts</a>
-            </li>
+        {/* Links - hidden on mobile */}
+        <div className="hidden md:flex space-x-8 ">
+          <a
+            href="/home"
+            className="hover:text-purple-950 transition duration-300"
+          >
+            Home
+          </a>
+          <a
+            href="#about"
+            className="hover:text-purple-950 transition duration-300"
+          >
+            About
+          </a>
+          <a
+            href="#services"
+            className="hover:text-purple-950 transition duration-300"
+          >
+            Services
+          </a>
+          <a
+            href="#contact"
+            className="hover:text-purple-950 transition duration-300"
+          >
+            Contact
+          </a>
+        </div>
 
-            <li>
-              <a href="/about">About</a>
-            </li>
-            <li>
-              <a href="/chatbot">Chatbot <i className="fas fa-arrow-down"></i> </a>
-            </li>
-            <div className="hidden-t">
-              <div className="bottom-nav">
-                <a href="/register">Sign up </a>
-                <a href="/Login">Sign in </a>
-              </div>
-            </div>
+        {/* Buttons for Login/Sign Up or Dashboard if logged in  */}
+        {token ? (
+          <button
+            onClick={() => navigate("/reach")}
+            className="border border-purple-950 text-purple-950 hover:bg-purple-950 hover:text-white px-4 py-2 rounded-full font-semibold transition duration-300"
+          >
+            Dashboard
+          </button>
+        ) : (
+          <div className="hidden md:flex space-x-4 text-white">
+            <button
+              onClick={() => navigate("/login")}
+              className="bg-purple-950  px-4 py-2 rounded-full font-semibold transition duration-300
+            hover:bg-transparent hover:border hover:border-purple-950 hover:text-purple-950"
+            >
+              Login
+            </button>
+            <button
+              onClick={() => navigate("/register")}
+              className="border border-purple-950 text-purple-950 hover:bg-purple-950 hover:text-white px-4 py-2 rounded-full font-semibold transition duration-300"
+            >
+              Sign Up
+            </button>
           </div>
+        )}
+        {/* Mobile Menu Icon */}
+        <div className="md:hidden">
+          <button id="menu-toggle" className="text-white focus:outline-none">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
 
-          {userAuth ? (
-            <div className="last-li">
-              <a href="/reach">Dashboard </a>             
-            </div>
-          ) : (
-            <div className="last-li">
-              <a href="/register">Sign up </a>
-              <a href="/Login">Sign in </a>
-            </div>
-          )}
-        </ul>
+      {/* Mobile Dropdown Menu */}
+      <div
+        id="mobile-menu"
+        className="md:hidden flex flex-col items-center mt-4 space-y-4"
+      >
+        <a
+          href="#about"
+          className=" hover:text-purple-300 transition duration-300"
+        >
+          About
+        </a>
+        <a
+          href="#services"
+          className=" hover:text-purple-300 transition duration-300"
+        >
+          Services
+        </a>
+        <a
+          href="#contact"
+          className=" hover:text-purple-300 transition duration-300"
+        >
+          Contact
+        </a>
+        <div className="text-white flex flex-col space-y-4">
+          <button
+            onClick={() => navigate("/login")}
+            className="bg-purple-950  px-4 py-2 rounded-full font-semibold transition duration-300
+            hover:bg-transparent hover:border hover:border-purple-950 hover:text-purple-950"
+          >
+            Login
+          </button>
+          <button
+            onClick={() => navigate("/register")}
+            className="border border-purple-950 text-purple-950 hover:bg-purple-950 hover:text-white px-4 py-2 rounded-full font-semibold transition duration-300"
+          >
+            Sign Up
+          </button>
+        </div>
       </div>
     </nav>
   );

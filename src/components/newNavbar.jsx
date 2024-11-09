@@ -22,12 +22,18 @@ export default function NewNavbar({ onSearch }) {
   return (
     <div className="main-nav-nav">
       <div className="top-main-profile">
-        <div className="logo-img-site">
-          <h1>MEDLOBE</h1>
-        </div>
+        <span
+          className="flex justify-center font-extrabold text-2xl mb-4"
+          onClick={() => navigate("/")}
+        >
+          <h1>MED</h1>
+          <h1 className="text-purple-950">LOBE</h1>
+        </span>
         <div className="user-detailes-o">
           <div className="nav-side">
-            <a href="/home" className="active-a">Home</a>
+            <a href="/home" className="active-a">
+              Home
+            </a>
             <a href="/reach">Reach Out</a>
             <a href="/chatbot">Medai AI</a>
             <a href="/about">About</a>
@@ -55,7 +61,6 @@ export default function NewNavbar({ onSearch }) {
               marginLeft: "10px",
             }}
           >
-           
             {/* <img
               src={user.profileImage}
               alt="User Profile"
@@ -79,14 +84,6 @@ export default function NewNavbar({ onSearch }) {
               {user.name}
             </div>
           </div>
-          {!token && (
-            <>
-              <a href="/login" className="dak-btn">
-                Sign in
-              </a>
-              <a href="/register">Sign up</a>
-            </>
-          )}
         </div>
       </div>
     </div>

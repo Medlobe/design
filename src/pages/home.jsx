@@ -53,11 +53,7 @@ export default function Home() {
     "Kiwifruit's abundance of vitamin C boosts the immune system, aids in collagen production for healthy skin, and enhances iron absorption, preventing anemia.",
     "Chia seeds' omega-3 fatty acids reduce inflammation, support brain health, and contribute to heart health by lowering cholesterol levels.",
   ]);
-  const [facts, setFacts] = useState([
-    "Quinoa, being a seed, provides a complete source of protein, making it ideal for muscle repair and growth. Its high fiber content aids digestion and promotes a feeling of fullness, aiding in weight management.",
-    "Kiwifruit's abundance of vitamin C boosts the immune system, aids in collagen production for healthy skin, and enhances iron absorption, preventing anemia.",
-    "Chia seeds' omega-3 fatty acids reduce inflammation, support brain health, and contribute to heart health by lowering cholesterol levels.",
-  ]);
+
 
   const [email, setEmail] = useState();
 
@@ -101,17 +97,7 @@ export default function Home() {
 
     fetchFacts();
   }, []);
-  useEffect(() => {
-    const appendFacts = () => {
-      const newFacts = allFacts.map((fact) => fact);
 
-      setFacts((prevFacts) => [...prevFacts, ...newFacts]);
-    };
-
-    if (allFacts.length > 0) {
-      appendFacts();
-    }
-  }, [allFacts]);
 
   //functions
 
@@ -157,13 +143,14 @@ export default function Home() {
           <ChatBot />
         </div>
         <div className="hero-body">
-          <NewNavbar />
+         
+          <Navbar/>
 
           <div className="her0-z">
             <div className="container">
               <div className="main-hero">
                 <div className="text-box">
-                  <h1 data-aos="fade-down" data-aos-delay="0">Medai Chat, The Future Of Medical Research and History</h1>
+                  <h1 data-aos="fade-down" data-aos-delay="0">Medlobe, The Future Of Medical Research and History</h1>
                   <p data-aos="fade-down" data-aos-delay="0">“Medlobe: Where AI meets healthcare, and a doctor is always within reach.”</p>
                   <div className="email-btn">
                     <a onClick={goToreg} data-aos="fade-right" data-aos-delay="400">Sign in</a>
