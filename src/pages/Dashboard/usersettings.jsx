@@ -331,7 +331,7 @@ export default function UserSettigns() {
                 EDIT PHOTO
               </div>
 
-              {/* Hidden file input */}
+              
               <input
                 type="file"
                 accept="image/*"

@@ -86,12 +86,7 @@ export default function Navbar() {
             <li>
               <a href="/chatbot">Chatbot <i className="fas fa-arrow-down"></i> </a>
             </li>
-            <div className="hidden-t">
-              <div className="bottom-nav">
-                <a href="/register">Sign up </a>
-                <a href="/Login">Sign in </a>
-              </div>
-            </div>
+           
           </div>
 
           {userAuth ? (

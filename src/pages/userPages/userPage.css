@@ -515,7 +515,7 @@
   top: 0;
   display: flex;
   top: 0;
-  z-index: 334;
+  z-index: 33455;
   background-color: white;
 }
 
@@ -685,6 +685,147 @@
 .search-btn-nav input:hover {
   background-color: #eee;
 }
+.logo-img-site.dispt{
+  display: none;
+}
+.dispt{
+  display: none;
+}
+.toggle-dark{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  z-index: 44;
+}
+@media screen and (max-width:1100px){
+  .user-detailes-o{
+    position: fixed;
+    background-color:  white;
+    height: 100vh;
+    width: 300px;
+    z-index: 554 !important;
+    padding: 10px 10px;
+    flex-direction: column;
+    left: -300px;
+    top: 0;
+    align-items: normal;
+    transition: all 0.5s ease-in-out;
+    box-shadow: 0 0 8px rgba(0 0 0 /20%);
+    
+
+  }
+  .user-detailes-o.show {
+    left: 0; /* Slide in when "show" class is added */
+  }
+  .toggle-dark{
+    display: flex;
+  }
+  .nav-side{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    left: 0;
+
+  }
+  .dispt{
+    display: flex !important;
+  }
+  .logo-img-site.dispt{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* margin-left: 40px; */
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+
+    justify-content: space-between;
+  }
+  .logo-img-site.dispt i{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    
+
+  }
+  .hire-burrons.dispt{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .hire-burrons.dispt a{
+    width: 100%;
+    height: 50px !important;
+    display: flex;
+    border-radius: 40px;
+
+  }
+  .nav-side a{
+    width: 100%;
+    margin-top: 5px;
+    border-radius: 40px;
+
+  }
+  .toggle-boss.dipst{
+    position: relative;
+
+    display: flex;
+  }
+  .toggle-boss.dipst i{
+    color:black;
+  }
+  .active-a{
+
+    background-color: #eee;
+    height: 40px;
+    border-radius: 5px;
+    color: #000;
+  }
+  
+
+  
+}
+.user-image-online{
+  position: relative;
+  display: flex;
+  cursor: pointer;
+
+}
+.user-image-online img{
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+}
+.user-image-online span{
+  width: 14px;
+  height: 14px;
+  background-color: greenyellow;
+  border-radius: 50%;
+  position: absolute;
+  top: 65%;
+  left: 65%;
+  border: 2px solid white;
+  box-shadow: 0 0 6px rgba(0 0 0 /20%);
+
+}
+
+
+
+
+
+
 
 .reach-out-second-nav {
   position: sticky;

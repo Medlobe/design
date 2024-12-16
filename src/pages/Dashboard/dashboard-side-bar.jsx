@@ -16,7 +16,11 @@ export default function SideNavbarD() {
         </div>
         <div className="links-a">
           <i className="fas fa-users"></i>
-          <a href="/reach">Reach Out</a>
+          <a href="/newR">Reachout</a>
+        </div>
+        <div className="links-a">
+          <i className="fas fa-stethoscope"></i>
+          <a href="/community">Community</a>
         </div>
 
         <div className="links-a">

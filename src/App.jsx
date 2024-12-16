@@ -30,6 +30,8 @@ import axios from "axios";
 import { ToastContainer } from "react-toastify";
 
 import DashboarMain from "./pages/Dashboard/user-dashboard";
+import CommunityNvabr from "./pages/community/communityNavbar";
+import CommunityMain from "./pages/community/communitymain";
 
 function App() {
   //variables
@@ -78,19 +80,21 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/regShow" element={<RegShow />} />
+              <Route path="/Community" element={<CommunityMain />} />
+              
               <Route
                 path="/users/:id/verify/:token"
                 element={<EmailVerify />}
               />
               {userAuth ? (
-                <Route path="/reach/:id" element={<Reach />} />
+                <Route path="/newR/:id" element={<CommunityMain />} />
               ) : (
                 <Route path="/reach/:id" element={<Login />} />
               )}
               {userAuth ? (
-                <Route path="/reach" element={<NewReach />} />
+                <Route path="/newR" element={<CommunityMain />} />
               ) : (
-                <Route path="/reach" element={<Login />} />
+                <Route path="/newR" element={<Login />} />
               )}
               <Route path="/facts" element={<Facts />} />
               <Route path="/testpadge" element={<SecondUserPadge />} />
@@ -98,19 +102,19 @@ function App() {
               <Route path="/chatbot" element={<MedChatBot />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/chat/:id" element={<Chat />} />
-              <Route path="/newR" element={<NewReach />} />
+              <Route path="/newR" element={<CommunityMain />} />
 
               <Route
                 path="/termsAndConditions"
                 element={<TermsAndConditions />}
               />
               {userAuth ? (
-                <Route path="/profile/:id" element={<DashboarMain />} />
+                <Route path="/profile/:id" element={<CommunityMain />} />
               ) : (
                 <Route path="/profile/:id" element={<SecondUserPadge />} />
               )}
               {userAuth ? (
-                <Route path="/profile" element={<DashboarMain />} />
+                <Route path="/profile" element={<CommunityMain />} />
               ) : (
                 <Route path="/profile" element={<Login />} />
               )}

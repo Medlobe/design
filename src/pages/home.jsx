@@ -79,7 +79,7 @@ export default function Home() {
       easing: "ease", // animation easing function
       delay: 100, // delay between each animated element
       once: false,
-      offset:100, // whether animation should only happen once
+      offset:50, // whether animation should only happen once
     });
     AOS.refresh();
   }, []);

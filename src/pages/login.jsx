@@ -152,7 +152,7 @@ export default function Login() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full  max-w-4xl bg-white shadow-lg rounded-lg overflow-hidden flex  flex-col lg:flex-row">
+      <div className="w-full  max-w-4xl bg-white  rounded-lg overflow-hidden flex  flex-col lg:flex-row">
         {/* Left Section - Form */}
         <div className=" lg:w-1/2  p-8 flex flex-col justify-center">
           <span

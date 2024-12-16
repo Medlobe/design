@@ -144,7 +144,7 @@ export default function SecondUserPadge() {
         ) : (
           <div className="main-btm">
             <div className="container">
-              <div className="advance-search">
+              {/* <div className="advance-search">
                 <div className="search-bar">
                   <i className="fas fa-search"></i>
                   <input
@@ -155,7 +155,7 @@ export default function SecondUserPadge() {
                 <a href="#" className="advanced-search-link">
                   Advanced search
                 </a>
-              </div>
+              </div> */}
               <div className="bottom-grid">
                 <div className="left-grid">
                   <div className="practioner-image">
