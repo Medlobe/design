@@ -1,78 +1,54 @@
-// Footer.js
-import React from "react";
-
-const Footer = () => {
+export default function Footer() {
   return (
-    <footer className="bg-white text-gray-600 py-12 px-6">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-start md:items-center">
+    <footer className="relative bg-gradient-to-r from-purple-950 to-black text-white py-8 px-4">
+      <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
         
-        <div className="flex flex-col mb-6 md:mb-0">
-          <h3 className="text-gray-800 text-lg font-semibold">Medlobe</h3>
-          <p className="text-sm mt-2">Our solutions connect you to health professionals quickly and easily. Contact us for more information.</p>
+        {/* Left Section - Logo and Text */}
+        <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
+          <h1 className="text-3xl font-extrabold text-white">MEDLOBE</h1>
+          <span className="text-purple-300 text-sm md:text-base">Your Health Hub</span>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-6 md:mb-0">
-          <div>
-            <h4 className="text-gray-800 font-semibold mb-2">Company</h4>
-            <ul className="space-y-1">
-              <li><a href="#" className="hover:text-gray-900">About Us</a></li>
-              <li><a href="#" className="hover:text-gray-900">Customers</a></li>
-              <li><a href="#" className="hover:text-gray-900">Newsroom</a></li>
-              <li><a href="#" className="hover:text-gray-900">Events</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-gray-800 font-semibold mb-2">Industries</h4>
-            <ul className="space-y-1">
-              <li><a href="#" className="hover:text-gray-900">Healthcare</a></li>
-              <li><a href="#" className="hover:text-gray-900">Telemedicine</a></li>
-              <li><a href="#" className="hover:text-gray-900">AI & Machine Learning</a></li>
-              <li><a href="#" className="hover:text-gray-900">Digital Health</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-gray-800 font-semibold mb-2">Products</h4>
-            <ul className="space-y-1">
-              <li><a href="#" className="hover:text-gray-900">Teleconsultation Platform</a></li>
-              <li><a href="#" className="hover:text-gray-900">Health Records Management</a></li>
-              <li><a href="#" className="hover:text-gray-900">AI Health Advisor</a></li>
-              <li><a href="#" className="hover:text-gray-900">Wellness Planning</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-gray-800 font-semibold mb-2">Get In Touch</h4>
-            <ul className="space-y-1">
-              <li><a href="mailto:hallo@medlobe.com" className="hover:text-gray-900">hallo@medlobe.com</a></li>
-              <li className="flex space-x-2 mt-2">
-                <a href="#" className="text-gray-600 hover:text-gray-800">
-                  <i className="fab fa-linkedin"></i>
-                </a>
-                <a href="#" className="text-gray-600 hover:text-gray-800">
-                  <i className="fab fa-youtube"></i>
-                </a>
-                <a href="#" className="text-gray-600 hover:text-gray-800">
-                  <i className="fab fa-facebook"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
+        {/* Middle Section - Links */}
+        <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 space-x-0 md:space-x-6 items-center">
+          <a href="#" className="hover:text-purple-400 transition ease-in-out duration-300">
+            About Us
+          </a>
+          <a href="#" className="hover:text-purple-400 transition ease-in-out duration-300">
+            Privacy Policy
+          </a>
+          <a href="#" className="hover:text-purple-400 transition ease-in-out duration-300">
+            Terms of Service
+          </a>
+          <a href="#" className="hover:text-purple-400 transition ease-in-out duration-300">
+            Contact
+          </a>
         </div>
 
-      </div>
-      <div className="container mx-auto mt-8 flex justify-between text-sm border-t border-gray-300 pt-6">
-        <p>© 2024 Medlobe, All rights reserved</p>
-        <div className="space-x-4">
-          <a href="#" className="hover:text-gray-800">Terms & Conditions</a>
-          <a href="#" className="hover:text-gray-800">Privacy Policy</a>
+        {/* Right Section - Social Icons */}
+        <div className="flex space-x-6">
+          <a href="#" className="text-white hover:text-purple-400 transition ease-in-out duration-300">
+            <i className="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" className="text-white hover:text-purple-400 transition ease-in-out duration-300">
+            <i className="fab fa-twitter"></i>
+          </a>
+          <a href="#" className="text-white hover:text-purple-400 transition ease-in-out duration-300">
+            <i className="fab fa-linkedin-in"></i>
+          </a>
         </div>
       </div>
+
+      {/* 3D Effect and Copyright */}
+      <div className="mt-6 text-center text-sm opacity-60">
+        <p>© 2024 MEDLOBE. All rights reserved.</p>
+      </div>
+
+      {/* Bottom Shadow for 3D Effect */}
+      <div className="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-r from-black to-purple-950 shadow-lg transform skew-y-6 -z-10"></div>
     </footer>
   );
-};
+}
 
-export default Footer;
 
   
