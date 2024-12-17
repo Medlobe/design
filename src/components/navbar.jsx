@@ -43,15 +43,7 @@ export default function Navbar() {
           </a>
         </div>
 
-<<<<<<< HEAD
-            <li>
-              <a href="/about">About</a>
-            </li>
-            <li>
-              <a href="/chatbot">Chatbot <i className="fas fa-arrow-down"></i> </a>
-            </li>
-           
-=======
+
         {/* Buttons for Login/Sign Up or Dashboard if logged in  */}
         {token ? (
           <button
@@ -75,10 +67,10 @@ export default function Navbar() {
             >
               Sign Up
             </button>
->>>>>>> adf377921fe1cce8d0c1c5c4504e835576a36183
+
           </div>
         )}
-        {/* Mobile Menu Icon */}
+        
         <div className="md:hidden">
           <button id="menu-toggle" className="text-white focus:outline-none">
             <svg
