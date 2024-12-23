@@ -153,8 +153,8 @@ export default function Home() {
                   <h1 data-aos="fade-down" data-aos-delay="0">Medlobe, The Future Of Medical Research and History</h1>
                   <p data-aos="fade-down" data-aos-delay="0">“Medlobe: Where AI meets healthcare, and a doctor is always within reach.”</p>
                   <div className="email-btn">
-                    <a onClick={goToreg} data-aos="fade-right" data-aos-delay="400">Sign in</a>
-                    <a onClick={goToreg} data-aos="fade-left" data-aos-delay="600">Sign up</a>
+                    <a  href="/login" data-aos="fade-right" data-aos-delay="400">Sign in</a>
+                    <a href="/register" data-aos="fade-left" data-aos-delay="600">Sign up</a>
                   </div>
                 </div>
 

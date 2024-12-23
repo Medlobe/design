@@ -2,6 +2,8 @@ export default function SideNavbarD() {
   const logout = () => {
     // Clear session storage
     sessionStorage.clear();
+    // Clearing the entire local storage
+    localStorage.clear();
 
     // Redirect to login page
     window.location.href = "/login";
