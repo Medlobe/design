@@ -5,21 +5,63 @@ import UserSettigns from "../Dashboard/usersettings";
 import NewReach from "../newReach";
 import Advertisment from "./advert";
 import Post from "./Communitypost";
-import { useContext, useState, useEffect } from "react";
-import { Router, useLocation, useNavigate } from "react-router-dom";
+import { useContext, useState, useEffect, useRef } from "react";
+import { Router, useLocation, useNavigate, Link } from "react-router-dom";
+import axios from "axios";
+import { BsPersonLinesFill } from "react-icons/bs";
+
 
 export default function CommunityMain() {
   const location = useLocation();
-
   const navigate = useNavigate();
+  const serverName = process.env.REACT_APP_SERVER_NAME;
+  const token = sessionStorage.getItem("token");
+  const userId = sessionStorage.getItem("userId");
 
-  const showReachOut = "/newR";
+  const showReachOut = "/reach" || "/newR";
   const showCommunity = "/community";
   const showprofilesetting = "/profile";
+  const [searchValue, setSearchValue] = useState("");
+  const searchRef = useRef(null);
+  const [contacts, setContacts] = useState([]);
+
+  useEffect(() => {
+    const fetchContactedUsers = async () => {
+      try {
+        const response = await axios.get(
+          `${serverName}messages/getContactedUsers`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setContacts(response.data);
+        console.log("contacts", response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchContactedUsers();
+  }, [token]);
+
+  // Function to handle the search input value
+  const handleSearch = (value) => {
+    setSearchValue(value);
+    console.log("Search Value in Parent Component:", value);
+
+    // Trigger the function in ChildComponent with the updated value
+    if (searchRef.current) {
+      searchRef.current(value);
+    }
+  };
 
   return (
     <>
-      <NewNavbar isCommunityPage={true} />
+      <NewNavbar onSearch={handleSearch} isCommunityPage={true} />
+
       <div className="maincomunity-body">
         <SideNavbarD />
 
@@ -48,7 +90,7 @@ export default function CommunityMain() {
             <Post />
           </div>
         )}
-        {location.pathname === showReachOut && <NewReach />}
+        {location.pathname === showReachOut && <NewReach ref={searchRef} />}
         {location.pathname === showprofilesetting && <UserSettigns />}
         <div className="extra-posts">
           <Advertisment />
@@ -56,32 +98,34 @@ export default function CommunityMain() {
             <div className="extra-follow-header">
               <h2>Related Practitioners</h2>
             </div>
-            <div className="follow-card">
-              <a href="#">
-                <img src="assets/images/oip.jpg" alt="" />
-                <span className="follow-details">
-                  <h2>Okoro Chukwuemeka</h2>
-                  <p>Health Instructor</p>
-                </span>
-              </a>
-              <p className="followp">Follow</p>
-            </div>
-            <div className="follow-card">
-              <a href="#">
-                <img src="assets/images/oip.jpg" alt="" />
-                <span className="follow-details">
-                  <h2>Onoja lucky</h2>
-                  <p>Dermatologist</p>
-                </span>
-              </a>
-              <p className="followp">Follow</p>
-            </div>
+            {contacts.map((contact, index) => {
+              return (
+                <Link to={`/toContact/${contact._id}`} className="follow-card" key={index}>
+                  <Link to={`/toContact/${contact._id}`}>
+                    {contact.profileImage ? (
+                      <img
+                        src={`${contact.profileImage}`}
+                        alt={`Profile image of ${contact.name}`}
+                      />
+                    ) : (
+                      <img
+                        src="../assets/images/OIP.jpg"
+                        alt="sub of the profile image"
+                      />
+                    )}
+                    <span className="follow-details">
+                      <h2>{contact.name}</h2>
+                      <p>{contact.practitionField}</p>
+                    </span>
+                  </Link>
+                  <BsPersonLinesFill className="text-black" size={24} />
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>
-      <div className="call-message-box">
-        
-      </div>
+      <div className="call-message-box"></div>
     </>
   );
 }

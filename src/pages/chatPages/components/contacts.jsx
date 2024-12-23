@@ -86,7 +86,7 @@ export default function Contacts({ currentUser, currentChat, changeChat }) {
                 >
                   {contact.profileImage ? (
                     <img
-                      src={`${contact.profileImage.url}`}
+                      src={`${contact.profileImage}`}
                       alt={`Profile image of ${contact.name}`}
                     />
                   ) : (

@@ -1,4 +1,11 @@
-import { useState, useEffect, useRef, useContext,useLocation, useNavigate } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/navbar";
 import axios, { all } from "axios";
@@ -6,7 +13,7 @@ import { motion } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-import { Router,  } from "react-router-dom";
+import { Router } from "react-router-dom";
 
 import CallChatBot from "../components/callChatbot";
 import NewNavbar from "../components/newNavbar";
@@ -16,7 +23,7 @@ import { GlobalContext } from "../context/GlobalContext";
 import Loader from "../components/loader";
 import Footer from "../components/footer";
 
-export default function NewReach() {
+const NewReach = forwardRef((props, ref) => {
   //variables
   const serverName = process.env.REACT_APP_SERVER_NAME;
   //get userId
@@ -161,6 +168,9 @@ export default function NewReach() {
     searchPractitioners(searchValue);
   };
 
+  // Expose the search function to the parent
+  useImperativeHandle(ref, () => handleSearchChange);
+
   const searchPractitioners = (query) => {
     // If the query is empty, reset to the full list immediately
     if (query === "") {
@@ -188,63 +198,62 @@ export default function NewReach() {
 
   return (
     <>
-    <div className="practioner-cards">
-      <div className="grid-prtc">
-        {filteredPractitionalsData.map((users, index) => (
-          <Link
-           className="apract"
-            to={`/toContact/${users._id}`}
-            style={{ textDecoration: "none !important" }}
-            key={index}
-          >
-            <div className="pract-card">
-              <div className="pct-img">
-                <span>
-                  {users.profileImage ? (
-                    <img src={`${users.profileImage}`} />
-                  ) : (
-                    <img src="assets/images/banner3.jpg" />
-                  )}
-                </span>
-                <div className="text-prct">
-                  <h1>
-                    {users.name}
-                    <img src="assets/images/Group134.png" alt="" />
-                  </h1>
-                  <h4>{users.expertise}</h4>
-                  <p>{users.country}</p>
+      <div className="practioner-cards">
+        <div className="grid-prtc">
+          {filteredPractitionalsData.map((users, index) => (
+            <Link
+              className="apract"
+              to={`/toContact/${users._id}`}
+              style={{ textDecoration: "none !important" }}
+              key={index}
+            >
+              <div className="pract-card">
+                <div className="pct-img">
+                  <span>
+                    {users.profileImage ? (
+                      <img src={`${users.profileImage}`} />
+                    ) : (
+                      <img src="assets/images/banner3.jpg" />
+                    )}
+                  </span>
+                  <div className="text-prct">
+                    <h1>
+                      {users.name}
+                      <img src="assets/images/Group134.png" alt="" />
+                    </h1>
+                    <h4>{users.expertise}</h4>
+                    <p>{users.country}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="star-rating">
-                <p>4.5</p>
-                <span>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                </span>
-                <p>(222,000)</p>
-                
-              </div>
-              <button className="pp-btn">Global Practitioner</button>
-              {/* <div className="sumarry-prct">
+                <div className="star-rating">
+                  <p>4.5</p>
+                  <span>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
+                  </span>
+                  <p>(222,000)</p>
+                </div>
+                <button className="pp-btn">Global Practitioner</button>
+                {/* <div className="sumarry-prct">
                 <p>{users.about}</p>
               </div> */}
-              <div className="folowers-and-post">
-                <a href="#">
-                  <strong>33</strong>
-                  posts
-                </a>
-                <a href="#">
-                  <strong>{users.contacts} </strong>
-                  contacts
-                </a>
-                <a href="#">
-                  <strong>Clients</strong>
-                  100+
-                </a>
-              </div>
-              {/* <div className="association-set">
+                <div className="folowers-and-post">
+                  <a href="#">
+                    <strong>33</strong>
+                    posts
+                  </a>
+                  <a href="#">
+                    <strong>{users.contacts} </strong>
+                    contacts
+                  </a>
+                  <a href="#">
+                    <strong>Clients</strong>
+                    100+
+                  </a>
+                </div>
+                {/* <div className="association-set">
                 <div className="asos-div">
                   <img src="assets/images/Google-lens.png" alt="" />
                   <span>
@@ -256,50 +265,52 @@ export default function NewReach() {
 
                 <button>Explore</button>
               </div> */}
-            </div>
-          </Link>
-        ))}
+              </div>
+            </Link>
+          ))}
 
-        <div className="people-also-grid">
-          <h1>People Also Searched For</h1>
-          <div className="button-grid">
-            <button>
-              <i className="fas fa-search"></i>
-              <p>Geographer</p>
+          <div className="people-also-grid">
+            <h1>People Also Searched For</h1>
+            <div className="button-grid">
+              <button>
+                <i className="fas fa-search"></i>
+                <p>Geographer</p>
+              </button>
+              <button>
+                <i className="fas fa-search"></i>
+                <p>Geographer</p>
+              </button>
+              <button>
+                <i className="fas fa-search"></i>
+                <p>Geographer</p>
+              </button>
+              <button>
+                <i className="fas fa-search"></i>
+                <p>Geographer</p>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="navigation-padges-buttons">
+          <div className="nabvigations">
+            <button className="prev-btn">
+              <i className="fas fa-angle-left"> </i>
+              Previouse
             </button>
-            <button>
-              <i className="fas fa-search"></i>
-              <p>Geographer</p>
-            </button>
-            <button>
-              <i className="fas fa-search"></i>
-              <p>Geographer</p>
-            </button>
-            <button>
-              <i className="fas fa-search"></i>
-              <p>Geographer</p>
+            <span className="counter-btn">
+              <button className="active">1</button>
+              <button>2</button>
+              <button>3</button>
+            </span>
+            <button className="after-btn-">
+              After
+              <i className="fas fa-angle-right"> </i>
             </button>
           </div>
         </div>
       </div>
-      <div className="navigation-padges-buttons">
-        <div className="nabvigations">
-          <button className="prev-btn">
-            <i className="fas fa-angle-left"> </i>
-            Previouse
-          </button>
-          <span className="counter-btn">
-            <button className="active">1</button>
-            <button>2</button>
-            <button>3</button>
-          </span>
-          <button className="after-btn-">
-            After
-            <i className="fas fa-angle-right"> </i>
-          </button>
-        </div>
-      </div>
-    </div>
     </>
   );
-}
+});
+
+export default NewReach;

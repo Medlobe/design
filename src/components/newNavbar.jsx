@@ -1,7 +1,8 @@
-import { useContext ,useState ,useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Router, useLocation, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalContext";
 import CommunityNvabr from "../pages/community/communityNavbar";
+import { FaSearch } from "react-icons/fa";
 
 export default function NewNavbar({ onSearch, isCommunityPage = false }) {
   const location = useLocation();
@@ -17,6 +18,7 @@ export default function NewNavbar({ onSearch, isCommunityPage = false }) {
   const handleInputChange = (e) => {
     onSearch(e.target.value);
   };
+
   const [profileImage, setProfileImage] = useState("assets/images/banner3.jpg");
   useEffect(() => {
     if (user && user.profileImage) {
@@ -31,16 +33,21 @@ export default function NewNavbar({ onSearch, isCommunityPage = false }) {
           <div className="logo-img-site">
             <h1>MEDLOBE</h1>
           </div>
-            <CommunityNvabr />
 
           <div className="hire-burrons">
             {location.pathname === showSearchBarOn && (
-              <div className="searchbar-community">
-                <input type="text" onChange={handleInputChange} />
-                <a href="#">Search</a>
+              <div className="flex items-center border rounded-full px-3 py-2">
+                <FaSearch className="text-gray-500 mr-2 " />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="outline-none flex-grow"
+                  onChange={handleInputChange}
+                />
               </div>
             )}
-             {token && (
+
+            {token && (
               <div className="community-nav">
                 <div className="notification-and-message">
                   <span>
@@ -50,15 +57,14 @@ export default function NewNavbar({ onSearch, isCommunityPage = false }) {
                     <img src="assets/images/bell.png" alt="" />
                   </span>
                 </div>
-                <div className="user-image-online"
-                  onClick={() => navigate("/profile")}>
+                <div
+                  className="user-image-online"
+                  onClick={() => navigate("/profile")}
+                >
                   <img src={profileImage} alt="Profile" />
-                  <span>
-
-                  </span>
+                  <span></span>
                 </div>
               </div>
-              
             )}
 
             {!token && (
@@ -103,17 +109,14 @@ export default function NewNavbar({ onSearch, isCommunityPage = false }) {
                     <img src="assets/images/bell.png" alt="" />
                   </span>
                 </div>
-                <div className="user-image-online"
-                onClick={() => navigate("/profile")}>
-                  <img src={profileImage} alt="Profile"
-                   
-                   />
-                  <span>
-
-                  </span>
+                <div
+                  className="user-image-online"
+                  onClick={() => navigate("/profile")}
+                >
+                  <img src={profileImage} alt="Profile" />
+                  <span></span>
                 </div>
               </div>
-              
             )}
 
             {!token && (
