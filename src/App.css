@@ -1566,16 +1566,36 @@ align-items: center;
   position: relative;
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 10px;
   align-items: center;
 
 }
 .notification-and-message span {
   display: flex;
+  width: 40px;
+  cursor: pointer;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  align-items: center;
+  justify-content: center;
+
 
 }
+
+
 .notification-and-message span img{
   max-width: 20px;
+
+}
+.drop-down-module{
+  position: absolute;
+  top: 20px;
+  width: 350px;
+  background-color: white;
+  border-radius: 20px;
+  height: 500px;
+  box-shadow: 0 0 7px rgba(0 0 0 /20%);
 
 }
 .boxshadow-p{

@@ -2,6 +2,7 @@ import { useContext ,useState ,useEffect } from "react";
 import { Router, useLocation, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalContext";
 import CommunityNvabr from "../pages/community/communityNavbar";
+import Callmesage from "../pages/chatPages/components/callmesage";
 
 export default function NewNavbar({ onSearch, isCommunityPage = false }) {
   const location = useLocation();
@@ -24,6 +25,11 @@ export default function NewNavbar({ onSearch, isCommunityPage = false }) {
     }
   }, [user]);
 
+  const [showMessages, setShowMessages] = useState(false);
+  const toggleMessageDropdown = () => {
+    setShowMessages(true); 
+    console.log("happy")
+  };
   return (
     <div className="main-nav-nav">
       {isCommunityPage ? (
@@ -31,6 +37,7 @@ export default function NewNavbar({ onSearch, isCommunityPage = false }) {
           <div className="logo-img-site">
             <h1>MEDLOBE</h1>
           </div>
+           
             <CommunityNvabr />
 
           <div className="hire-burrons">
@@ -43,8 +50,9 @@ export default function NewNavbar({ onSearch, isCommunityPage = false }) {
              {token && (
               <div className="community-nav">
                 <div className="notification-and-message">
-                  <span>
-                    <img src="assets/images/" alt="" />
+                  <span onClick={toggleMessageDropdown} >
+                    <img src="assets/images/chat.png" alt="" />
+                    {showMessages && <Callmesage />}
                   </span>
                   <span>
                     <img src="assets/images/bell.png" alt="" />
@@ -102,6 +110,10 @@ export default function NewNavbar({ onSearch, isCommunityPage = false }) {
                   <span>
                     <img src="assets/images/bell.png" alt="" />
                   </span>
+                  <span>
+                    <img src="assets/images/chat.png" alt="" />
+                  </span>
+                  
                 </div>
                 <div className="user-image-online"
                 onClick={() => navigate("/profile")}>
