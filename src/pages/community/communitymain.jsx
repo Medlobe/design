@@ -5,26 +5,95 @@ import UserSettigns from "../Dashboard/usersettings";
 import NewReach from "../newReach";
 import Advertisment from "./advert";
 import Post from "./Communitypost";
-import { useContext, useState, useEffect } from "react";
-import { Router, useLocation, useNavigate } from "react-router-dom";
+import { useContext, useState, useEffect, useRef } from "react";
+import { Router, useLocation, useNavigate, Link } from "react-router-dom";
+import axios from "axios";
+import { BsPersonLinesFill } from "react-icons/bs";
+import SecondUserPadge from "../userPages/profile-testing";
 
 export default function CommunityMain() {
   const location = useLocation();
-
   const navigate = useNavigate();
+  const serverName = process.env.REACT_APP_SERVER_NAME;
+  const token = sessionStorage.getItem("token");
+  const userId = sessionStorage.getItem("userId");
 
-  const showReachOut = "/newR";
+  const showReachOut = "/reach" || "/newR";
   const showCommunity = "/community";
-  const showprofilesetting = "/profile";
+  const showContact = /^\/toContact\/[a-zA-Z0-9]+$/;
 
+  const showprofilesetting = "/profile";
+  const [searchValue, setSearchValue] = useState("");
+  const searchRef = useRef(null);
+  const [contacts, setContacts] = useState([]);
+
+  useEffect(() => {
+    const fetchContactedUsers = async () => {
+      try {
+        const response = await axios.get(
+          `${serverName}messages/getContactedUsers`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setContacts(response.data);
+        console.log("contacts", response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchContactedUsers();
+  }, [token]);
+
+  // Function to handle the search input value
+  const handleSearch = (value) => {
+    setSearchValue(value);
+    console.log("Search Value in Parent Component:", value);
+
+    // Trigger the function in ChildComponent with the updated value
+    if (searchRef.current) {
+      searchRef.current(value);
+    }
+  };
+  const [isSidebarVisible, setSidebarVisible] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarVisible((prev) => !prev);
+  };
   return (
     <>
-      <NewNavbar isCommunityPage={true} />
+      <NewNavbar
+        onToggleSidebar={toggleSidebar}
+        onSearch={handleSearch}
+        isCommunityPage={true}
+      />
+      <div
+        className={`blackbody-s ${isSidebarVisible ? "visible" : "hidden"}`}
+        onClick={toggleSidebar}
+      ></div>
       <div className="maincomunity-body">
-        <SideNavbarD />
+        <SideNavbarD
+          onToggleSidebar={toggleSidebar}
+          isSidebarVisible={isSidebarVisible}
+        />
 
         {location.pathname === showCommunity && (
           <div className="community-posts">
+            <div className="filter-button-section">
+              <div className="filter-btns">
+                <button>All</button>
+                <button>Groups</button>
+                <button>Products</button>
+                <button>People</button>
+                <button>Organizations</button>
+                <button>Articles</button>
+                <button>Posts</button>
+              </div>
+            </div>
             <div className="post-an-add">
               <div className="first-row-post">
                 <img src="assets/images/OIP.jpg" alt="" />
@@ -48,40 +117,49 @@ export default function CommunityMain() {
             <Post />
           </div>
         )}
-        {location.pathname === showReachOut && <NewReach />}
+        {location.pathname === showReachOut && <NewReach ref={searchRef} />}
         {location.pathname === showprofilesetting && <UserSettigns />}
+        {showContact.test(location.pathname) && <SecondUserPadge />}
         <div className="extra-posts">
           <Advertisment />
           <div className="extra-follow">
             <div className="extra-follow-header">
               <h2>Related Practitioners</h2>
             </div>
-            <div className="follow-card">
-              <a href="#">
-                <img src="assets/images/oip.jpg" alt="" />
-                <span className="follow-details">
-                  <h2>Okoro Chukwuemeka</h2>
-                  <p>Health Instructor</p>
-                </span>
-              </a>
-              <p className="followp">Follow</p>
-            </div>
-            <div className="follow-card">
-              <a href="#">
-                <img src="assets/images/oip.jpg" alt="" />
-                <span className="follow-details">
-                  <h2>Onoja lucky</h2>
-                  <p>Dermatologist</p>
-                </span>
-              </a>
-              <p className="followp">Follow</p>
-            </div>
+            {contacts.map((contact, index) => {
+              return (
+                <Link
+                  to={`/toContact/${contact._id}`}
+                  className="follow-card"
+                  key={index}
+                >
+                  <Link to={`/toContact/${contact._id}`}>
+                    {contact.profileImage ? (
+                      <img
+                        src={`${contact.profileImage}`}
+                        alt={`Profile image of ${contact.name}`}
+                      />
+                    ) : (
+                      <img
+                        src="../assets/images/OIP.jpg"
+                        alt="sub of the profile image"
+                      />
+                    )}
+                    <span className="follow-details">
+                      <h2>{contact.name}</h2>
+                      {/* <p>{contact.practitionField}</p> */}
+                    </span>
+                  </Link>
+                  <div className="icon-t">
+                    <i className="fas fa-ellipsis-v"></i>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>
-      <div className="call-message-box">
-        
-      </div>
+      <div className="call-message-box"></div>
     </>
   );
 }

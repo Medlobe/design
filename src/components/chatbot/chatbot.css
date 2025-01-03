@@ -49,16 +49,17 @@ background-image: url('../../../public/assets/images/bg-shapes.png');
 
 }
 .serach-span{
-  border: 2px solid var(--border-color);
+  /* border: 2px solid #ddd; */
   height: 40px;
   width: 100%;
   border-radius: 30px;
   display: flex;
+  background-color: #ecf0f1;
   flex-direction: row;
   /* gap: 10px; */
   /* margin-top: 20px; */
   align-items: center;
-  color: white;
+  color: black;
   padding: 0px 10px;
 }
 .serach-span input{
@@ -66,11 +67,14 @@ background-image: url('../../../public/assets/images/bg-shapes.png');
   height: 40px;
   outline: none;
   padding:0px 10px;
-  color: white;
+  width: 100%;
+  color: black;
   background-color: transparent;
+  font-size: 15px;
+  
 }
 .serach-span input::placeholder{
-  color: var(--border-color);
+  color: black;
 }
 .serach-span i{
   font-size: 13px;

@@ -1,7 +1,7 @@
 export default function ChatHeaderSearch(){
     return(
-        <>
-        <div className="header-left">
+        <div className="sticky-chat-header-top">
+        <div className="header-top">
           <h4>Chats</h4>
           <i className="fas fa-edit" style={{fontWeight:"400"}}></i>
 
@@ -10,7 +10,7 @@ export default function ChatHeaderSearch(){
           <i className="fas fa-search"></i>
           <input type="text" placeholder="search"/>
         </div>
-        </>
+        </div>
     )
 
 }

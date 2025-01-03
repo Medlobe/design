@@ -312,9 +312,9 @@ export default function UserSettigns() {
     closeModal();
   };
 
-  //   if (user.length === 0) {
-  //     return <Loader />;
-  //   }
+    if (user.length === 0) {
+      return <Loader />;
+    }
 
   return (
     <>

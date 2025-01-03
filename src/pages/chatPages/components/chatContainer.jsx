@@ -115,7 +115,7 @@ export default function ChatContainer({
                 <div className="profileImg">
                   {currentChat.profileImage ? (
                     <img
-                      src={`${currentChat.profileImage.url}`}
+                      src={`${currentChat.profileImage}`}
                       alt={`Profile image of ${currentChat.name}`}
                     />
                   ) : (

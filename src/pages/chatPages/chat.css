@@ -18,9 +18,9 @@
 .contactContainer {
   padding: 15px 0px;
   width: 100%;
-  border-right: 1px solid var(--border-color);
-  overflow-x: scroll;
-  overflow-y: scroll;
+  
+
+  
 }
 
 .contactContainer::-webkit-scrollbar {
@@ -51,22 +51,53 @@
   height: 3rem;
 }
 .contactBody {
-  min-height: 450px;
+
   margin-top: 20px;
+  overflow-y: auto;
+
+  height: 350px;
 }
 
+.sticky-chat-header-top{
+  position: sticky;
+  display: flex;
+  background-color: white;
+  /* padding: 10px; */
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+  
+
+
+}
+.header-top{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
+
+}
 .contacts {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+
 
   position: relative;
   width: 100%;
-  /* margin-top: 20px; */
+ 
+ 
+  height: 70px;
+  padding: 0px 15px;
   margin-bottom: 10px;
-  padding: 15px;
-  height: 90px;
-  border-bottom: 1px solid var(--border-color);
+
+}
+.contacts:hover{
+  background-color:#ecf0f1 ;
 }
 .contact {
   width: 100%;
@@ -75,20 +106,20 @@
   align-items: center;
 
   cursor: pointer;
-  /* border-radius: 0.2rem; */
+  
 
   gap: 15px;
 
   transition: 0.5s ease-in;
 }
 .contact img {
-  width: 50px;
-  height: 50px;
+  min-width: 40px;
+  height: 40px;
   border-radius: 100%;
   object-fit: cover;
-  border: 2px solid var(--border-color);
+
 }
-.contact span {
+.contacts-span {
   gap: 5px;
   height: 100%;
   display: flex;
@@ -96,18 +127,19 @@
   position: relative;
   flex-direction: column;
 }
-.contact span h3 {
-  color: white;
-  font-size: 15px;
+.contacts-span h3 {
+  color: black;
+  font-size: 12px;
+  font-weight: 600;
 }
-.contact span h6 {
-  color: white;
+.contacts-span h6 {
+  color: black;
   font-weight: lighter;
   font-size: 13px;
   text-transform: uppercase;
 }
 .contacts .selected {
-  background-color: rgba(225, 225, 225, 0.196);
+  
   width: 100%;
 }
 

@@ -86,7 +86,7 @@ export default function Contacts({ currentUser, currentChat, changeChat }) {
                 >
                   {contact.profileImage ? (
                     <img
-                      src={`${contact.profileImage.url}`}
+                      src={`${contact.profileImage}`}
                       alt={`Profile image of ${contact.name}`}
                     />
                   ) : (
@@ -95,15 +95,12 @@ export default function Contacts({ currentUser, currentChat, changeChat }) {
                       alt="sub of the profile image"
                     />
                   )}
-                  <span>
+                  <div className="contacts-span">
                     <h3>{contact.name}</h3>
-                    {contact.healthPractitioner === true ? (
-                      <h6> {contact.practitionField}</h6>
-                    ) : (
-                      <h6>Client</h6>
-                    )}
-                  </span>
+                    
+                  </div>
                 </div>
+                <i className="fas fa-ellipsis-v"></i>
               </div>
             );
           })}

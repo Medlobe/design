@@ -89,12 +89,22 @@ function App() {
               {userAuth ? (
                 <Route path="/newR/:id" element={<CommunityMain />} />
               ) : (
-                <Route path="/reach/:id" element={<Login />} />
+                <Route path="/newR/:id" element={<Login />} />
               )}
               {userAuth ? (
                 <Route path="/newR" element={<CommunityMain />} />
               ) : (
                 <Route path="/newR" element={<Login />} />
+              )}
+                  {userAuth ? (
+                <Route path="/reach" element={<CommunityMain />} />
+              ) : (
+                <Route path="/reach" element={<Login />} />
+              )}
+               {userAuth ? (
+                <Route path="/reach/:id" element={<CommunityMain />} />
+              ) : (
+                <Route path="/reach/:id" element={<Login />} />
               )}
               <Route path="/facts" element={<Facts />} />
               <Route path="/testpadge" element={<SecondUserPadge />} />
@@ -119,7 +129,7 @@ function App() {
                 <Route path="/profile" element={<Login />} />
               )}
 
-              <Route path="/toContact/:id" element={<SecondUserPadge />} />
+              <Route path="/toContact/:id" element={<CommunityMain />} />
 
               {userAuth ? (
                 <Route path="/chat:id" element={<Chat />} />
