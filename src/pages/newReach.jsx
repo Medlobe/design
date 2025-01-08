@@ -195,11 +195,22 @@ const NewReach = forwardRef((props, ref) => {
 
     setFilteredPractitionalsData(searchedPractitioners);
   };
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>
       <div className="practioner-cards">
+        
+
         <div className="grid-prtc">
+        {/* <div className="page-header">
+          <h1>Reach Out</h1>
+          <p>
+            <i className="far fa-file"></i>Drafts
+          </p>
+        </div> */}
           {filteredPractitionalsData.map((users, index) => (
             <Link
               className="apract"
@@ -208,12 +219,15 @@ const NewReach = forwardRef((props, ref) => {
               key={index}
             >
               <div className="pract-card">
+                <div className="absolute-hamburger">
+                  <i className="fas fa-ellipsis-v"></i>
+                </div>
                 <div className="pct-img">
                   <span>
                     {users.profileImage ? (
                       <img src={`${users.profileImage}`} />
                     ) : (
-                      <img src="assets/images/banner3.jpg" />
+                      <img src="assets/images/OIP.jpg" />
                     )}
                   </span>
                   <div className="text-prct">
@@ -236,9 +250,9 @@ const NewReach = forwardRef((props, ref) => {
                   <p>(222,000)</p>
                 </div>
                 <button className="pp-btn">Global Practitioner</button>
-                {/* <div className="sumarry-prct">
-                <p>{users.about}</p>
-              </div> */}
+                <div className="sumarry-prct">
+                  <p>{users.about}</p>
+                </div>
                 <div className="folowers-and-post">
                   <a href="#">
                     <strong>33</strong>
@@ -290,22 +304,22 @@ const NewReach = forwardRef((props, ref) => {
               </button>
             </div>
           </div>
-        </div>
-        <div className="navigation-padges-buttons">
-          <div className="nabvigations">
-            <button className="prev-btn">
-              <i className="fas fa-angle-left"> </i>
-              Previouse
-            </button>
-            <span className="counter-btn">
-              <button className="active">1</button>
-              <button>2</button>
-              <button>3</button>
-            </span>
-            <button className="after-btn-">
-              After
-              <i className="fas fa-angle-right"> </i>
-            </button>
+          <div className="navigation-padges-buttons">
+            <div className="nabvigations">
+              <button className="prev-btn">
+                <i className="fas fa-angle-left"> </i>
+                Previouse
+              </button>
+              <span className="counter-btn">
+                <button className="active">1</button>
+                <button>2</button>
+                <button>3</button>
+              </span>
+              <button className="after-btn-">
+                After
+                <i className="fas fa-angle-right"> </i>
+              </button>
+            </div>
           </div>
         </div>
       </div>

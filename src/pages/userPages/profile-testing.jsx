@@ -122,8 +122,7 @@ export default function SecondUserPadge() {
       );
 
       console.log(`${practitioner.name} contacted successfully`);
-      // Navigate to the chat page
-      // Append `personsId` to `personsData` before navigation
+     
       const extendedPersonsData = {
         ...practitioner,
         personsId: practitioner._id,
@@ -137,77 +136,34 @@ export default function SecondUserPadge() {
   return (
     <>
       <div className="main-user-container">
-        <NewNavbar />
-        {/* <SearchNavabar/> */}
+        
+       
         {practitioner.length === 0 ? (
           <Loader />
         ) : (
           <div className="main-btm">
-            <div className="container">
-              {/* <div className="advance-search">
-                <div className="search-bar">
-                  <i className="fas fa-search"></i>
-                  <input
-                    type="text"
-                    placeholder="Search a Practiioner by name,company,nech .."
-                  />
-                </div>
-                <a href="#" className="advanced-search-link">
-                  Advanced search
-                </a>
-              </div> */}
+            
+            
               <div className="bottom-grid">
                 <div className="left-grid">
-                  <div className="practioner-image">
+                  <div className="practioner-image"
+                  style={{backgroundImage: "url('../assets/images/banner3.jpg')"}}
+                  
+                  >
                     {practitioner.profileImage ? (
                       <img src={`${practitioner.profileImage}`} />
                     ) : (
-                      <img src="assets/images/banner3.jpg" />
+                      <img src="assets/images/OIP.jpg" />
                     )}
-                    <p>{practitioner.name}</p>
-                    <h4>{practitioner.email}</h4>
-                    <a onClick={handleContact}>
-                      Contact <i className="fas fa-plus"></i>{" "}
-                    </a>
+                    {/* <p>{practitioner.name}</p>
+                    <h4>{practitioner.email}</h4> */}
+                   
                   </div>
-                  <div className="checklist-div">
-                    <div className="grid-check-list">
-                      <span>
-                        <h1>{practitioner.contacts}</h1>
-                        <p>Happy Clients</p>
-                      </span>
-                      <span>
-                        <h1>30</h1>
-                        <p>Views</p>
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    className="message-conatct-div"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <a onClick={handleMovetoChat}>
-                      Message
-                      <i className="far fa-message"></i>
-                    </a>
-                  </div>
+                  
+                  
                 </div>
                 <div className="right-side-grid">
-                  {/* <div className="practioner-details-nav">
-              <div className="main-pct-det">
-                <a href="#">Forum</a>
-                <a href="#">Articles</a>
-                <a href="#" className="active">
-                  About
-                </a>
-                <a href="#">About</a>
-              </div>
-            </div> */}
+                 
                   <div className="about-me sza-section">
                     <div className="sca-header">
                       <h4>{practitioner.practitionField} </h4>
@@ -261,11 +217,12 @@ export default function SecondUserPadge() {
             </div> */}
                 </div>
               </div>
-            </div>
           </div>
+          
+         
         )}
       </div>
-      <Footer />
+    
     </>
   );
 }

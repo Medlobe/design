@@ -17,7 +17,7 @@ export default function Post() {
               </span>
             </div>
             <div className="clear-and-detais-button">
-              <img src="assets/images/trash-bin.png" alt="" />
+              <i className="fas fa-ellipsis-v"></i>
             </div>
           </div>
         </div>
@@ -28,11 +28,11 @@ export default function Post() {
             <span>Like</span>
           </div>
           <div className="action-item">
-            <i className="far fa-comment-alt"></i>
+            <i className="fas fa-comment-alt"></i>
             <span>Comment</span>
           </div>
           <div className="action-item">
-            <i className="far fa-share"></i>
+            <i className="fas fa-retweet"></i>
             <span>Repost</span>
           </div>
           <div className="action-item">
@@ -57,7 +57,7 @@ export default function Post() {
               </span>
             </div>
             <div className="clear-and-detais-button">
-              <img src="assets/images/trash-bin.png" alt="" />
+            <i className="fas fa-ellipsis-v"></i>
             </div>
           </div>
         </div>
@@ -80,7 +80,7 @@ export default function Post() {
             <span>Comment</span>
           </div>
           <div className="action-item">
-            <i className="far fa-share"></i>
+            <i className="fas fa-retweet"></i>
             <span>Repost</span>
           </div>
           <div className="action-item">

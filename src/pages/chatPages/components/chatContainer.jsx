@@ -17,6 +17,7 @@ export default function ChatContainer({
   const hostName = process.env.REACT_APP_HOST_NAME;
   const token = sessionStorage.getItem("token");
   const scrollRef = useRef();
+  const messagesContainerRef = useRef(null);
   const userId = sessionStorage.getItem("userId");
 
   //states
@@ -60,7 +61,10 @@ export default function ChatContainer({
 
   // Auto-scroll when messages change
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    const container = messagesContainerRef.current;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
   }, [messages]);
 
   const sendMessage = async (messageText) => {
@@ -104,13 +108,15 @@ export default function ChatContainer({
       {currentChat && (
         <div className="chatContainer">
           <div className="chat-header">
-            <div className="user-details">
+            <div className="header-chat-user">
               {!screenValue && (
                 <i class="fas fa-arrow-left" onClick={handleShow}></i>
               )}
               <span>
                 <div className="username">
-                  <h3> {currentChat.name} </h3>
+                  <i className="fas fa-phone"></i>
+                  <i className="fas fa-video"></i>
+                  {/* <h3> {currentChat.name} </h3> */}
                 </div>
                 <div className="profileImg">
                   {currentChat.profileImage ? (
@@ -137,7 +143,7 @@ export default function ChatContainer({
                       message.senderId === senderId ? "sent" : "received"
                     }`}
                   >
-                    <div className="content">
+                    <div className="content-chat">
                       <p>{message.content}</p>
                     </div>
                   </div>

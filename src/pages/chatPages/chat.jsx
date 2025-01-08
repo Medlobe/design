@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useContext } from "react";
-import {  useLocation, useNavigate, Link } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import "./chat.css";
 import axios from "axios";
 import Contacts from "./components/contacts";
@@ -16,7 +16,6 @@ export default function Chat() {
   const token = sessionStorage.getItem("token");
   const userId = sessionStorage.getItem("userId");
   const location = useLocation();
- 
 
   //states
   const practitioner = location.state || {};
@@ -46,8 +45,6 @@ export default function Chat() {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
- 
 
   const handleSelectContact = (contact) => {
     setSelectedContact(contact);

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ChatHeaderSearch from "./chatSearchheader";
 import axios from "axios";
 
-export default function Contacts({ currentUser, currentChat, changeChat }) {
+export default function Contacts({ currentUser, currentChat, changeChat ,onClose}) {
   const serverName = process.env.REACT_APP_SERVER_NAME;
   const token = sessionStorage.getItem("token");
   const userId = sessionStorage.getItem("userId");
@@ -66,6 +66,8 @@ export default function Contacts({ currentUser, currentChat, changeChat }) {
     changeChat(contact);
   };
 
+
+
   return (
     <>
       <div className="contactContainer">
@@ -82,7 +84,10 @@ export default function Contacts({ currentUser, currentChat, changeChat }) {
                     index === currentSelected ? "selected" : ""
                   }`}
                   key={index}
-                  onClick={() => changeCurrentChat(index, contact)}
+                  onClick={() => {
+                    changeCurrentChat(index, contact);
+                     // Trigger the close action
+                  }}
                 >
                   {contact.profileImage ? (
                     <img
@@ -95,15 +100,12 @@ export default function Contacts({ currentUser, currentChat, changeChat }) {
                       alt="sub of the profile image"
                     />
                   )}
-                  <span>
+                  <div className="contacts-span">
                     <h3>{contact.name}</h3>
-                    {contact.healthPractitioner === true ? (
-                      <h6> {contact.practitionField}</h6>
-                    ) : (
-                      <h6>Client</h6>
-                    )}
-                  </span>
+                    
+                  </div>
                 </div>
+                <i className="fas fa-ellipsis-v"></i>
               </div>
             );
           })}
