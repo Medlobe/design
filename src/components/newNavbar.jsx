@@ -70,15 +70,17 @@ export default function NewNavbar({
             {token && (
               <div className="community-nav">
                 <div className="notification-and-message">
-                  <span>
+                  <span className="notifspan"   >
                     <img
                       src="assets/images/chat.png"
                       alt=""
                       onClick={toggleMessageDropdown}
+                     
+                     
                     />
                     {showMessages && <Callmesage />}
                   </span>
-                  <span>
+                  <span className="notifspan">
                     <img src="assets/images/bell.png" alt="" />
                   </span>
                 </div>

@@ -29,7 +29,8 @@ export default function Callmesage() {
   return (
     <>
       <div className="drop-down-module">
-        <Contacts currentUser={currentUser} changeChat={handleChatChange} />
+        <Contacts currentUser={currentUser} changeChat={handleChatChange}
+         />
         {!show && (
           <ChatContainer
             currentChat={currentChat}

@@ -10,8 +10,9 @@ import { Router, useLocation, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { BsPersonLinesFill } from "react-icons/bs";
 import SecondUserPadge from "../userPages/profile-testing";
+import PostContent from "../../dashboardComponets/PostContent";
 
-export default function CommunityMain() {
+export default function CommunityMain({ handleTogglePostContent }) {
   const location = useLocation();
   const navigate = useNavigate();
   const serverName = process.env.REACT_APP_SERVER_NAME;
@@ -21,7 +22,7 @@ export default function CommunityMain() {
   const showReachOut = "/reach" || "/newR";
   const showCommunity = "/community";
   const showContact = /^\/toContact\/[a-zA-Z0-9]+$/;
-
+  const showPostContent = "/Post";
   const showprofilesetting = "/profile";
   const [searchValue, setSearchValue] = useState("");
   const searchRef = useRef(null);
@@ -81,6 +82,15 @@ export default function CommunityMain() {
           isSidebarVisible={isSidebarVisible}
         />
 
+        {location.pathname != showPostContent && (
+          <button
+            className="plus-button-post"
+            onClick={() => navigate("/Post")}
+          >
+            <i className="fas fa-plus"></i>
+          </button>
+        )}
+
         {location.pathname === showCommunity && (
           <div className="community-posts">
             <div className="filter-button-section">
@@ -117,6 +127,7 @@ export default function CommunityMain() {
             <Post />
           </div>
         )}
+        {location.pathname === showPostContent && <PostContent />}
         {location.pathname === showReachOut && <NewReach ref={searchRef} />}
         {location.pathname === showprofilesetting && <UserSettigns />}
         {showContact.test(location.pathname) && <SecondUserPadge />}

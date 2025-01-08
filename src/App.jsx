@@ -106,6 +106,11 @@ function App() {
               ) : (
                 <Route path="/reach/:id" element={<Login />} />
               )}
+               {userAuth ? (
+                <Route path="/Post" element={<CommunityMain />} />
+              ) : (
+                <Route path="/Post" element={<Login />} />
+              )}
               <Route path="/facts" element={<Facts />} />
               <Route path="/testpadge" element={<SecondUserPadge />} />
               <Route path="/about" element={<About />} />

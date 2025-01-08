@@ -195,18 +195,22 @@ const NewReach = forwardRef((props, ref) => {
 
     setFilteredPractitionalsData(searchedPractitioners);
   };
-  if(isLoading){
-    return <Loader />
+  if (isLoading) {
+    return <Loader />;
   }
 
   return (
     <>
-      
       <div className="practioner-cards">
         
-        
+
         <div className="grid-prtc">
-       
+        {/* <div className="page-header">
+          <h1>Reach Out</h1>
+          <p>
+            <i className="far fa-file"></i>Drafts
+          </p>
+        </div> */}
           {filteredPractitionalsData.map((users, index) => (
             <Link
               className="apract"
@@ -247,8 +251,8 @@ const NewReach = forwardRef((props, ref) => {
                 </div>
                 <button className="pp-btn">Global Practitioner</button>
                 <div className="sumarry-prct">
-                <p>{users.about}</p>
-              </div>
+                  <p>{users.about}</p>
+                </div>
                 <div className="folowers-and-post">
                   <a href="#">
                     <strong>33</strong>
