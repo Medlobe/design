@@ -7,14 +7,12 @@ import {
   useImperativeHandle,
 } from "react";
 import { Link } from "react-router-dom";
+import { Router } from "react-router-dom";
 import Navbar from "../components/navbar";
 import axios, { all } from "axios";
 import { motion } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css";
-
-import { Router } from "react-router-dom";
-
 import CallChatBot from "../components/callChatbot";
 import NewNavbar from "../components/newNavbar";
 import HeroCsection from "./userPages/Hero0course-comp";
