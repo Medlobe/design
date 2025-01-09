@@ -13,6 +13,7 @@ import SecondUserPadge from "../userPages/profile-testing";
 import PostContent from "../../dashboardComponets/PostContent";
 import MiniLoader from "../../components/mini-loader";
 import Loader from "../../components/loader";
+import PostModal from "./postModal";
 
 export default function CommunityMain({ handleTogglePostContent }) {
   const location = useLocation();
@@ -115,6 +116,15 @@ export default function CommunityMain({ handleTogglePostContent }) {
     fetchPosts();
   }, []);
 
+  const [selectedPost, setSelectedPost] = useState(null);
+  const handlePostClick = (post) => {
+    setSelectedPost(post);
+  };
+
+  const closeModal = () => {
+    setSelectedPost(null);
+  };
+
   // Handle scroll event for infinite scroll
   const handleScroll = () => {
     const bottom =
@@ -213,10 +223,21 @@ export default function CommunityMain({ handleTogglePostContent }) {
             </div>
             <div className="posts-list">
               {allPosts.length === 0 ? (
-              <Loader/>
+                <Loader />
+              ) : selectedPost ? (
+                <PostModal
+                  post={selectedPost}
+                  users={users}
+                  closeModal={closeModal}
+                />
               ) : (
                 combinedPosts.map((post, index) => (
-                  <Post key={index} post={post} />
+                  <Post
+                    key={index}
+                    post={post}
+                    users={users}
+                    handlePostClick={handlePostClick}
+                  />
                 ))
               )}
             </div>
