@@ -242,13 +242,14 @@ export default function CommunityMain({ handleTogglePostContent }) {
               )}
             </div>
 
-            {!hasMore & (allPosts.length !== 0) && (
+            {!hasMore && allPosts.length !== 0 && !selectedPost && (
               <div className="no-more-posts flex items-center justify-center">
                 No more posts available
               </div>
             )}
           </div>
         )}
+
         {location.pathname === showPostContent && <PostContent />}
         {location.pathname === showReachOut && <NewReach ref={searchRef} />}
         {location.pathname === showprofilesetting && <UserSettigns />}

@@ -150,15 +150,18 @@ export default function Post({ post, users, handlePostClick }) {
               </div>
             </span>
           </div>
+
           <div className="clear-and-detais-button">
             <i className="fas fa-ellipsis-v"></i>
           </div>
         </div>
       </div>
+
       <div className="mt-4" onClick={() => handlePostClick(post)}>
         <h1 className="text-black">{post.title}</h1>
         <p className="text-gray-700">{post.writeup}</p>
       </div>
+
       {post.media.length != 0 && (
         <div
           className="post-body border-2"
@@ -167,6 +170,7 @@ export default function Post({ post, users, handlePostClick }) {
           <img src={post.media[0].url} />
         </div>
       )}
+
       <div className="action-bar">
         <div
           className="action-item"
@@ -191,7 +195,7 @@ export default function Post({ post, users, handlePostClick }) {
         </div>
         <div className="action-item">
           <i className="far fa-paper-plane"></i>
-          <span>Send</span>
+          <span>Share</span>
         </div>
       </div>
     </div>

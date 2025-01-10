@@ -104,65 +104,74 @@ export default function PostModal({ post, users, closeModal }) {
     }
   };
 
-
-
   return (
     <div className="bg-white">
-      <div className="  rounded-lg p-8 shadow-lg">
-        <div className="flex justify-between items-center border-b-2 pb-4 mb-4">
-          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => handleContact(post.user?._id)}>
+      <div className="  rounded-2xl mt-4 p-8  border-2">
+        <div className="post-name-and-follow">
+          <div
+            className="post-flex"
+            onClick={() => handleContact(post.user?._id)}
+          >
             <img
               src={post.user?.profileImage || "assets/images/oip.jpg"}
               alt="user-avatar"
-              className="w-12 h-12 rounded-full object-cover"
             />
-            <div className="text-gray-700">
-              <h2 className="font-semibold">{post.user?.name}</h2>
-              <p className="text-sm text-gray-500">
-                {new Date(post.createdAt).toLocaleString()}
-              </p>
-            </div>
-          </div>
-          <button onClick={()=>  closeModal()} className="text-gray-400 hover:text-gray-600 z-50">
-            <i className="fas fa-times text-2xl"></i>
-          </button>
-        </div>
-
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">{post.title}</h1>
-          <p className="mt-2 text-gray-600">{post.writeup}</p>
-        </div>
-
-        {post.media.length !== 0 && (
-          <div className="mb-6">
-            <img
-              src={post.media[0].url}
-              alt="Post Media"
-              className="w-full rounded-lg shadow-lg"
-            />
-          </div>
-        )}
-
-        <div className="flex items-center space-x-6 mb-6">
-          <div
-            onClick={liked ? handleUnlikePost : handleLikePost}
-            className="flex items-center space-x-2 cursor-pointer hover:text-blue-600"
-          >
-            <i
-              className={`fas fa-thumbs-up ${liked ? "text-blue-600" : "text-gray-500"}`}
-            />
-            <span className={`text-gray-700 ${liked ? "text-blue-600" : ""}`}>
-              {likesCount > 0 ? likesCount : ""} Like{likesCount > 1 ? "s" : ""}
+            <span>
+              <div className="name-of-user">
+                <h2>{post.user?.name}</h2>
+                {userId != post.user?._id && (
+                  <a onClick={() => handleContact(post.user?._id)}>Contact</a>
+                )}
+              </div>
+              <div className="time-of-post">
+                <p>{new Date(post.createdAt).toLocaleString()}</p>
+              </div>
             </span>
           </div>
 
-          <div className="flex items-center space-x-2 cursor-pointer text-gray-600 hover:text-blue-600">
-            <i className="fas fa-comment-alt" />
+          <div
+            className="clear-and-detais-button text-gray-400 hover:text-gray-600 z-50"
+            onClick={() => closeModal()}
+          >
+            <i className="fas fa-times text-2xl"></i>
+          </div>
+        </div>
+
+        <div className="mt-4">
+          <h1 className="text-black">{post.title}</h1>
+          <p className="text-gray-700">{post.writeup}</p>
+        </div>
+
+        {post.media.length != 0 && (
+          <div className="post-body border-2">
+            <img src={post.media[0].url} alt="post media" />
+          </div>
+        )}
+
+        <div className="action-bar">
+          <div
+            className="action-item"
+            onClick={liked ? handleUnlikePost : handleLikePost}
+          >
+            <i
+              className={`fa${liked ? "s" : "r"} fa-thumbs-up ${
+                liked ? "text-blue-500" : ""
+              }`}
+            />
+            <span className={`ml-2 ${liked ? "text-blue-500" : ""}`}>
+              {likesCount > 0 ? likesCount : ""} Like{likesCount > 1 ? "s" : ""}
+            </span>
+          </div>
+          <div className="action-item">
+            <i className="fas fa-comment-alt"></i>
             <span>Comment</span>
           </div>
-
-          <div className="flex items-center space-x-2 cursor-pointer text-gray-600 hover:text-blue-600">
-            <i className="fas fa-share-alt" />
+          <div className="action-item">
+            <i className="fas fa-retweet"></i>
+            <span>Repost</span>
+          </div>
+          <div className="action-item">
+            <i className="far fa-paper-plane"></i>
             <span>Share</span>
           </div>
         </div>
@@ -173,7 +182,10 @@ export default function PostModal({ post, users, closeModal }) {
             comments.map((comment) => {
               const user = getUser(comment.userId);
               return (
-                <div key={comment._id} className="flex justify-between items-start bg-gray-50 p-4 rounded-lg shadow-sm">
+                <div
+                  key={comment._id}
+                  className="flex justify-between items-start bg-gray-50 p-4 rounded-lg shadow-sm"
+                >
                   <div className="flex items-start space-x-3">
                     <img
                       src={user?.profileImage || "assets/images/oip.jpg"}
@@ -181,7 +193,9 @@ export default function PostModal({ post, users, closeModal }) {
                       className="w-10 h-10 rounded-full"
                     />
                     <div>
-                      <h4 className="font-semibold text-gray-800">{user?.name}</h4>
+                      <h4 className="font-semibold text-gray-800">
+                        {user?.name}
+                      </h4>
                       <p className="text-sm text-gray-600">{comment.comment}</p>
                     </div>
                   </div>
@@ -202,7 +216,10 @@ export default function PostModal({ post, users, closeModal }) {
         </div>
 
         {/* Comment Input */}
-        <form onSubmit={handleAddComment} className="mt-6 flex items-center space-x-4">
+        <form
+          onSubmit={handleAddComment}
+          className="mt-6 flex items-center space-x-4"
+        >
           <input
             type="text"
             value={newComment}
