@@ -25,7 +25,7 @@ const PostContent = () => {
 
   const handleAddImage = () => {
     document.getElementById("fileInput").click();
-    console.log("cliked"); // Trigger the file input click programmatically
+   
   };
 
   const handleDeleteImage = (index) => {
@@ -142,7 +142,7 @@ const PostContent = () => {
               </span>
             )}
 
-            {/* Hidden file input */}
+             {/* Hidden file input  */}
             <input
               type="file"
               id="fileInput"
