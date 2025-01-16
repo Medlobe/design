@@ -138,7 +138,7 @@
    
    
   
-    border-radius: 10px;
+    border-radius: 20px;
 
 }
 .links-a.active{
@@ -174,11 +174,11 @@
     gap: 20px;
     padding: 20px;
     width:100% ;
-   /* background-color: #f6f6f6dd; */
+ 
     
 
 }
-.testimonials-div,
+
 .image-casingus{
     position: relative;
     
@@ -190,23 +190,23 @@
     border-radius: 30px;
     height: 400px;
     
-    overflow-y: auto;
-    /* border: 1px solid#ddd; */
+   
     background-color: white;
     
 
 }
 .image-casingus{
-    display: grid;
-    padding: 10px;
-    grid-template-columns: 300px 1fr;
+   display: flex;
+   flex-direction: column;
+   position: relative;
+   width: 100%;
+   background-color: black;
+   height: 270px;
+
   
 
 }
-.image-casingus .img-img{
-    border-right: 1px solid #ddd;
 
-}
 .img-img{
     position: relative;
     display: flex;
@@ -215,15 +215,11 @@
     width: 100%;
     height:100%;
     cursor: pointer;
-    align-items: center;
-    justify-content: center;
+    
     border-radius: 5px;
 
 }
-.img-img:hover{
 
-    background-color: #eee;
-}
 .main-img-css img{
     width: 200px;
     height: 200px;
@@ -235,125 +231,23 @@
    
 }
 .main-img-css{
-    position: relative;
+    position:absolute;
+    top: 90%;
+    left: 26%;
     display: flex;
-    width: 200px;
-    height: 200px;
-    align-items: center;
-    justify-content: center;
-
-}
-
-
-.camera-div{
-    position: absolute;
-    top: 45%;
-    left: 25%;
-    width: 100px;
-  padding: 7px;
-  border-radius: 5px;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  cursor: pointer;
-  font-size: 12px;
-  border: 1px solid white;
-
-}
-.plus-div{
-    position: absolute;
-    width: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    left: 92%;
-    top: 20px;
-    cursor: pointer;
-    z-index: 44;
-
-    height: 50px;
-    border: 2px solid #ddd;
-}
-.baby-plus-div{
-    position: absolute;
-    align-items: center;
-    justify-content: center;
-
-    display: flex;
-    width:100px;
-    border-radius: 5px;
-    font-size: 12px;
-    padding: 5px;
-    gap: 5px;
-
-    top: 10px;
-    left: 60%;
-    border: 1px solid #ddd;
-
-}
-.user-details-main-main{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-top: 20px;
-}
-.user-details-main-main p{
-    font-size: 12px ;
-    font-weight: 600;
-    color: #d4d3d3;
-}
-.online-statuse{
-    display: flex;
-    flex-direction: row;
-    gap:10px ;
-    align-items: center;
-}
-.online-statuse i{
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: flex;
-    background-color: rgb(43, 227, 43);
-}
-.inputss-test{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    width: 100%;
-    height: 100%;
-
-}
-.inpts-main-inp{
-    position: relative;
-    display: flex;
-    flex-direction: column;
    
+    
 
 }
-.inpts-main-inp p{
-    font-size: 16px;
-    font-weight: 600;
 
 
-}
-.inpts-main-inp input{
+.testimonials-r{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
     width: 100%;
-    height: 50px;
-    background-color: #eee;
-    padding: 10px;
-    border-radius: 40px;
-    margin: 10px;
-    font-size: 14px;
-}
-.user-same-dis{
-    padding:10px  20px;
-}
-.text-prct.no-p{
-    padding: 0;
+
 }
 
 

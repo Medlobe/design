@@ -70,7 +70,12 @@ export default function Contacts({ currentUser, currentChat, changeChat ,onClose
 
   return (
     <>
-      <div className="contactContainer">
+      <div className="contactContainer" 
+        onClick={(e) => {
+          e.stopPropagation(); // Prevent body click handler
+         
+        }}
+      >
         <div className="upper-div">
           <ChatHeaderSearch />
         </div>

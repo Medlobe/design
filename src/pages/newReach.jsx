@@ -7,14 +7,12 @@ import {
   useImperativeHandle,
 } from "react";
 import { Link } from "react-router-dom";
+import { Router } from "react-router-dom";
 import Navbar from "../components/navbar";
 import axios, { all } from "axios";
 import { motion } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css";
-
-import { Router } from "react-router-dom";
-
 import CallChatBot from "../components/callChatbot";
 import NewNavbar from "../components/newNavbar";
 import HeroCsection from "./userPages/Hero0course-comp";
@@ -283,7 +281,7 @@ const NewReach = forwardRef((props, ref) => {
             </Link>
           ))}
 
-          <div className="people-also-grid">
+          {/* <div className="people-also-grid">
             <h1>People Also Searched For</h1>
             <div className="button-grid">
               <button>
@@ -303,8 +301,8 @@ const NewReach = forwardRef((props, ref) => {
                 <p>Geographer</p>
               </button>
             </div>
-          </div>
-          <div className="navigation-padges-buttons">
+          </div> */}
+          {/* <div className="navigation-padges-buttons">
             <div className="nabvigations">
               <button className="prev-btn">
                 <i className="fas fa-angle-left"> </i>
@@ -320,7 +318,7 @@ const NewReach = forwardRef((props, ref) => {
                 <i className="fas fa-angle-right"> </i>
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

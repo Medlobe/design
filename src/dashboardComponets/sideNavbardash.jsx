@@ -51,8 +51,8 @@ const SideLeftNavbar = () => {
       <div className="user-details-side">
         <i className="fas fa-arrow-left" onClick={toggleNavbar}></i>
         <span>
-        <img src="../assets/images/BANNER2.jpg" alt="" />
-          {userData.profileImage && <img src={userData.profileImage.url}></img>}
+        <img src="assets/images/BANNER2.jpg" alt="" />
+          {userData.profileImage && <img src={userData.profileImage}></img>}
           <div className="online-spot"></div>
         </span>
         <div className="name-items">
@@ -71,16 +71,16 @@ const SideLeftNavbar = () => {
         </li>
         <li className="list-nav" data-href="#">
           <i className="fas fa-users"></i>
-          <a href="/reachout">Reach Out</a>
+          <a href="/reach">Reach Out</a>
         </li>
         <li className="list-nav" data-href="#">
           <i className="fas fa-inbox"></i>
-          <a href="/reachout">Inbox</a>
+          <a href="/reach">Inbox</a>
         </li>
 
         <li className="list-nav" data-href="#">
           <img
-            src="../assets/images/badge.png"
+            src="assets/images/badge.png"
             alt=""
             style={{ marginLeft: "-3px" }}
           />

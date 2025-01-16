@@ -22,9 +22,6 @@ import {
 
 export default function ContactPage() {
   //variables
-  const goBack = () => {
-    window.history.back();
-  };
   const serverName = process.env.REACT_APP_SERVER_NAME;
   const navigate = useNavigate();
   const token = sessionStorage.getItem("token");
@@ -34,6 +31,10 @@ export default function ContactPage() {
   const initialStarValue = () => {
     const stored = localStorage.getItem("starValues"); // Retrieve from local storage
     return stored ? JSON.parse(stored) : {}; // Parse or return empty object
+  };
+
+  const goBack = () => {
+    window.history.back();
   };
 
   //states
@@ -194,11 +195,12 @@ export default function ContactPage() {
 
   const handleContact = (id) => {
     if (id === userId) {
-      window.location.reload();
+      navigate(`/profile`);
     } else {
       navigate(`/toContact/${id}`);
     }
   };
+
 
   return (
     <div

@@ -106,7 +106,12 @@ export default function ChatContainer({
   return (
     <>
       {currentChat && (
-        <div className="chatContainer">
+        <div
+          className="chatContainer"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent body click handler
+          }}
+        >
           <div className="chat-header">
             <div className="header-chat-user">
               {!screenValue && (

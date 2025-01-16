@@ -321,10 +321,10 @@ export default function UserSettigns() {
       <div className="user-image-and-info">
         <div className="image-casingus">
           <div className="img-img">
-            <div className="baby-plus-div" onClick={() => openModal("profile")}>
+            {/* <div className="baby-plus-div" onClick={() => openModal("profile")}>
               <p>EDIT</p>
               <i className="fas fa-pencil"></i>
-            </div>
+            </div> */}
             <span className="main-img-css">
               <img src={profileImage} alt="Profile" />
               <div className="camera-div" onClick={handleEditPhotoClick}>
@@ -341,67 +341,9 @@ export default function UserSettigns() {
               />
             </span>
 
-            <div className="user-details-main-main">
-              <h1>{user.name}</h1>
-              <p>
-                {user.email} <i className="fas fa-copy"></i>
-              </p>
-              <span className="online-statuse">
-                <i></i>
-                <h4>Online</h4>
-              </span>
-            </div>
+           
           </div>
-          <div className="user-same-dis">
-            <div className="text-prct no-p">
-              <h1>
-                Premium Member
-                <img src="assets/images/Group134.png" alt="" />
-              </h1>
-              <h4>{user.expertise}</h4>
-              <p>Nigeria</p>
-            </div>
-            <div className="star-rating">
-              <p>4.5</p>
-              <span>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-              </span>
-              <p>(222,000)</p>
-              <button className="pp-btn">Global Practitioner </button>
-            </div>
-            <div className="sumarry-prct">
-              <p>{user.about}</p>
-            </div>
-            <div className="folowers-and-post">
-              <a href="#">
-                <strong>33</strong>
-                posts
-              </a>
-              <a href="#">
-                <strong>{user.contacts}</strong>
-                contacts
-              </a>
-              <a href="#">
-                <strong>{user.contactedPersons}</strong>
-                contacted
-              </a>
-            </div>
-            <div className="association-set">
-              <div className="asos-div">
-                <img src="assets/images/Google-lens.png" alt="" />
-                <span>
-                  <h4>Asociated With</h4>
-
-                  <a href="#">Google</a>
-                </span>
-              </div>
-
-              <button>Explore</button>
-            </div>
-          </div>
+         
         </div>
         <div className="testimonials-div">
           <div className="plus-div" onClick={() => openModal("experiences")}>

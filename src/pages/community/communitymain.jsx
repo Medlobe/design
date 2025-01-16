@@ -11,6 +11,9 @@ import axios from "axios";
 import { BsPersonLinesFill } from "react-icons/bs";
 import SecondUserPadge from "../userPages/profile-testing";
 import PostContent from "../../dashboardComponets/PostContent";
+import MiniLoader from "../../components/mini-loader";
+import Loader from "../../components/loader";
+import PostModal from "./postModal";
 
 export default function CommunityMain({ handleTogglePostContent }) {
   const location = useLocation();
@@ -27,7 +30,15 @@ export default function CommunityMain({ handleTogglePostContent }) {
   const [searchValue, setSearchValue] = useState("");
   const searchRef = useRef(null);
   const [contacts, setContacts] = useState([]);
+  const [allPosts, setAllPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState([]);
+  const [users, setUsers] = useState([]); // State for holding user data
+  const [combinedPosts, setCombinedPosts] = useState([]); // State for combined data
+  const [loading, setLoading] = useState(false); // To track loading state
+  const [page, setPage] = useState(1); // To keep track of the current page for pagination
+  const [hasMore, setHasMore] = useState(true); // To check if more posts are available
 
+  // Fetch contacts
   useEffect(() => {
     const fetchContactedUsers = async () => {
       try {
@@ -39,16 +50,100 @@ export default function CommunityMain({ handleTogglePostContent }) {
             },
           }
         );
-
         setContacts(response.data);
-        console.log("contacts", response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchContactedUsers();
   }, [token]);
+
+  // Fetch posts when scrolling
+  const fetchPosts = async () => {
+    if (loading || !hasMore) return; // Prevent multiple requests while loading
+    setLoading(true);
+
+    try {
+      const postsResponse = await axios.get(
+        `${serverName}post/get?page=${page}&limit=80`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const newPosts = postsResponse.data.posts;
+
+      if (newPosts.length < 80) {
+        setHasMore(false); // If fewer than 80 posts were returned, no more posts
+      }
+
+      setPage((prevPage) => prevPage + 1); // Increment the page number for the next batch
+
+      // Fetch all users
+      const usersResponse = await axios.get(`${serverName}user/getAllData`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const allFetchedUsers = usersResponse.data.allData;
+
+      // Store posts and users separately
+      setAllPosts((prevPosts) => [...prevPosts, ...newPosts]);
+      setUsers((prevUsers) => [...prevUsers, ...allFetchedUsers]);
+
+      // Combine posts with their user data
+      const combinedData = newPosts.map((post) => {
+        const user = allFetchedUsers.find((user) => user._id === post.posterId);
+        return {
+          ...post,
+          user: user || null, // If user not found, set as null
+        };
+      });
+
+      // Store combined data separately
+      setCombinedPosts((prevCombined) => [...prevCombined, ...combinedData]);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const [selectedPost, setSelectedPost] = useState(null);
+  const handlePostClick = (post) => {
+    setSelectedPost(post);
+  };
+
+  const closeModal = () => {
+    setSelectedPost(null);
+  };
+
+  // Handle scroll event for infinite scroll
+  const handleScroll = () => {
+    const bottom =
+      Math.floor(window.innerHeight + document.documentElement.scrollTop) ===
+      document.documentElement.offsetHeight;
+    if (bottom) {
+      fetchPosts();
+    }
+  };
+
+  // Use effect to set up the scroll event listener
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup on unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [loading, hasMore]);
 
   // Function to handle the search input value
   const handleSearch = (value) => {
@@ -60,11 +155,13 @@ export default function CommunityMain({ handleTogglePostContent }) {
       searchRef.current(value);
     }
   };
+
   const [isSidebarVisible, setSidebarVisible] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarVisible((prev) => !prev);
   };
+
   return (
     <>
       <NewNavbar
@@ -124,9 +221,35 @@ export default function CommunityMain({ handleTogglePostContent }) {
                 </div>
               </div>
             </div>
-            <Post />
+            <div className="posts-list">
+              {allPosts.length === 0 ? (
+                <Loader />
+              ) : selectedPost ? (
+                <PostModal
+                  post={selectedPost}
+                  users={users}
+                  closeModal={closeModal}
+                />
+              ) : (
+                combinedPosts.map((post, index) => (
+                  <Post
+                    key={index}
+                    post={post}
+                    users={users}
+                    handlePostClick={handlePostClick}
+                  />
+                ))
+              )}
+            </div>
+
+            {!hasMore && allPosts.length !== 0 && !selectedPost && (
+              <div className="no-more-posts flex items-center justify-center">
+                No more posts available
+              </div>
+            )}
           </div>
         )}
+
         {location.pathname === showPostContent && <PostContent />}
         {location.pathname === showReachOut && <NewReach ref={searchRef} />}
         {location.pathname === showprofilesetting && <UserSettigns />}
@@ -158,7 +281,6 @@ export default function CommunityMain({ handleTogglePostContent }) {
                     )}
                     <span className="follow-details">
                       <h2>{contact.name}</h2>
-                      {/* <p>{contact.practitionField}</p> */}
                     </span>
                   </Link>
                   <div className="icon-t">

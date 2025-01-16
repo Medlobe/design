@@ -10,38 +10,47 @@ export default function NewNavbar({
   isCommunityPage = false,
   onToggleSidebar,
 }) {
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const [showMessages, setShowMessages] = useState(false);
+  const [profileImage, setProfileImage] = useState("assets/images/banner3.jpg");
+
   const location = useLocation();
   const { state } = useContext(GlobalContext);
   const navigate = useNavigate();
-
   const user = state.user || [];
-
   const token = sessionStorage.getItem("token");
-
   const showSearchBarOn = "/reach";
+  const communitPge = "/community"
   const showsearchbar2 = "/toContact/:id";
 
   const handleInputChange = (e) => {
     onSearch(e.target.value);
   };
 
-  const [profileImage, setProfileImage] = useState("assets/images/banner3.jpg");
   useEffect(() => {
     if (user && user.profileImage) {
       setProfileImage(user.profileImage);
     }
   }, [user]);
-  const [showMessages, setShowMessages] = useState(false);
 
   const toggleMessageDropdown = () => {
     setShowMessages((prevShowMessages) => !prevShowMessages);
   };
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
-
 
   const toggleDropdown = () => {
     setDropdownVisible((prev) => !prev);
   };
+  const handleBodyClick = () => {
+    if (isDropdownVisible) setDropdownVisible(false);
+    if (showMessages) setShowMessages(false);
+  };
+  useEffect(() => {
+    document.body.addEventListener("click", handleBodyClick);
+
+    return () => {
+      document.body.removeEventListener("click", handleBodyClick);
+    };
+  }, [isDropdownVisible, showMessages]);
 
   return (
     <div className="main-nav-nav">
@@ -49,19 +58,19 @@ export default function NewNavbar({
         <div className="top-main-profile boxshadow-p">
           <div className="logo-img-site">
             <div className="midea-screen-hamburger">
-              <i className="fas fa-bars" onClick={onToggleSidebar}></i>
+              <img src="assets/images/menu.png" alt="" onClick={onToggleSidebar}/>
             </div>
             <h1>MEDLOBE</h1>
           </div>
 
           <div className="hire-burrons">
             {location.pathname === (showSearchBarOn || showsearchbar2) && (
-              <div className="flex items-center border rounded-full px-3 py-2">
-                <FaSearch className="text-gray-500 mr-2 " />
+              <div className="reachout-search">
+                <i className="fas fa-search"></i>
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="outline-none flex-grow"
+                  
                   onChange={handleInputChange}
                 />
               </div>
@@ -70,21 +79,38 @@ export default function NewNavbar({
             {token && (
               <div className="community-nav">
                 <div className="notification-and-message">
-                  <span className="notifspan"   >
+                  <span className="notifspan">
                     <img
                       src="assets/images/chat.png"
                       alt=""
-                      onClick={toggleMessageDropdown}
-                     
-                     
+                      // onClick={toggleMessageDropdown}
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent body click handler
+                        toggleMessageDropdown();
+                      }}
                     />
+                    <p>Chats</p>
                     {showMessages && <Callmesage />}
                   </span>
                   <span className="notifspan">
                     <img src="assets/images/bell.png" alt="" />
+                    <p>Notifications</p>
                   </span>
+                  {location.pathname === communitPge &&  
+                    <span className="notifspan notshow-now">
+                      <img src="assets/images/filter.png" alt="" />
+                      <p>Filter</p>
+                    </span>
+                  }
+                  
                 </div>
-                <div className="user-image-online" onClick={toggleDropdown}>
+                <div
+                  className="user-image-online"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent body click handler
+                    toggleDropdown();
+                  }}
+                >
                   <img
                     src={profileImage}
                     alt="Profile"
@@ -95,7 +121,13 @@ export default function NewNavbar({
                   </span>
 
                   {isDropdownVisible && (
-                    <div className="profile-drop-down-module">
+                    <div className="profile-drop-down-module"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent body click handler
+                    
+                    }}
+                    
+                    >
                       <div className="header-place">
                         <img
                           src={profileImage}
@@ -108,7 +140,7 @@ export default function NewNavbar({
                         </span>
                       </div>
                       <div className="psection">
-                        <div className="pnav active" >
+                        <div className="pnav active">
                           <i className="fas fa-id-card"></i>
                           <a href="">Membership Plan</a>
 
@@ -137,9 +169,9 @@ export default function NewNavbar({
                         </div>
                       </div>
                       <div className="pnav padst">
-                          <i className="fas fa-signout"></i>
-                          <a href="">Sign Out</a>
-                        </div>
+                        <i className="fas fa-signout"></i>
+                        <a href="">Sign Out</a>
+                      </div>
                     </div>
                   )}
                 </div>

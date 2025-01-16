@@ -550,9 +550,9 @@
     
     cursor: pointer;
   }
-  .midea-screen-hamburger i{
+  .midea-screen-hamburger img{
     display: flex;
-    font-size:15px ;
+    max-width: 25px;
   }
 }
 
@@ -941,6 +941,21 @@
 
 }
 
+@media screen and (max-width:600px){
+  .circlep-img {
+    width: 35px;
+    height: 35px;
+   
+  }
+  .logo-img-site h1{
+    display: none;
+  }
+  .midea-screen-hamburger img{
+    max-width: 20px;
+
+  }
+  
+}
 
 
 
