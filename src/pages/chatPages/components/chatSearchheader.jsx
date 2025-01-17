@@ -3,7 +3,11 @@ export default function ChatHeaderSearch(){
         <div className="sticky-chat-header-top">
         <div className="header-top">
           <h4>Chats</h4>
-          <i className="fas fa-edit" style={{fontWeight:"400"}}></i>
+          <span>
+            <i className="fas fa-gear"></i>
+          
+
+          </span>
 
         </div>
         <div className="serach-span">

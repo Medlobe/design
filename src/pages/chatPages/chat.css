@@ -1,23 +1,36 @@
 .ChatPageContainer {
   height: 100vh;
+  overflow: hidden;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 1rem;
   align-items: center;
-  background-color: #131324;
+  
 }
 .ChatPageContainer .mainContainer {
   height: 100vh;
   width: 100%;
-  background-color: #040c18;
   display: grid;
-  grid-template-columns: 350px auto;
+  grid-template-columns: 350px 1fr 350px;
+  
+  
+ 
+}
+.ChatPageContainer .mainContainer .contactContainer .contactBody{
+  height: 100%;
+
+}
+.mainContainer .contactContainer{
+  height: 100%;
+  border-right: 1px solid #ddd;
+
 }
 .contactContainer {
   padding: 15px 0px;
   width: 100%;
+  
   
 
   
@@ -39,6 +52,12 @@
 
 .upper-div {
   padding: 0px 15px;
+  position: sticky;
+  top: 0;
+  display: flex;
+  width: 100%;
+  background-color: white;
+  z-index: 222;
 }
 
 @keyframes back {
@@ -59,11 +78,11 @@
 }
 
 .sticky-chat-header-top{
-  position: sticky;
+  position: relative;
   display: flex;
   background-color: white;
-  /* padding: 10px; */
-  top: 0;
+  width: 100%;
+
   display: flex;
   flex-direction: column;
   padding-bottom: 10px;
@@ -173,8 +192,9 @@
 
 .chatContainer {
   display: flex;
+  height: 100%;
   flex-direction: column;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 .user-details {
   display: flex;
@@ -193,16 +213,25 @@
   cursor: pointer;
   color: #fff;
 }
+.chat-header{
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 222;
+}
+
+
 .header-chat-user{
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   width:  100%;
   border-bottom: 1px solid #ddd;
   padding: 10px ;
 }
 .header-chat-user i{
-  width: 25px ;
+  min-width: 25px ;
   height: 25px ;
   border-radius: 50%;
   background-color: #ecf0f1;
@@ -219,6 +248,11 @@
   align-items: center;
 
   gap: 10px;
+  display: flex;
+  width: 100%;
+  margin-left: 5px;
+  align-items: center;
+  justify-content: space-between;
 }
 .profileImg img {
   height: 30px;
@@ -266,12 +300,29 @@
   padding-right: 15px;
 }
 
+
+.ChatPageContainer{
+  .header-chat-user i{
+    width: 40px;
+    height: 40px;
+    font-size:15px ;
+  }
+  .profileImg img{
+    width: 40px;
+    height: 40px;
+  }
+}
+.chatContainer{
+  border-right: 1px solid #ddd;
+}
+
 .messagesContainer {
   padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   overflow: auto;
+  /* border-right: 1px solid #ddd; */
   height: 100%;
 
   background-color: white;
@@ -315,8 +366,7 @@
   align-items: center;
   background: white;
 
-  width: 100%;
-
+  
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
   
@@ -373,12 +423,7 @@
 }
 
 /* extra styles for medai screen  */
-@media (max-width: 1080px) {
-  .ChatPageContainer .mainContainer {
-    display: grid;
-    grid-template-columns: 100%;
-  }
-}
+
 .content{
   flex-direction: row;
   gap: 20px;
@@ -446,4 +491,41 @@
   
  
    
+ }
+
+ /* .contactContainer{
+  display: none;
+ } */
+
+
+ @media screen and (max-width:600px){
+  .contactBody{
+    height: 100%;
+
+  }
+  .ChatInputContainer{
+    width: 100%;
+  position: fixed;
+  top: 88%;
+  left:0;
+  }
+  .messagesContainer{
+    padding-bottom: 90px;
+  }
+  .ChatPageContainer .mainContainer{
+    display: flex;
+    flex-direction: column;
+  }
+  .ChatPageContainer{
+    .header-chat-user i{
+      width: 30px;
+      height: 30px;
+      font-size:12px ;
+    }
+    .profileImg img{
+      width: 30px;
+      height: 30px;
+    }
+  }
+  
  }

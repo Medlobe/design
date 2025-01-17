@@ -20,7 +20,7 @@ export default function NewNavbar({
   const user = state.user || [];
   const token = sessionStorage.getItem("token");
   const showSearchBarOn = "/reach";
-  const communitPge = "/community"
+  const communitPge = "/community";
   const showsearchbar2 = "/toContact/:id";
 
   const handleInputChange = (e) => {
@@ -58,7 +58,11 @@ export default function NewNavbar({
         <div className="top-main-profile boxshadow-p">
           <div className="logo-img-site">
             <div className="midea-screen-hamburger">
-              <img src="assets/images/menu.png" alt="" onClick={onToggleSidebar}/>
+              <img
+                src="assets/images/menu.png"
+                alt=""
+                onClick={onToggleSidebar}
+              />
             </div>
             <h1>MEDLOBE</h1>
           </div>
@@ -70,7 +74,6 @@ export default function NewNavbar({
                 <input
                   type="text"
                   placeholder="Search..."
-                  
                   onChange={handleInputChange}
                 />
               </div>
@@ -83,10 +86,13 @@ export default function NewNavbar({
                     <img
                       src="assets/images/chat.png"
                       alt=""
-                      // onClick={toggleMessageDropdown}
                       onClick={(e) => {
-                        e.stopPropagation(); // Prevent body click handler
-                        toggleMessageDropdown();
+                        e.stopPropagation();
+                        if (window.innerWidth < 600) {
+                          navigate("/chat"); // Navigate to chats on small screens
+                        } else {
+                          toggleMessageDropdown();
+                        }
                       }}
                     />
                     <p>Chats</p>
@@ -96,13 +102,12 @@ export default function NewNavbar({
                     <img src="assets/images/bell.png" alt="" />
                     <p>Notifications</p>
                   </span>
-                  {location.pathname === communitPge &&  
+                  {location.pathname === communitPge && (
                     <span className="notifspan notshow-now">
                       <img src="assets/images/filter.png" alt="" />
                       <p>Filter</p>
                     </span>
-                  }
-                  
+                  )}
                 </div>
                 <div
                   className="user-image-online"
@@ -121,12 +126,11 @@ export default function NewNavbar({
                   </span>
 
                   {isDropdownVisible && (
-                    <div className="profile-drop-down-module"
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent body click handler
-                    
-                    }}
-                    
+                    <div
+                      className="profile-drop-down-module"
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent body click handler
+                      }}
                     >
                       <div className="header-place">
                         <img

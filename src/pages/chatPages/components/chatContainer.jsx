@@ -58,14 +58,21 @@ export default function ChatContainer({
       socket.current.disconnect();
     };
   }, [senderId, receiverId, messages]);
-
-  // Auto-scroll when messages change
   useEffect(() => {
     const container = messagesContainerRef.current;
-    if (container) {
-      container.scrollTop = container.scrollHeight;
+    if (!container) return;
+  
+    // Check if user is already near the bottom
+    const isAtBottom =
+      container.scrollHeight - container.scrollTop <= container.clientHeight + 50;
+  
+    if (isAtBottom) {
+      container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
     }
   }, [messages]);
+  
+  
+
 
   const sendMessage = async (messageText) => {
     if (!messageText.trim()) return;
@@ -159,7 +166,7 @@ export default function ChatContainer({
           <ChatInput handleSendMsg={sendMessage} isSending={messageSending} />
         </div>
       )}
-      <ToastContainer />
+     
     </>
   );
 }

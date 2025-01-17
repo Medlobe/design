@@ -945,6 +945,7 @@
   .circlep-img {
     width: 35px;
     height: 35px;
+    min-width: 35px;
    
   }
   .logo-img-site h1{
@@ -957,6 +958,12 @@
   
 }
 
+@media screen and (max-width:400px){
+  .top-main-profile{
+    padding: 10px;
+  }
+  
+}
 
 
 

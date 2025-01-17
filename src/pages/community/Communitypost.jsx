@@ -159,12 +159,16 @@ export default function Post({ post, users, handlePostClick }) {
 
       <div className="mt-4 header-posty" onClick={() => handlePostClick(post)}>
         <h1 className="text-black">{post.title}</h1>
-        <p className="text-gray-700">{post.writeup}</p>
+        <p className="text-gray-700">{post.writeup}
+      
+        </p>
+        
+        
       </div>
 
       {post.media.length != 0 && (
         <div
-          className="post-body border-2"
+          className="post-body"
           onClick={() => handlePostClick(post)}
         >
           <img src={post.media[0].url} />
@@ -177,25 +181,29 @@ export default function Post({ post, users, handlePostClick }) {
           onClick={liked ? handleUnlikePost : handleLikePost}
         >
           <i
-            className={`fa${liked ? "s" : "r"} fa-thumbs-up ${
-              liked ? "text-blue-500" : ""
+            className={`fa${liked ? "s" : "r"} fa-heart ${
+              liked ? "text-red-500" : ""
             }`}
           />
-          <span className={`ml-2 ${liked ? "text-blue-500" : ""}`}>
-            {likesCount > 0 ? likesCount : ""} Like{likesCount > 1 ? "s" : ""}
+          <span className={`ml-2 ${liked ? "text-black" : ""}`}>
+            {likesCount > 0 ? likesCount : ""}
           </span>
         </div>
         <div className="action-item">
-          <i className="fas fa-comment-alt"></i>
-          <span onClick={() => handlePostClick(post)}>Comment</span>
+          <i className="far fa-comment"  onClick={() => handlePostClick(post)}></i>
+          {/* <span>Comment</span> */}
         </div>
         <div className="action-item">
           <i className="fas fa-retweet"></i>
-          <span>Repost</span>
+          {/* <span>Repost</span> */}
         </div>
         <div className="action-item">
-          <i className="far fa-paper-plane"></i>
-          <span>Share</span>
+          <i className="far fa-bookmark"></i>
+          {/* <span>Repost</span> */}
+        </div>
+        <div className="action-item">
+          <i className="far fa-chart-bar"></i>
+          {/* <span>Share</span> */}
         </div>
       </div>
     </div>
