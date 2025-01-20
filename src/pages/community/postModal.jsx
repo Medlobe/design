@@ -10,6 +10,7 @@ export default function PostModal({ post, users, closeModal }) {
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(post.likes.length);
   const [comments, setComments] = useState(post.comments);
+  const [commentsCount, setcommentsCount] = useState(post.comments.length);
   const [newComment, setNewComment] = useState("");
 
   const navigate = useNavigate();
@@ -106,8 +107,8 @@ export default function PostModal({ post, users, closeModal }) {
 
   return (
     <div className="bg-white">
-      <div className="  rounded-2xl mt-4 p-8  border-2">
-        <div className="post-name-and-follow">
+      <div className="  rounded-2xl mt-4   ">
+        <div className="post-name-and-follow borderd">
           <div
             className="post-flex"
             onClick={() => handleContact(post.user?._id)}
@@ -133,71 +134,79 @@ export default function PostModal({ post, users, closeModal }) {
             className="clear-and-detais-button text-gray-400 hover:text-gray-600 z-50"
             onClick={() => closeModal()}
           >
-            <i className="fas fa-times text-2xl"></i>
+            <i className="fas fa-arrow-left "></i>
           </div>
         </div>
 
-        <div className="mt-4">
+        <div className="mt-4 padding-inlines">
           <h1 className="text-black">{post.title}</h1>
           <p className="text-gray-700">{post.writeup}</p>
         </div>
 
         {post.media.length != 0 && (
-          <div className="post-body border-2">
+          <div className="post-body ">
             <img src={post.media[0].url} alt="post media" />
           </div>
         )}
 
-        <div className="action-bar">
+        <div className="action-bar border-bottom-p">
           <div
             className="action-item"
             onClick={liked ? handleUnlikePost : handleLikePost}
           >
             <i
-              className={`fa${liked ? "s" : "r"} fa-thumbs-up ${
+              className={`fa${liked ? "s" : "r"} fa-heart ${
                 liked ? "text-blue-500" : ""
               }`}
             />
-            <span className={`ml-2 ${liked ? "text-blue-500" : ""}`}>
-              {likesCount > 0 ? likesCount : ""} Like{likesCount > 1 ? "s" : ""}
+            <span className={` ${liked ? "text-blue-500" : ""}`}>
+              {likesCount > 0 ? likesCount : ""}
             </span>
           </div>
           <div className="action-item">
-            <i className="fas fa-comment-alt"></i>
-            <span>Comment</span>
+            <i className="far fa-comment"></i>
+            <span>{commentsCount > 0 ? commentsCount : ""}</span>
+            {/* <span>Comment</span> */}
+          </div>
+
+          <div className="action-item">
+            <i className="far fa-bookmark"></i>
           </div>
           <div className="action-item">
-            <i className="fas fa-retweet"></i>
-            <span>Repost</span>
-          </div>
-          <div className="action-item">
-            <i className="far fa-paper-plane"></i>
-            <span>Share</span>
+            <i className="far fa-chart-bar"></i>
           </div>
         </div>
 
         {/* Comments Section */}
-        <div className="space-y-4">
+        <div className="comment-section">
           {comments.length > 0 ? (
             comments.map((comment) => {
               const user = getUser(comment.userId);
               return (
-                <div
-                  key={comment._id}
-                  className="flex justify-between items-start bg-gray-50 p-4 rounded-lg shadow-sm"
-                >
-                  <div className="flex items-start space-x-3">
-                    <img
-                      src={user?.profileImage || "assets/images/oip.jpg"}
-                      alt={user?.name}
-                      className="w-10 h-10 rounded-full"
-                    />
-                    <div>
-                      <h4 className="font-semibold text-gray-800">
-                        {user?.name}
-                      </h4>
-                      <p className="text-sm text-gray-600">{comment.comment}</p>
-                    </div>
+                <div key={comment._id} className="main-comment">
+                  <div className="comment">
+                    <span className="comment-span">
+                      <img
+                        src={user?.profileImage || "assets/images/oip.jpg"}
+                        alt={user?.name}
+                        className="post-profile"
+                      />
+                      <div className="comment-text">
+                        <h4 className="font-semibold text-gray-800">
+                          {user?.name}
+                        </h4>
+                        <p className="text-sm text-gray-600">
+                          {comment.comment}
+                        </p>
+                        
+                      </div>
+
+                     
+                    </span>
+                    <span className="icon-t">
+                      <i className="fas fa-ellipsis-v"></i>
+                    </span>
+                    
                   </div>
                   {comment.userId === userId && (
                     <button

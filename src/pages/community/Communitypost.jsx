@@ -13,6 +13,7 @@ export default function Post({ post, users, handlePostClick }) {
   const [likesCount, setLikesCount] = useState(post.likes.length);
   const [comments, setComments] = useState(post.comments);
   const [newComment, setNewComment] = useState("");
+  const [commentsCount,setcommentsCount] = useState(post.comments.length)
 
   const [selectedPost, setSelectedPost] = useState(null);
 
@@ -191,7 +192,7 @@ export default function Post({ post, users, handlePostClick }) {
         </div>
         <div className="action-item">
           <i className="far fa-comment"  onClick={() => handlePostClick(post)}></i>
-          {/* <span>Comment</span> */}
+          {commentsCount > 0 ? commentsCount : ""} 
         </div>
         <div className="action-item">
           <i className="fas fa-retweet"></i>

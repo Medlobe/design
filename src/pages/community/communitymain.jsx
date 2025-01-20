@@ -190,37 +190,46 @@ export default function CommunityMain({ handleTogglePostContent }) {
 
         {location.pathname === showCommunity && (
           <div className="community-posts">
-            <div className="filter-button-section">
-              <div className="filter-btns">
-                <button>All</button>
-                <button>Groups</button>
-                <button>Products</button>
-                <button>People</button>
-                <button>Organizations</button>
-                <button>Articles</button>
-                <button>Posts</button>
-              </div>
-            </div>
-            <div className="post-an-add">
-              <div className="first-row-post">
-                <img src="assets/images/OIP.jpg" alt="" />
-                <input type="text" placeholder="Whats on your mind ?" />
-              </div>
-              <div className="second-btn-of-post">
-                <div className="span-bxer">
-                  <img src="assets/images/youtube.png" alt="" />
-                  <p>Video</p>
+            
+            {!selectedPost && (
+              <div className="filter-button-section">
+                <div className="filter-btns">
+                  <button>All</button>
+                  <button>Groups</button>
+                  <button>Products</button>
+                  <button>People</button>
+                  <button>Organizations</button>
+                  <button>Articles</button>
+                  <button>Posts</button>
                 </div>
-                <div className="span-bxer">
-                  <img src="assets/images/image-.png" alt="" />
-                  <p>Picture</p>
+              </div> 
+              )}
+            {!selectedPost && (
+              <div className="post-add-bg">
+                <div className="post-an-add">
+                  <div className="first-row-post">
+                    <img src="assets/images/OIP.jpg" alt="" />
+                    <input type="text" placeholder="Whats on your mind ?" />
+                  </div>
+                  <div className="second-btn-of-post">
+                    <div className="span-bxer">
+                      <img src="assets/images/youtube.png" alt="" />
+                      <p>Video</p>
+                    </div>
+                    <div className="span-bxer">
+                      <img src="assets/images/image-.png" alt="" />
+                      <p>Picture</p>
+                    </div>
+                    <div className="span-bxer">
+                      <img src="assets/images/news-report.png" alt="" />
+                      <p>Article</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="span-bxer">
-                  <img src="assets/images/news-report.png" alt="" />
-                  <p>Article</p>
-                </div>
+
               </div>
-            </div>
+            )}
+            
             <div className="posts-list">
               {allPosts.length === 0 ? (
                 <Loader />
