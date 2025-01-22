@@ -31,13 +31,13 @@ export default function Callmesage() {
       <div className="drop-down-module">
         <Contacts currentUser={currentUser} changeChat={handleChatChange}
          />
-         {/* {!show && (
+         {!show && (
            <ChatContainer
              currentChat={currentChat}
              currentUser={currentUser}
              handleShow={handleShow}
            />
-         )} */}
+         )}
       </div>
     </>
   );

@@ -395,6 +395,7 @@ overflow: clip;
   .chat-input{
     padding: 
    15px;
+   height: 70px;
   }
   
 }

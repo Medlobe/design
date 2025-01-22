@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Menu from "../Dashboard/menue-modal";
 
 export default function PostModal({ post, users, closeModal }) {
   const serverName = process.env.REACT_APP_SERVER_NAME;
@@ -13,6 +14,7 @@ export default function PostModal({ post, users, closeModal }) {
   const [commentsCount, setcommentsCount] = useState(post.comments.length);
   const [newComment, setNewComment] = useState("");
 
+  const [showMenue, setShowmenu] =  useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,6 +34,14 @@ export default function PostModal({ post, users, closeModal }) {
       navigate(`/toContact/${id}`);
     }
   };
+
+  const commentmenuItems = [
+    { label: "Like", action: null },
+    { label: "Unfollow", action: null  },
+    { label: "Save", action:null },
+  ];
+
+
 
   // Handle Like Post
   const handleLikePost = async () => {
@@ -104,6 +114,12 @@ export default function PostModal({ post, users, closeModal }) {
       console.error("Error deleting comment:", error);
     }
   };
+
+  // togglemenu
+
+  const handleMenue = ( ) => {
+    setShowmenu(!showMenue)
+  }
 
   return (
     <div className="bg-white">
@@ -192,22 +208,39 @@ export default function PostModal({ post, users, closeModal }) {
                         className="post-profile"
                       />
                       <div className="comment-text">
-                        <h4 className="font-semibold text-gray-800">
+                        <h4 className="user-name-comment">
                           {user?.name}
                         </h4>
-                        <p className="text-sm text-gray-600">
+                        <p className="post-text">
                           {comment.comment}
                         </p>
                         
                       </div>
 
+
+
                      
                     </span>
-                    <span className="icon-t">
+                    <span className="icon-t" onClick={handleMenue}>
                       <i className="fas fa-ellipsis-v"></i>
-                    </span>
+
+                    </span> 
+                    {/* {showMenue && <Menu items={commentmenuItems}/>} */}
                     
+                    
+                  <div className="bottom-nav-llike">
+                    <span>
+                      <i className="fas fa-heart"></i>
+                      <p>Like </p>
+                    </span>
+                    <span>
+                      <i className="fas fa-user"></i>
+                      <p>Follow</p>
+                    </span>
                   </div>
+                  </div>
+
+                  
                   {comment.userId === userId && (
                     <button
                       className="text-red-500 hover:text-red-700 text-sm"
