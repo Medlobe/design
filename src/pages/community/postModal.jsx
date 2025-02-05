@@ -14,7 +14,8 @@ export default function PostModal({ post, users, closeModal }) {
   const [commentsCount, setcommentsCount] = useState(post.comments.length);
   const [newComment, setNewComment] = useState("");
 
-  const [showMenue, setShowmenu] =  useState(false)
+  const [activeCommentMenu, setActiveCommentMenu] = useState(null);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,14 +36,14 @@ export default function PostModal({ post, users, closeModal }) {
     }
   };
 
-  const commentmenuItems = [
-    { label: "Like", action: null },
-    { label: "Unfollow", action: null  },
-    { label: "Save", action:null },
+  const commentMenuItems = [
+    { label: "Like", icon: "far fa-heart", action: () => console.log("Liked") },
+    { label: "Unfollow", icon: "far fa-user-minus", action: () => console.log("Unfollowed") },
+    { label: "Save", icon: "far fa-bookmark", action: () => console.log("Saved") },
   ];
-
-
-
+  
+ 
+  
   // Handle Like Post
   const handleLikePost = async () => {
     setLiked(true);
@@ -117,9 +118,10 @@ export default function PostModal({ post, users, closeModal }) {
 
   // togglemenu
 
-  const handleMenue = ( ) => {
-    setShowmenu(!showMenue)
-  }
+  const handleMenue = (commentId) => {
+    setActiveCommentMenu(activeCommentMenu === commentId ? null : commentId);
+  };
+  
 
   return (
     <div className="bg-white">
@@ -208,39 +210,32 @@ export default function PostModal({ post, users, closeModal }) {
                         className="post-profile"
                       />
                       <div className="comment-text">
-                        <h4 className="user-name-comment">
-                          {user?.name}
-                        </h4>
-                        <p className="post-text">
-                          {comment.comment}
-                        </p>
-                        
+                        <h4 className="user-name-comment">{user?.name}</h4>
+                        <p className="post-text">{comment.comment}</p>
                       </div>
-
-
-
-                     
                     </span>
-                    <span className="icon-t" onClick={handleMenue}>
+                    <span
+                      className="icon-t"
+                      onClick={() => handleMenue(comment._id)}
+                    >
                       <i className="fas fa-ellipsis-v"></i>
-
-                    </span> 
-                    {/* {showMenue && <Menu items={commentmenuItems}/>} */}
-                    
-                    
-                  <div className="bottom-nav-llike">
-                    <span>
-                      <i className="fas fa-heart"></i>
-                      <p>Like </p>
                     </span>
-                    <span>
-                      <i className="fas fa-user"></i>
-                      <p>Follow</p>
-                    </span>
-                  </div>
+                    {activeCommentMenu === comment._id && (
+                      <Menu items={commentMenuItems} />
+                    )}
+
+                    <div className="bottom-nav-llike">
+                      <span>
+                        <i className="fas fa-heart"></i>
+                        <p>Like </p>
+                      </span>
+                      <span>
+                        <i className="fas fa-user"></i>
+                        <p>Follow</p>
+                      </span>
+                    </div>
                   </div>
 
-                  
                   {comment.userId === userId && (
                     <button
                       className="text-red-500 hover:text-red-700 text-sm"

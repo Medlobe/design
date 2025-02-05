@@ -1750,6 +1750,14 @@ a {
   object-fit: cover;
   border-radius: 20px;
 }
+.post-text{
+  font-size: 12px;
+}
+.text-black{
+  margin-bottom: 10px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
 
 .action-bar {
   display: flex;
@@ -1997,10 +2005,10 @@ a {
 
 .plus-button-post {
   position: fixed;
-  top: 80%;
-  left: 70%;
-  width: 70px;
-  height: 70px;
+  top: 85%;
+  left: 72%;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   z-index: 55;
   background-color: white;
@@ -2341,14 +2349,18 @@ a {
   font-weight: 600;
 }
 .dropdown-menue{
-  position: relative
+  position: absolute
   ;
+  left:80%;
+  /* top: 20px; */
+
   display: flex;
   flex-direction: column;
   width: 170px;
   height: auto;
+  overflow: clip;
   min-height: 200px;
-  border-radius: 20px;
+  border-radius: 5px;
   background-color: white;
   animation: dropDown 0.5s ease forwards ;
   box-shadow: 0 0 5px rgba(0 0 0 /20%);
@@ -2361,7 +2373,7 @@ a {
   display: flex;
   flex-direction: row;
   gap: 10px;
-  font-size: 12px ;
+  font-size: 10px ;
   color: #777;
   /* padding-inline: 20px; */
 
@@ -2374,4 +2386,22 @@ a {
   5px;
   align-items: center;
   
+  
 }
+.dropdown-menue button{
+  width:100% 
+  ;
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  font-size: 15px ;
+  margin-top: 5px;
+  font-weight: 600;
+}
+.dropdown-menue button:hover{
+  background-color: #ecf0f1;
+
+}
+
+
+

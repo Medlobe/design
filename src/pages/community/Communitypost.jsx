@@ -160,7 +160,7 @@ export default function Post({ post, users, handlePostClick }) {
 
       <div className="mt-4 header-posty" onClick={() => handlePostClick(post)}>
         <h1 className="text-black">{post.title}</h1>
-        <p className="text-gray-700">{post.writeup}
+        <p className="post-text">{post.writeup}
       
         </p>
         
