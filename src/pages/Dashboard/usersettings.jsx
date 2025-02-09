@@ -431,7 +431,7 @@ export default function UserSettigns() {
             onClose={closeModal}
             onSubmit={(e) => handleFormSubmit(e, "profile")}
           >
-            <h2>Edit Profile</h2>
+            <h2 className="edit-h2">Edit Profile</h2>
             <div className="change-inps-set">
               <div className="image-casingus">
                 <span className="main-img-css">
@@ -475,7 +475,7 @@ export default function UserSettigns() {
                 </span>
               </div>
 
-              <span>
+              <span className="okx">
                 <label htmlFor="about" className="mpx-label">
                   About
                 </label>

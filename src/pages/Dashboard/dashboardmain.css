@@ -473,8 +473,9 @@
     top: 10px;
     width: 40px;
     height: 40px;
-    border: 2px solid #ddd;
+    /* border: 2px solid #ddd; */
     border-radius: 50%;
+    background-color: #ecf0f1;
     cursor: pointer;
   }
   
@@ -556,7 +557,34 @@
 
 }
  
+@media screen and (max-width:700px){
+    .modal-overlay{
+        padding: 10px;
 
+    }   
+    .close-btn{
+        left: 90%;
+        width: 28px;
+        height: 28px;
+        
+
+    } 
+    .modal-content{
+        padding: 0px;
+    }
+    .edit-h2{
+        margin: 10px;
+        font-size: 15px !important ;
+    }
+    .okx,
+    .inps-innn{
+        padding: 0px 15px;
+    }
+    .disclaimer-div{
+        margin: 15px;
+    }
+
+}
  
 
 .disclaimer-div{

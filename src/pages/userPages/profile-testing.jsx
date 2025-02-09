@@ -189,7 +189,6 @@ export default function SecondUserPadge() {
         </div>
         <div className="navbar-post">
           <a href="" className="active">Posts</a>
-          <a href="">Likes</a>
           <a href="">Articles</a>
           <a href="">Media</a>
           <a href="">Replies</a>
