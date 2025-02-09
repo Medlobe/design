@@ -4,6 +4,7 @@ import { GlobalContext } from "../../context/GlobalContext";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import Loader from "../../components/loader";
+import GoBackButton from "../../components/obackbutton";
 
 export default function UserSettigns() {
   //variables
@@ -312,53 +313,86 @@ export default function UserSettigns() {
     closeModal();
   };
 
-    if (user.length === 0) {
-      return <Loader />;
-    }
+  if (user.length === 0) {
+    return <Loader />;
+  }
 
   return (
     <>
       <div className="user-image-and-info">
         <div className="image-casingus">
-          <div className="img-img">
-            {/* <div className="baby-plus-div" onClick={() => openModal("profile")}>
-              <p>EDIT</p>
-              <i className="fas fa-pencil"></i>
-            </div> */}
-            <span className="main-img-css">
-              <img src={profileImage} alt="Profile" />
-              <div className="camera-div" onClick={handleEditPhotoClick}>
-                EDIT PHOTO
-              </div>
+          <GoBackButton/>
+          <span className="main-img-css">
+            <img src={profileImage} alt="Profile" />
+            
 
-              
-              <input
-                type="file"
-                accept="image/*"
-                ref={fileInputRef}
-                onChange={handleFileChange}
-                style={{ display: "none" }}
-              />
-            </span>
-
-           
-          </div>
-         
+          
+          </span>
         </div>
-        <div className="testimonials-div">
-          <div className="plus-div" onClick={() => openModal("experiences")}>
-            <i className="fas fa-plus"></i>
+        <div className="buttpns-tol-follow">
+          <i className="fas fa-ellipsis-h"></i>
+          <i className="far fa-bell"></i>
+          <i className="far fa-user"></i>
+          <i className="far fa-message"></i>
+          <button onClick={() => openModal("profile")}>Edit Profile</button>
+        </div>
+        <div className="main-user-details-abt" id="">
+          <div className="username-t">
+            <h2>{user.name}</h2>
           </div>
-          <div className="block-header">
+          <div className="user-abt">
+            <p>{user.about}</p>
+          </div>
+          <div className="details-side">
+            <div className="dets">
+              <i className="far fa-calendar"></i>
+              <p>Joined Noverber 2nd 2025</p>
+
+            </div>
+            <div className="dets">
+              <i className="fas fa-link"></i>
+              <p><a href="https://t.co/guFL4GzdGj">emekaokoro.netlify.app</a></p>
+            </div>
+            <div className="dets">
+              <i className="fa fa-map-marker-alt"></i>
+              <p>Enugu</p>
+
+            </div>
+            <div className="dets">
+              <i className="fas fa-stethoscope"></i>
+              <p>Psychologist</p>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div className="navbar-post">
+          <a href="" className="active">Posts</a>
+          <a href="">Likes</a>
+          <a href="">Articles</a>
+          <a href="">Media</a>
+          <a href="">Replies</a>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+        <div className="testimonials-div">
+          {/* <div className="block-header">
             <h1>Experiences</h1>
           </div>
           <div className="experience-divs">
             <div className="w-100 experience ">
               {userExperienceData.map((experience, index) => (
-                <div
-                  key={index}
-                  className="flex items-start p-2 "
-                >
+                <div key={index} className="flex items-start p-2 ">
                   {experience.companyLogo ? (
                     <img
                       src={experience.companyLogo}
@@ -378,9 +412,7 @@ export default function UserSettigns() {
                     </h3>
                     <p className="text-sm ">
                       {experience.companyName} .{" "}
-                      <a className="text-sm ">
-                        {experience.companyDomain}
-                      </a>
+                      <a className="text-sm ">{experience.companyDomain}</a>
                     </p>
 
                     <h6 className="text-sm text-gray-500">
@@ -391,13 +423,9 @@ export default function UserSettigns() {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
-          {/* <div className="empty-no-file">
-                        <img src="assets/images/nodata.jpeg" alt="" />
-                    </div> */}
-
-          {/*profile Modal*/}
+       
           <Modal
             isOpen={activeModal === "profile"}
             onClose={closeModal}
@@ -405,9 +433,27 @@ export default function UserSettigns() {
           >
             <h2>Edit Profile</h2>
             <div className="change-inps-set">
+              <div className="image-casingus">
+                <span className="main-img-css">
+                  <img src={profileImage} alt="Profile" />
+                  <div className="camera-div" onClick={handleEditPhotoClick}>
+                    <p>EDIT PHOTO</p>
+                  </div>
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    style={{ display: "none" }}
+                  />
+                </span>
+              </div>
               <div className="inps-innn">
                 <span>
-                  <label htmlFor="nameInp">Name</label>
+                  <label htmlFor="nameInp" className="mpx-label">
+                    Name
+                  </label>
                   <input
                     type="text"
                     id="nameInp"
@@ -417,11 +463,12 @@ export default function UserSettigns() {
                   />
                 </span>
                 <span>
-                  <label htmlFor="description">Expertise</label>
-                  <textarea
-                    id="expertise"
-                    name="expertise"
-                    className="about-descriptio"
+                  <label htmlFor="description" className="mpx-label">
+                    Expertise
+                  </label>
+                  <input
+                    type="text"
+                    id="description"
                     value={profileData.expertise}
                     onChange={handleProfileInputChange}
                   />
@@ -429,7 +476,9 @@ export default function UserSettigns() {
               </div>
 
               <span>
-                <label htmlFor="about">About</label>
+                <label htmlFor="about" className="mpx-label">
+                  About
+                </label>
                 <textarea
                   id="about"
                   name="about"
@@ -608,23 +657,6 @@ export default function UserSettigns() {
                 </div>
               </>
             </div>
-          </Modal>
-
-          {/* Preferences Modal */}
-          <Modal
-            isOpen={activeModal === "preferences"}
-            onClose={closeModal}
-            onSubmit={(e) => handleFormSubmit(e, "preferences")}
-          >
-            <h2>Update Preferences</h2>
-            <label>
-              Notifications:
-              <input type="checkbox" name="notifications" />
-            </label>
-            <label>
-              Dark Mode:
-              <input type="checkbox" name="darkMode" />
-            </label>
           </Modal>
         </div>
 

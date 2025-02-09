@@ -10,6 +10,7 @@ import { GlobalContext } from "../../context/GlobalContext";
 import axios from "axios";
 import Loader from "../../components/loader";
 import Footer from "../../components/footer";
+import GoBackButton from "../../components/obackbutton";
 
 export default function SecondUserPadge() {
   gsap.registerPlugin(ScrollTrigger);
@@ -122,7 +123,7 @@ export default function SecondUserPadge() {
       );
 
       console.log(`${practitioner.name} contacted successfully`);
-     
+
       const extendedPersonsData = {
         ...practitioner,
         personsId: practitioner._id,
@@ -135,94 +136,104 @@ export default function SecondUserPadge() {
 
   return (
     <>
-      <div className="main-user-container">
-        
-       
-        {practitioner.length === 0 ? (
-          <Loader />
-        ) : (
-          <div className="main-btm">
-            
-            
-              <div className="bottom-grid">
-                <div className="left-grid">
-                  <div className="practioner-image"
-                  style={{backgroundImage: "url('../assets/images/banner3.jpg')"}}
-                  
-                  >
-                    {practitioner.profileImage ? (
-                      <img src={`${practitioner.profileImage}`} />
-                    ) : (
-                      <img src="assets/images/OIP.jpg" />
-                    )}
-                    {/* <p>{practitioner.name}</p>
-                    <h4>{practitioner.email}</h4> */}
-                   
-                  </div>
-                  
-                  
-                </div>
-                <div className="right-side-grid">
-                 
-                  <div className="about-me sza-section">
-                    <div className="sca-header">
-                      <h4>{practitioner.practitionField} </h4>
-                    </div>
-                    <span>
-                      <h1>{practitioner.expertise}</h1>
-                      <p>{practitioner.about}</p>
-                    </span>
-                  </div>
-                  <div className=" sza-section">
-                    <div className="sca-header">
-                      <h4>EXPERIENCE</h4>
-                    </div>
-                    <span>
-                      {userExperienceData.map((experience, index) => (
-                        <div key={index} className="experience-whole">
-                          {experience.companyLogo ? (
-                            <img
-                              src={experience.companyLogo}
-                              alt={experience.companyName}
-                              className="w-12 h-12 rounded-md mr-4"
-                            />
-                          ) : (
-                            <img
-                              src="../assets/images/banner3.jpg"
-                              alt={`any`}
-                              className="w-12 h-12 rounded-md mr-4"
-                            />
-                          )}
-                          <div>
-                            <h1>{experience.companyPosition}</h1>
-                            <div className="date-of-work">
-                              <p className="text-sm ">
-                                {experience.companyName}
-                              </p>
-                              <p>.</p>
-                              <a className="text-sm ">
-                                {experience.companyDomain}
-                              </a>
-                            </div>
-                            <div className="brief-explanation">
-                              <p>{experience.experience}</p>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </span>
-                  </div>
-                  {/* <div className="sza-section">
-              <SimpleSlider/>
-            </div> */}
-                </div>
-              </div>
+      {practitioner.length === 0 ? (
+        <Loader />
+      ) : (
+        <div className="user-image-and-info">
+          <div className="image-casingus">
+            <GoBackButton/>
+            <span className="main-img-css">
+              {practitioner.profileImage ? (
+                <img src={`${practitioner.profileImage}`} />
+              ) : (
+                <img src="assets/images/OIP.jpg" />
+              )}
+            </span>
           </div>
-          
-         
-        )}
-      </div>
-    
+          <div className="buttpns-tol-follow">
+            <i className="fas fa-ellipsis-h"></i>
+            <i className="far fa-bell"></i>
+            <i className="far fa-user"></i>
+            <i className="far fa-message"></i>
+            
+          </div>
+          <div className="main-user-details-abt" id="">
+          <div className="username-t">
+            <h2>{practitioner.name}</h2>
+          </div>
+          <div className="user-abt">
+            <p>{practitioner.about}</p>
+          </div>
+          <div className="details-side">
+            <div className="dets">
+              <i className="far fa-calendar"></i>
+              <p>Joined Noverber 2nd 2025</p>
+
+            </div>
+            <div className="dets">
+              <i className="fas fa-link"></i>
+              <p><a href="https://t.co/guFL4GzdGj">emekaokoro.netlify.app</a></p>
+            </div>
+            <div className="dets">
+              <i className="fa fa-map-marker-alt"></i>
+              <p>Enugu</p>
+
+            </div>
+            <div className="dets">
+              <i className="fas fa-stethoscope"></i>
+              <p>{practitioner.expertise}</p>
+
+            </div>
+
+          </div>
+        </div>
+        <div className="navbar-post">
+          <a href="" className="active">Posts</a>
+          <a href="">Likes</a>
+          <a href="">Articles</a>
+          <a href="">Media</a>
+          <a href="">Replies</a>
+          <a href="">Experience</a>
+        </div>
+
+          <div className="right-side-grid">
+            
+            <div className=" sza-section">
+              
+              <span>
+                {userExperienceData.map((experience, index) => (
+                  <div key={index} className="experience-whole">
+                    {experience.companyLogo ? (
+                      <img
+                        src={experience.companyLogo}
+                        alt={experience.companyName}
+                        className="w-12 h-12 rounded-md mr-4"
+                      />
+                    ) : (
+                      <img
+                        src="../assets/images/banner3.jpg"
+                        alt={`any`}
+                        className="w-12 h-12 rounded-md mr-4"
+                      />
+                    )}
+                    <div>
+                      <h1>{experience.companyPosition}</h1>
+                      <div className="date-of-work">
+                        <p className="text-sm ">{experience.companyName}</p>
+                        <p>.</p>
+                        <a className="text-sm ">{experience.companyDomain}</a>
+                      </div>
+                      <div className="brief-explanation">
+                        <p>{experience.experience}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

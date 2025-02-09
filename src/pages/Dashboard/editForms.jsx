@@ -6,6 +6,7 @@ const Modal = ({ isOpen, onClose, onSubmit, children }) => {
 
   return (
     <div className="modal-overlay">
+      <div className="man-modal-ccc">
       <div className="modal-content">
         <button className="close-btn" onClick={onClose}>
             <i className='fas fa-close'></i>
@@ -14,6 +15,8 @@ const Modal = ({ isOpen, onClose, onSubmit, children }) => {
           {children}
           <button type="submit" className="submit-btn">Submit</button>
         </form>
+      </div>
+
       </div>
     </div>
   );
